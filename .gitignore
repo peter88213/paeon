@@ -1,0 +1,11 @@
+/src/__pycache__/
+/src/paeon/__pycache__/
+/src/paeon/model/__pycache__/
+/src/paeon/file/__pycache__/
+/src/paeon/csv/__pycache__/
+/src/paeon/converter/__pycache__/
+/src/paeon/html/__pycache__/
+/src/paeon/odt/__pycache__/
+/src/paeon/yw/__pycache__/
+/test/__pycache__/
+/test/aeon3/

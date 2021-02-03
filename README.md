@@ -1,2 +1,2 @@
 # paeon
-Python library for Aeon timeline support
+Python library for Aeon Timeline support
