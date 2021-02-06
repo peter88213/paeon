@@ -7,6 +7,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import sys
 
 from paeon.model.timeline import Timeline
+from paeon.aeon.read_aeon3 import read_aeon3
 
 
 class Aeon3File(Timeline):
@@ -26,22 +27,8 @@ class Aeon3File(Timeline):
         from the binary prefix and suffix.
         """
 
-        with open(self.filePath, 'r') as f:
-            data = f.read()
-
-        # Binary prefix: all characters before the first curly bracket
-
-        self.binPrefix, data = data.split('{', 1)
-
-        # Binary suffix: all characters after the last curly bracket
-
-        data, self.binSuffix = data.rsplit('}', 1)
-
-        # JSON part: the rest
-
-        self.jsonPart = '{' + data + '}'
-
-        # Parse the JSON part (to come)
+        self.binPrefix, self.jsonPart, self.binSuffix = read_aeon3(
+            self.filePath)
 
     def write(self):
         """Assemble the Aeon 3 project and write the file.
