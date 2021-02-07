@@ -97,7 +97,7 @@ class CorruptedData(unittest.TestCase):
         part2 = None
         part3 = 'def'
         message = write_aeon3(TEST_DATA, part1, part2, part3)
-        self.assertEqual(message, 'ERROR: Cannot assemble project parts.')
+        self.assertEqual(message, 'ERROR: Cannot assemble the project.')
         self.assertFalse(os.path.isfile(TEST_DATA))
 
 

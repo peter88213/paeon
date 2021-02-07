@@ -63,3 +63,7 @@ if __name__ == '__main__':
     print(project.read())
     print(project.write_json())
     print(project.write())
+    text = project.jsonPart.split('"')
+    for word in text:
+        if "Ä" in word:
+            print(word)

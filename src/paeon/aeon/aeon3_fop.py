@@ -38,6 +38,8 @@ def read_aeon3(filePath):
     """
 
     try:
+        # Read the file as raw string
+
         with open(filePath, 'r') as f:
             data = f.read()
 
@@ -61,6 +63,14 @@ def read_aeon3(filePath):
     except:
         return 'ERROR: No JSON part found.', None, None, None
 
+    # Convert the raw JSON part to an utf-8 string
+
+    with open('temp.json', 'w') as f:
+        f.write(jsonPart)
+
+    with open('temp.json', 'r', encoding='utf-8') as f:
+        jsonPart = f.read()
+
     return 'SUCCESS: "' + filePath + '" read.', binPrefix, jsonPart, binSuffix
 
 
@@ -79,11 +89,20 @@ def write_aeon3(filePath, binPrefix, jsonPart, binSuffix):
 
     print(write_aeon3(pathToAeonProject, part1, part2, part3))
     """
+
     try:
+        # Convert the utf-8 JSON part to a raw string
+
+        with open('temp.json', 'w', encoding='utf-8') as f:
+            f.write(jsonPart)
+
+        with open('temp.json', 'r') as f:
+            jsonPart = f.read()
+
         data = binPrefix + jsonPart + binSuffix
 
     except:
-        return 'ERROR: Cannot assemble project parts.'
+        return 'ERROR: Cannot assemble the project.'
 
     try:
         with open(filePath, 'w') as f:
