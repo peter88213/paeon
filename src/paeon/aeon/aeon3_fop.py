@@ -3,6 +3,7 @@
 Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
+import os
 
 
 def read_aeon3(filePath):
@@ -71,6 +72,8 @@ def read_aeon3(filePath):
     with open('temp.json', 'r', encoding='utf-8') as f:
         jsonPart = f.read()
 
+    os.remove('temp.json')
+
     return 'SUCCESS: "' + filePath + '" read.', binPrefix, jsonPart, binSuffix
 
 
@@ -98,6 +101,8 @@ def write_aeon3(filePath, binPrefix, jsonPart, binSuffix):
 
         with open('temp.json', 'r') as f:
             jsonPart = f.read()
+
+        os.remove('temp.json')
 
         data = binPrefix + jsonPart + binSuffix
 
