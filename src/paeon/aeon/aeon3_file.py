@@ -7,7 +7,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import sys
 
 from paeon.model.timeline import Timeline
-from paeon.aeon.aeon3_fop import read_aeon3, write_aeon3
+from paeon.aeon.aeon3_fop import split_aeon3, join_aeon3
 
 
 class Aeon3File(Timeline):
@@ -18,29 +18,61 @@ class Aeon3File(Timeline):
 
     def __init__(self, filePath):
         self.filePath = filePath
-        self.binPrefix = ''
-        self.binSuffix = ''
         self.jsonPart = ''
 
     def read(self):
-        """Read the Aeon3 project file and separate the JSON part 
-        from the binary prefix and suffix.
+        """Read the timeline attributes from an Aeon3 project file.
         Return a message beginning with SUCCESS or ERROR.
         """
-        message, self.binPrefix, self.jsonPart, self.binSuffix = read_aeon3(
-            self.filePath)
-        return message
+
+        # Split the project file into binary and JSON parts.
+
+        prefixPath = self.filePath.replace('.' + self.EXTENSION, '.bin1')
+        jsonPath = self.filePath.replace('.' + self.EXTENSION, '.json')
+        suffixPath = self.filePath.replace('.' + self.EXTENSION, '.bin2')
+
+        message = split_aeon3(self.filePath, prefixPath, jsonPath, suffixPath)
+
+        if message.startswith('ERROR'):
+            return message
+
+        # Read the JSON file.
+
+        try:
+            with open(jsonPath, 'r', encoding='utf-8') as f:
+                self.jsonPart = f.read()
+
+        except:
+            return 'ERROR: Cannot read the JSON file.'
+
+        # Parse the JSON part (to come)
+
+        return 'SUCCESS: Project data read.'
 
     def write(self):
-        """Assemble the Aeon 3 project and write the file.
+        """Write the timeline attributes to an Aeon3 project file.
         Return a message beginning with SUCCESS or ERROR.
         """
 
-        # Write back the timeline attributes to the JSON part (to come)
+        # Write the timeline attributes to the JSON tree (to come)
+
+        prefixPath = self.filePath.replace('.' + self.EXTENSION, '.bin1')
+        jsonPath = self.filePath.replace('.' + self.EXTENSION, '.json')
+        suffixPath = self.filePath.replace('.' + self.EXTENSION, '.bin2')
+
+        # Write the JSON file.
+
+        try:
+
+            with open(jsonPath, 'w', encoding='utf-8') as f:
+                f.write(self.jsonPart)
+
+        except:
+            return 'ERROR: Cannot write the JSON file.'
 
         # Assemble binary and JSON parts and write the project file.
 
-        return write_aeon3(self.filePath, self.binPrefix, self.jsonPart, self.binSuffix)
+        return join_aeon3(self.filePath, prefixPath, jsonPath, suffixPath)
 
 
 if __name__ == '__main__':

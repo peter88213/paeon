@@ -3,54 +3,36 @@
 Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-import os
-
-EXTENSION = '.aeon'
 
 
-def read_aeon3(filePath):
+def split_aeon3(aeonPath, prefixPath, jsonPath, suffixPath):
     """Read the Aeon3 project file and separate the JSON part 
     from the "binary" prefix and suffix.
 
-    Call parameter is a string
-    filePath: path to an .aeon file
-
-    The .aeon file is read as a text file; the "binary" parts contain non-printable
-    characters that could not be decoded as utf-8. So there is no "encoding" 
-    specified as open() argument.
-
     The JSON part begins with the first curly bracket and ends with the last curly bracket.
 
-    Normal operation:
-    Return a tuple of four strings
-    message beginning with 'SUCCESS', binPrefix, jsonPart, binSuffix
+    Parameters
+    str aeonPath: Path to the .aeon project file to be read.
+    str prefixPath: Path to the binary prefix file to be created.  
+    str jsonPath: Path to the JSON file to be created.
+    str suffixPath: Path to the  binary suffixfile to be created.
 
-    Error handling:
-    Return a tuple of four elements
-    message beginning with 'ERROR', None, None, None
-
-    Usage example:
-
-    message, part1, part2, part3 = read_aeon3(pathToAeonProject)
-
-    if message.startswith('ERROR'):
-        print(message)
-        exit(1)
-
-    process_json_part(part2) 
+    Return a message beginning with 'SUCCESS' or 'ERROR'.
     """
 
     try:
-        # Read the file as raw string
+        # Read the file as raw string.
+        # Note: The .aeon file is read as a text file; the "binary"
+        # parts contain non-printable characters that could not be
+        # decoded as utf-8. So there is no encoding specified.
 
-        with open(filePath, 'r') as f:
+        with open(aeonPath, 'r') as f:
             data = f.read()
 
     except:
-        return 'ERROR: Cannot read "' + filePath + '".', None, None, None
+        return 'ERROR: Cannot read "' + aeonPath + '".'
 
     try:
-
         # Binary prefix: all characters before the first curly bracket
 
         binPrefix, data = data.split('{', 1)
@@ -64,58 +46,65 @@ def read_aeon3(filePath):
         jsonPart = '{' + data + '}'
 
     except:
-        return 'ERROR: No JSON part found.', None, None, None
+        return 'ERROR: No JSON part found.'
 
-    # Convert the raw JSON part to an utf-8 string
+    # Write split files.
 
-    jsonPath = filePath.replace(EXTENSION, '.json')
+    try:
 
-    with open(jsonPath, 'w') as f:
-        f.write(jsonPart)
+        with open(prefixPath, 'w') as f:
+            f.write(binPrefix)
 
-    with open(jsonPath, 'r', encoding='utf-8') as f:
-        jsonPart = f.read()
+        with open(jsonPath, 'w') as f:
+            f.write(jsonPart)
 
-    return 'SUCCESS: "' + filePath + '" read.', binPrefix, jsonPart, binSuffix
+        with open(suffixPath, 'w') as f:
+            f.write(binSuffix)
+
+    except:
+        return 'ERROR: Cannot write split files.'
+
+    return 'SUCCESS: Split files written.'
 
 
-def write_aeon3(filePath, binPrefix, jsonPart, binSuffix):
+def join_aeon3(aeonPath, prefixPath, jsonPath, suffixPath):
     """Assemble the Aeon 3 project and write the file.
-    Return a message beginning with SUCCESS or ERROR.
 
-    Normal operation:
-    Write project data to a text file located at filePath
-    Return a message beginning with SUCCESS
+    Parameters
+    str aeonPath: Path to the .aeon project file to be created.
+    str prefixPath: Path to the binary prefix file to be read.  
+    str jsonPath: Path to the JSON file to be read.
+    str suffixPath: Path to the binary suffix file to be read.
 
-    Error handling:
-    Return a  message beginning with ERROR
-
-    Usage example:
-
-    print(write_aeon3(pathToAeonProject, part1, part2, part3))
+    Return a message beginning with 'SUCCESS' or 'ERROR'.
     """
 
     try:
         # Convert the utf-8 JSON part to a raw string
 
-        jsonPath = filePath.replace(EXTENSION, '.json')
-
-        with open(jsonPath, 'w', encoding='utf-8') as f:
-            f.write(jsonPart)
+        with open(prefixPath, 'r') as f:
+            binPrefix = f.read()
 
         with open(jsonPath, 'r') as f:
             jsonPart = f.read()
 
+        with open(suffixPath, 'r') as f:
+            binSuffix = f.read()
+
+    except:
+        return 'ERROR: Cannot read split files.'
+
+    try:
         data = binPrefix + jsonPart + binSuffix
 
     except:
         return 'ERROR: Cannot assemble the project.'
 
     try:
-        with open(filePath, 'w') as f:
+        with open(aeonPath, 'w') as f:
             f.write(data)
 
     except:
-        return 'ERROR: Can not write "' + filePath + '".'
+        return 'ERROR: Can not write "' + aeonPath + '".'
 
-    return 'SUCCESS: "' + filePath + '" written.'
+    return 'SUCCESS: "' + aeonPath + '" written.'
