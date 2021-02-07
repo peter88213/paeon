@@ -42,26 +42,10 @@ class Aeon3File(Timeline):
 
         return write_aeon3(self.filePath, self.binPrefix, self.jsonPart, self.binSuffix)
 
-    def write_json(self):
-        """Create a JSON file with the Aeon 3 project content.
-        Return a message beginning with SUCCESS or ERROR.
-        """
-        jsonPath = self.filePath.replace(self.EXTENSION, 'json')
-
-        try:
-            with open(jsonPath, 'w', encoding='utf-8') as f:
-                f.write(self.jsonPart)
-
-        except:
-            return 'ERROR: Can not write "' + jsonPath + '".'
-
-        return 'SUCCESS: "' + jsonPath + '" written.'
-
 
 if __name__ == '__main__':
     project = Aeon3File(sys.argv[1])
     print(project.read())
-    print(project.write_json())
     print(project.write())
     text = project.jsonPart.split('"')
     for word in text:

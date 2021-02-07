@@ -5,6 +5,8 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 
+EXTENSION = '.aeon'
+
 
 def read_aeon3(filePath):
     """Read the Aeon3 project file and separate the JSON part 
@@ -66,13 +68,13 @@ def read_aeon3(filePath):
 
     # Convert the raw JSON part to an utf-8 string
 
-    with open('temp.json', 'w') as f:
+    jsonPath = filePath.replace(EXTENSION, '.json')
+
+    with open(jsonPath, 'w') as f:
         f.write(jsonPart)
 
-    with open('temp.json', 'r', encoding='utf-8') as f:
+    with open(jsonPath, 'r', encoding='utf-8') as f:
         jsonPart = f.read()
-
-    os.remove('temp.json')
 
     return 'SUCCESS: "' + filePath + '" read.', binPrefix, jsonPart, binSuffix
 
@@ -96,13 +98,13 @@ def write_aeon3(filePath, binPrefix, jsonPart, binSuffix):
     try:
         # Convert the utf-8 JSON part to a raw string
 
-        with open('temp.json', 'w', encoding='utf-8') as f:
+        jsonPath = filePath.replace(EXTENSION, '.json')
+
+        with open(jsonPath, 'w', encoding='utf-8') as f:
             f.write(jsonPart)
 
-        with open('temp.json', 'r') as f:
+        with open(jsonPath, 'r') as f:
             jsonPart = f.read()
-
-        os.remove('temp.json')
 
         data = binPrefix + jsonPart + binSuffix
 

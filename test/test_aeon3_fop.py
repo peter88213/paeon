@@ -11,6 +11,7 @@ from paeon.aeon.aeon3_fop import read_aeon3, write_aeon3
 
 TEST_DATA_REF = 'data/fop/normal.aeon'
 TEST_DATA = 'workdir/project.aeon'
+TEMP_DATA = 'workdir/project.json'
 
 
 def read_file(inputFile):
@@ -41,6 +42,10 @@ class NormalOperation(unittest.TestCase):
 
         try:
             os.remove(TEST_DATA)
+        except:
+            pass
+        try:
+            os.remove(TEMP_DATA)
         except:
             pass
 
@@ -74,6 +79,10 @@ class CorruptedData(unittest.TestCase):
 
         try:
             os.remove(TEST_DATA)
+        except:
+            pass
+        try:
+            os.remove(TEMP_DATA)
         except:
             pass
 
@@ -118,6 +127,10 @@ class FileAccessError(unittest.TestCase):
             os.chmod(TEST_DATA, stat.S_IWUSR | stat.S_IREAD)
             # Make the file writeable, if necessary
             os.remove(TEST_DATA)
+        except:
+            pass
+        try:
+            os.remove(TEMP_DATA)
         except:
             pass
 
