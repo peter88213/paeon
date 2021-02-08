@@ -21,7 +21,7 @@ def split_aeon3(aeonPath, prefixPath, jsonPath, suffixPath):
     """
 
     try:
-        # Read the file as raw string.
+        # Read the file as string.
         # Note: The .aeon file is read as a text file; the "binary"
         # parts contain non-printable characters that could not be
         # decoded as utf-8. So there is no encoding specified.
@@ -80,7 +80,7 @@ def join_aeon3(aeonPath, prefixPath, jsonPath, suffixPath):
     """
 
     try:
-        # Convert the utf-8 JSON part to a raw string
+        # Read all project parts as 8 bit char strings.
 
         with open(prefixPath, 'r') as f:
             binPrefix = f.read()
@@ -95,12 +95,16 @@ def join_aeon3(aeonPath, prefixPath, jsonPath, suffixPath):
         return 'ERROR: Cannot read split files.'
 
     try:
+        # Join the parts.
+
         data = binPrefix + jsonPart + binSuffix
 
     except:
         return 'ERROR: Cannot assemble the project.'
 
     try:
+        # Write the results to a single project file.
+
         with open(aeonPath, 'w') as f:
             f.write(data)
 

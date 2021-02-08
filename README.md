@@ -1,5 +1,5 @@
 # paeon
-Python library for Aeon Timeline support.
+Python library for [Aeon Timeline](https://www.aeontimeline.com) support.
 
 The paeon lib is intended to serve as the basis for applications such as:
 
