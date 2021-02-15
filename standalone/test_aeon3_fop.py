@@ -1,5 +1,8 @@
 """Unit tests for Aeon3 file operation
 
+Standalone variant working IDE-independently. 
+
+Part of the paeon project (https://github.com/peter88213/paeon)
 Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
@@ -7,11 +10,16 @@ import unittest
 import os
 import stat
 
-from aeon3_fop import read_aeon3, write_aeon3
+from aeon3_fop import split_aeon3, join_aeon3
 
 TEST_DATA_REF = 'normal.aeon'
+TEST_BIN1_REF = 'normal.bin1'
+TEST_JSON_REF = 'normal.json'
+TEST_BIN2_REF = 'normal.bin2'
 TEST_DATA = 'project.aeon'
-TEMP_DATA = 'project.json'
+TEST_BIN1 = 'project.bin1'
+TEST_JSON = 'project.json'
+TEST_BIN2 = 'project.bin2'
 
 
 def read_file(inputFile):
@@ -45,7 +53,17 @@ class NormalOperation(unittest.TestCase):
         except:
             pass
         try:
-            os.remove(TEMP_DATA)
+            os.remove(TEST_BIN1)
+        except:
+            pass
+
+        try:
+            os.remove(TEST_JSON)
+        except:
+            pass
+
+        try:
+            os.remove(TEST_BIN2)
         except:
             pass
 
@@ -54,10 +72,13 @@ class NormalOperation(unittest.TestCase):
         delete the example file and create a new one.
         The written file must match the reference file.
         """
-        message, part1, part2, part3 = read_aeon3(TEST_DATA)
-        self.assertEqual(message, 'SUCCESS: "' + TEST_DATA + '" read.')
+        message = split_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
+        self.assertEqual(message, 'SUCCESS: Split files written.')
+        self.assertEqual(read_file(TEST_BIN1), read_file(TEST_BIN1_REF))
+        self.assertEqual(read_file(TEST_JSON), read_file(TEST_JSON_REF))
+        self.assertEqual(read_file(TEST_BIN2), read_file(TEST_BIN2_REF))
         os.remove(TEST_DATA)
-        message = write_aeon3(TEST_DATA, part1, part2, part3)
+        message = join_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'SUCCESS: "' + TEST_DATA + '" written.')
         self.assertEqual(read_file(TEST_DATA), read_file(TEST_DATA_REF))
 
@@ -82,7 +103,7 @@ class CorruptedData(unittest.TestCase):
         except:
             pass
         try:
-            os.remove(TEMP_DATA)
+            os.remove(TEST_JSON)
         except:
             pass
 
@@ -90,22 +111,16 @@ class CorruptedData(unittest.TestCase):
         """Read the data from the example project file.
         Expected result: program abort with error message.
         """
-        message, part1, part2, part3 = read_aeon3(TEST_DATA)
+        message = split_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'ERROR: No JSON part found.')
-        self.assertIsNone(part1)
-        self.assertIsNone(part2)
-        self.assertIsNone(part3)
 
+    @unittest.skip("no realistic test scenario")
     def test_write(self):
         """Try to create a project file with incomplete data.
         Expected result: program abort with error message.
         No file written.
         """
-        self.tearDown()
-        part1 = 'abc'
-        part2 = None
-        part3 = 'def'
-        message = write_aeon3(TEST_DATA, part1, part2, part3)
+        message = join_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'ERROR: Cannot assemble the project.')
         self.assertFalse(os.path.isfile(TEST_DATA))
 
@@ -130,7 +145,7 @@ class FileAccessError(unittest.TestCase):
         except:
             pass
         try:
-            os.remove(TEMP_DATA)
+            os.remove(TEST_JSON)
         except:
             pass
 
@@ -141,24 +156,21 @@ class FileAccessError(unittest.TestCase):
         self.tearDown()
         # Make sure that the test file doesn't exist
 
-        message, part1, part2, part3 = read_aeon3(TEST_DATA)
+        message = split_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'ERROR: Cannot read "' + TEST_DATA + '".')
-        self.assertIsNone(part1)
-        self.assertIsNone(part2)
-        self.assertIsNone(part3)
 
     def test_write(self):
         """Try to overwrite a read-only file.
         Expected result: program abort with error message.
         """
-        message, part1, part2, part3 = read_aeon3(TEST_DATA)
-        self.assertEqual(message, 'SUCCESS: "' + TEST_DATA + '" read.')
+        message = split_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
+        self.assertEqual(message, 'SUCCESS: Split files written.')
         # First read the data
 
         os.chmod(TEST_DATA, stat.S_IREAD)
         # Make the test file read-only
 
-        message = write_aeon3(TEST_DATA, part1, part2, part3)
+        message = join_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'ERROR: Can not write "' + TEST_DATA + '".')
 
 
