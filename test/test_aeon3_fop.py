@@ -111,6 +111,7 @@ class CorruptedData(unittest.TestCase):
         message = split_aeon3(TEST_DATA, TEST_BIN1, TEST_JSON, TEST_BIN2)
         self.assertEqual(message, 'ERROR: No JSON part found.')
 
+    @unittest.skip("no realistic test scenario")
     def test_write(self):
         """Try to create a project file with incomplete data.
         Expected result: program abort with error message.
