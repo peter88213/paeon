@@ -10,7 +10,7 @@ import stat
 
 from paeon.aeon.aeon3_fop import split_aeon3, join_aeon3
 
-TEST_DATA_REF = 'data/fop/normal.aeon'
+TEST_DATA_REF = 'data/normal.aeon'
 TEST_BIN1_REF = 'data/fop/normal.bin1'
 TEST_JSON_REF = 'data/fop/normal.json'
 TEST_BIN2_REF = 'data/fop/normal.bin2'
