@@ -4,7 +4,6 @@ Part of the paeon project (https://github.com/peter88213/paeon)
 Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
-from abc import abstractmethod
 from urllib.parse import quote
 import os
 
@@ -63,20 +62,21 @@ class Timeline(object):
             self.projectName = quote(tail.replace(
                 suffix + self.EXTENSION, ''))
 
-    @abstractmethod
     def read(self):
         """Parse the file and store selected properties.
         To be overwritten by file format specific subclasses.
         """
+        return 'ERROR: read method is not implemented.'
 
-    @abstractmethod
     def merge(self, novel):
         """Copy required attributes of the timeline object.
         To be overwritten by file format specific subclasses.
         """
+        return 'ERROR: merge method is not implemented.'
 
-    @abstractmethod
     def write(self):
         """Write selected properties to the file.
         To be overwritten by file format specific subclasses.
+        return 'ERROR: read method is not implemented.'
         """
+        return 'ERROR: write method is not implemented.'
