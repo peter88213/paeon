@@ -2,7 +2,7 @@
 """Create a yWriter 7 project from a csv file exported
 by Aeon Timeline 2. 
 
-Version 0.1.2
+Version 0.1.3
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/Paeon
@@ -4044,49 +4044,50 @@ class CsvTimeline(CsvFile):
 
         for cells in self.rows:
 
-            # Skip the heading row.
+            if cells[0] == 'EventID':
+                # Skip the heading row.
+                continue
 
-            if not cells[0] == 'EventID':
-                i = 0
+            i = 0
 
-                # Event ID --> scene ID.
+            # Event ID --> scene ID.
 
-                scId = cells[i]
-                self.scenes[scId] = Scene()
-                i += 1
+            scId = cells[i]
+            self.scenes[scId] = Scene()
+            i += 1
 
-                # Event title --> scene title.
+            # Event title --> scene title.
 
-                self.scenes[scId].title = cells[i]
-                i += 1
+            self.scenes[scId].title = cells[i]
+            i += 1
 
-                # Date and time:
+            # Date and time:
 
-                dt = cells[i].split(' ')
-                self.scenes[scId].date = dt[0]
-                self.scenes[scId].time = dt[1]
-                i += 1
-                i += 1
-                i += 1
-                i += 1
-                i += 1
-                i += 1
-                i += 1
-                i += 1
-                i += 1
+            dt = cells[i].split(' ')
+            self.scenes[scId].date = dt[0]
+            self.scenes[scId].time = dt[1]
+            i += 1
+            i += 1
+            i += 1
+            i += 1
+            i += 1
+            i += 1
+            i += 1
+            i += 1
+            i += 1
 
-                # Summary --> scene description.
+            # Summary --> scene description.
 
-                self.scenes[scId].desc = self.convert_to_yw(cells[i])
-                i += 1
+            self.scenes[scId].desc = self.convert_to_yw(cells[i])
+            i += 1
 
-                # Arcs --> tags:
+            # Arcs --> tags:
 
-                self.scenes[scId].tags = cells[i].split('|')
+            self.scenes[scId].tags = cells[i].split('|')
 
-                self.scenes[scId].status = 1
+            self.scenes[scId].status = 1
 
-                self.chapters['1'].srtScenes.append(scId)
+            self.chapters['1'].srtScenes.append(scId)
 
         # TODO: Sort self.chapters['1'].srtScenes by date/time
 
@@ -4112,7 +4113,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('csv timeline to yWriter converter 0.1.2')
+        ui = UiCmd('csv timeline to yWriter converter 0.1.3')
 
     converter = CsvConverter()
     converter.ui = ui
