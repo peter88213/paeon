@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""yWriter/csv timeline converter. 
+"""Create a yWriter 7 project from a csv file exported
+by Aeon Timeline 2. 
 
-Version 0.1.1
+Version 0.1.2
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/Paeon
@@ -4007,7 +4008,7 @@ class CsvFile(FileExport):
 
 
 class CsvTimeline(CsvFile):
-    """csv file representation of an Aeon2 time line. 
+    """File representation of a csv file exported by Aeon Timeline 2. 
 
     Represents a csv file with a record per scene.
     - Records are separated by line breaks.
@@ -4018,21 +4019,12 @@ class CsvTimeline(CsvFile):
     SUFFIX = ''
     _SEPARATOR = ','
 
-    fileHeader = '''"EventID","Title","Start Date",''' +\
-        '''"Duration","End Date","Parent","Color",''' +\
-        '''"Tags","Links","Tension","Complete","Summary"''' +\
-        ''',"Arc","Location","Observer","Participant"
-'''
-
-    sceneTemplate = '''"$ID","$Title","$Date $Time"''' +\
-        '''"Duration","End Date","Parent","Color",''' +\
-        '''"Tags","Links","Tension","Complete","Summary"''' +\
-        ''',"Arc","Location","Observer","Participant"
-'''
-
     def read(self):
         """Parse the csv file located at filePath, 
         fetching the Scene attributes contained.
+
+        Create one single chapter containing all scenes.
+
         Return a message beginning with SUCCESS or ERROR.
         """
         message = CsvFile.read(self)
@@ -4045,6 +4037,8 @@ class CsvTimeline(CsvFile):
         self.srtChapters = ['1']
 
         for cells in self.rows:
+
+            # Skip the heading row.
 
             if not cells[0] == 'EventID':
                 i = 0
@@ -4088,15 +4082,15 @@ class CsvTimeline(CsvFile):
 
                 self.chapters['1'].srtScenes.append(scId)
 
-        # TODO: sort self.chapters['1'].srtScenes by date/time
+        # TODO: Sort self.chapters['1'].srtScenes by date/time
+
+        # TODO: Import characters and locations.
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
 
 
 class CsvConverter(YwCnvUi):
-    """A converter class for csv timeline import/export."""
-    EXPORT_SOURCE_CLASSES = [Yw7File]
-    EXPORT_TARGET_CLASSES = [CsvTimeline]
+    """A converter class for csv timeline import."""
     CREATE_SOURCE_CLASSES = [CsvTimeline]
 
     def __init__(self):
@@ -4112,7 +4106,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('yWriter/csv timeline converter 0.1.1')
+        ui = UiCmd('csv timeline to yWriter converter 0.1.2')
 
     converter = CsvConverter()
     converter.ui = ui
@@ -4123,10 +4117,10 @@ def run(sourcePath, silentMode=True):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='yWriter/csv timeline converter',
+        description='csv timeline to yWriter converter',
         epilog='')
     parser.add_argument('sourcePath', metavar='Sourcefile',
-                        help='The path of the tineline csv file or yWriter project file.')
+                        help='The path of the csv timeline file.')
 
     parser.add_argument('--silent',
                         action="store_true",

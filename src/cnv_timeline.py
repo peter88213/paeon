@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""yWriter/csv timeline converter. 
+"""Create a yWriter 7 project from a csv file exported
+by Aeon Timeline 2. 
 
 Version @release
 
@@ -23,7 +24,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('yWriter/csv timeline converter @release')
+        ui = UiCmd('csv timeline to yWriter converter @release')
 
     converter = CsvConverter()
     converter.ui = ui
@@ -34,10 +35,10 @@ def run(sourcePath, silentMode=True):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='yWriter/csv timeline converter',
+        description='csv timeline to yWriter converter',
         epilog='')
     parser.add_argument('sourcePath', metavar='Sourcefile',
-                        help='The path of the tineline csv file or yWriter project file.')
+                        help='The path of the csv timeline file.')
 
     parser.add_argument('--silent',
                         action="store_true",

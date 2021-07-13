@@ -12,7 +12,7 @@ from pywriter.model.chapter import Chapter
 
 
 class CsvTimeline(CsvFile):
-    """csv file representation of an Aeon2 time line. 
+    """File representation of a csv file exported by Aeon Timeline 2. 
 
     Represents a csv file with a record per scene.
     - Records are separated by line breaks.
@@ -29,15 +29,12 @@ class CsvTimeline(CsvFile):
         ''',"Arc","Location","Observer","Participant"
 '''
 
-    sceneTemplate = '''"$ID","$Title","$Date $Time"''' +\
-        '''"Duration","End Date","Parent","Color",''' +\
-        '''"Tags","Links","Tension","Complete","Summary"''' +\
-        ''',"Arc","Location","Observer","Participant"
-'''
-
     def read(self):
         """Parse the csv file located at filePath, 
         fetching the Scene attributes contained.
+
+        Create one single chapter containing all scenes.
+
         Return a message beginning with SUCCESS or ERROR.
         """
         message = CsvFile.read(self)
@@ -50,6 +47,8 @@ class CsvTimeline(CsvFile):
         self.srtChapters = ['1']
 
         for cells in self.rows:
+
+            # Skip the heading row.
 
             if not cells[0] == 'EventID':
                 i = 0
@@ -93,6 +92,8 @@ class CsvTimeline(CsvFile):
 
                 self.chapters['1'].srtScenes.append(scId)
 
-        # TODO: sort self.chapters['1'].srtScenes by date/time
+        # TODO: Sort self.chapters['1'].srtScenes by date/time
+
+        # TODO: Import characters and locations.
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'

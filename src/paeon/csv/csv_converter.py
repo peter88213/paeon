@@ -12,9 +12,7 @@ from paeon.csv.csv_timeline import CsvTimeline
 
 
 class CsvConverter(YwCnvUi):
-    """A converter class for csv timeline import/export."""
-    EXPORT_SOURCE_CLASSES = [Yw7File]
-    EXPORT_TARGET_CLASSES = [CsvTimeline]
+    """A converter class for csv timeline import."""
     CREATE_SOURCE_CLASSES = [CsvTimeline]
 
     def __init__(self):
