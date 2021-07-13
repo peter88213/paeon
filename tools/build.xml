@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cnv_timeline" basedir=".">
+	<property name="release" value="0.1.0" />
+	<property name="src" location="../src" />
+	<property name="test" location="../test" />
+	<property name="build" location="../build" />
+	<property name="dist" location="../dist" />
+	<property name="docs" location="../docs" />
+	<property name="project-name" value="${ant.project.name}" />
+	<property name="release-name" value="${project-name}_v${release}" />
+
+	<target name="build" description="inline all library modules">
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+		<delete file="${test}/cnv_timeline.py" />
+		<exec executable="python" failonerror="true">
+		    <arg value="${src}/build_cnv_timeline.py"/>
+		</exec>
+		<fixcrlf encoding="utf-8" eol="lf" srcdir="${test}" includes="**/*.py" />
+	</target>
+
+	<target name="test" description="inline all library modules">
+		<exec executable="python" failonerror="true">
+		    <arg value="${test}/test_cnv_timeline.py"/>
+		</exec>
+	</target>
+
+	<target name="dist" description="generate the distribution">
+		
+		<mkdir dir="${build}" />
+		<mkdir dir="${dist}" />
+		<mkdir dir="${build}/${release-name}" />
+
+		<!--copy file="./install.bat" todir="${build}/${release-name}" /-->
+		
+		<copy file="${test}/cnv_timeline.py" todir="${build}/${release-name}" />
+		<replace encoding="utf-8" file="${build}/${release-name}/cnv_timeline.py" token="@release" value="${release}" />
+
+		<copy file="../LICENSE" todir="${build}/${release-name}" />
+		<!--copy file="${docs}/usage.md" tofile="${build}/${release-name}/README.md" /-->
+
+		<zip destfile="${dist}/cnv_timeline_v${release}.zip" basedir="${build}/${release-name}" />
+
+		<!--copy file="${docs}/template/index.md" overwrite="True" todir="${docs}" />
+		<replace encoding="utf-8" file="${docs}/index.md" token="0.99.0" value="${release}" /-->
+
+	</target>
+
+	<target name="clean" description="clean up">
+		
+		<delete file="${test}/cnv_timeline.py" />
+		
+	</target>
+
+</project>
