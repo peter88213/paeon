@@ -4019,6 +4019,12 @@ class CsvTimeline(CsvFile):
     SUFFIX = ''
     _SEPARATOR = ','
 
+    fileHeader = '''"EventID","Title","Start Date",''' +\
+        '''"Duration","End Date","Parent","Color",''' +\
+        '''"Tags","Links","Tension","Complete","Summary"''' +\
+        ''',"Arc","Location","Observer","Participant"
+'''
+
     def read(self):
         """Parse the csv file located at filePath, 
         fetching the Scene attributes contained.
