@@ -4094,7 +4094,7 @@ class CsvTimeline(CsvFile):
 
 
 class CsvConverter(YwCnvUi):
-    """A converter class for Markdown export."""
+    """A converter class for csv timeline import/export."""
     EXPORT_SOURCE_CLASSES = [Yw7File]
     EXPORT_TARGET_CLASSES = [CsvTimeline]
     CREATE_SOURCE_CLASSES = [CsvTimeline]
