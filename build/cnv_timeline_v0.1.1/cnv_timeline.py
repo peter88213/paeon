@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """yWriter/csv timeline converter. 
 
-Version 0.1.0
+Version 0.1.1
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/Paeon
@@ -4030,14 +4030,6 @@ class CsvTimeline(CsvFile):
         ''',"Arc","Location","Observer","Participant"
 '''
 
-    def get_sceneMapping(self, scId, sceneNumber, wordsTotal, lettersTotal):
-        """Return a mapping dictionary for a scene section. 
-        """
-        sceneMapping = CsvFile.get_sceneMapping(
-            self, scId, sceneNumber, wordsTotal, lettersTotal)
-
-        return sceneMapping
-
     def read(self):
         """Parse the csv file located at filePath, 
         fetching the Scene attributes contained.
@@ -4120,7 +4112,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('yWriter/csv timeline converter 0.1.0')
+        ui = UiCmd('yWriter/csv timeline converter 0.1.1')
 
     converter = CsvConverter()
     converter.ui = ui

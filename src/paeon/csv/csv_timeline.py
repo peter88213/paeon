@@ -35,14 +35,6 @@ class CsvTimeline(CsvFile):
         ''',"Arc","Location","Observer","Participant"
 '''
 
-    def get_sceneMapping(self, scId, sceneNumber, wordsTotal, lettersTotal):
-        """Return a mapping dictionary for a scene section. 
-        """
-        sceneMapping = CsvFile.get_sceneMapping(
-            self, scId, sceneNumber, wordsTotal, lettersTotal)
-
-        return sceneMapping
-
     def read(self):
         """Parse the csv file located at filePath, 
         fetching the Scene attributes contained.
