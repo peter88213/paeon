@@ -9,6 +9,8 @@ import os
 from pywriter.csv.csv_file import CsvFile
 from pywriter.model.scene import Scene
 from pywriter.model.chapter import Chapter
+from pywriter.model.world_element import WorldElement
+from pywriter.model.character import Character
 
 
 class CsvTimeline(CsvFile):
@@ -37,6 +39,68 @@ class CsvTimeline(CsvFile):
 
         Return a message beginning with SUCCESS or ERROR.
         """
+        self.locationCount = 0
+        self.locIdsByTitle = {}
+        # key = location title
+        # value = location ID
+
+        def get_lcIds(lcTitles):
+            """Return a list of location IDs; Add new location to the project.
+            """
+            lcIds = []
+
+            for lcTitle in lcTitles:
+
+                if lcTitle in self.locIdsByTitle:
+                    lcIds.append(self.locIdsByTitle[lcTitle])
+
+                elif lcTitle:
+                    # Add a new location to the project.
+
+                    self.locationCount += 1
+                    lcId = str(self.locationCount)
+                    self.locIdsByTitle[lcTitle] = lcId
+                    self.locations[lcId] = WorldElement()
+                    self.locations[lcId].title = lcTitle
+                    self.srtLocations.append(lcId)
+                    lcIds.append(lcId)
+
+                else:
+                    return None
+
+            return lcIds
+
+        self.characterCount = 0
+        self.chrIdsByTitle = {}
+        # key = character title
+        # value = character ID
+
+        def get_crIds(crTitles):
+            """Return a list of character IDs; Add new characters to the project.
+            """
+            crIds = []
+
+            for crTitle in crTitles:
+
+                if crTitle in self.chrIdsByTitle:
+                    crIds.append(self.chrIdsByTitle[crTitle])
+
+                elif crTitle:
+                    # Add a new character to the project.
+
+                    self.characterCount += 1
+                    crId = str(self.characterCount)
+                    self.chrIdsByTitle[crTitle] = crId
+                    self.characters[crId] = Character()
+                    self.characters[crId].title = crTitle
+                    self.srtCharacters.append(crId)
+                    crIds.append(crId)
+
+                else:
+                    return None
+
+            return crIds
+
         message = CsvFile.read(self)
 
         if message.startswith('ERROR'):
@@ -74,7 +138,11 @@ class CsvTimeline(CsvFile):
             i += 1
             # Color
             i += 1
-            # Tags
+            # Tags --> tags:
+
+            if cells[i] != '':
+                self.scenes[scId].tags = cells[i].split('|')
+
             i += 1
             # Links
             i += 1
@@ -85,14 +153,24 @@ class CsvTimeline(CsvFile):
             # Summary --> scene description.
             self.scenes[scId].desc = self.convert_to_yw(cells[i])
             i += 1
-            # Arc --> tags:
-            self.scenes[scId].tags = cells[i].split('|')
+            # Arc --> tags
+
+            if cells[i] != '':
+
+                if self.scenes[scId].tags is None:
+                    self.scenes[scId].tags = cells[i].split('|')
+
+                else:
+                    self.scenes[scId].tags.extend(cells[i].split('|'))
+
             i += 1
             # Location
+            self.scenes[scId].locations = get_lcIds(cells[i].split('|'))
             i += 1
             # Observer
             i += 1
             # Participant
+            self.scenes[scId].characters = get_crIds(cells[i].split('|'))
 
             # Set scene status = "Outline".
             self.scenes[scId].status = 1
@@ -101,6 +179,6 @@ class CsvTimeline(CsvFile):
 
         # TODO: Sort self.chapters['1'].srtScenes by date/time
 
-        # TODO: Import characters and locations.
+        # TODO: Import chrIdsByTitle and locIdsByTitle.
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
