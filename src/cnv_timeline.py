@@ -3,6 +3,7 @@
 by Aeon Timeline 2. 
 
 Version @release
+Requires Python 3.7 or above
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/Paeon

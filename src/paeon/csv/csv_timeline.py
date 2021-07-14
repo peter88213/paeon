@@ -111,6 +111,8 @@ class CsvTimeline(CsvFile):
         self.chapters[chId].title = 'Chapter 1'
         self.srtChapters = [chId]
 
+        scIdsByDate = {}
+
         for cells in self.rows:
 
             if cells[0] == 'EventID':
@@ -126,6 +128,7 @@ class CsvTimeline(CsvFile):
             self.scenes[scId].title = cells[i]
             i += 1
             # Start Date --> Date and time:
+            scIdsByDate[cells[i]] = scId
             dt = cells[i].split(' ')
             self.scenes[scId].date = dt[0]
             self.scenes[scId].time = dt[1]
@@ -175,10 +178,11 @@ class CsvTimeline(CsvFile):
             # Set scene status = "Outline".
             self.scenes[scId].status = 1
 
+        # Sort scenes by date/time
+
+        srtScIds = sorted(scIdsByDate.items())
+
+        for date, scId in srtScIds:
             self.chapters[chId].srtScenes.append(scId)
-
-        # TODO: Sort self.chapters['1'].srtScenes by date/time
-
-        # TODO: Import chrIdsByTitle and locIdsByTitle.
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
