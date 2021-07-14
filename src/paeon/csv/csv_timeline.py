@@ -179,9 +179,9 @@ class CsvTimeline(CsvFile):
 
         # Sort scenes by date/time
 
-        srtScIds = sorted(scIdsByDate.items())
+        srtScenes = sorted(scIdsByDate.items())
 
-        for date, scId in srtScIds:
+        for date, scId in srtScenes:
             self.chapters[chId].srtScenes.append(scId)
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
