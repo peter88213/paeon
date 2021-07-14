@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="cnv_timeline" basedir=".">
-	<property name="release" value="0.1.3" />
+	<property name="release" value="0.1.4" />
 	<property name="src" location="../src" />
 	<property name="test" location="../test" />
 	<property name="build" location="../build" />
@@ -39,7 +39,7 @@
 		<copy file="../LICENSE" todir="${build}/${release-name}" />
 		<!--copy file="${docs}/usage.md" tofile="${build}/${release-name}/README.md" /-->
 
-		<zip destfile="${dist}/cnv_timeline_v${release}.zip" basedir="${build}/${release-name}" />
+		<zip destfile="${dist}/cnv_timeline_v0.1.3.zip" basedir="${build}/${release-name}" />
 
 		<!--copy file="${docs}/template/index.md" overwrite="True" todir="${docs}" />
 		<replace encoding="utf-8" file="${docs}/index.md" token="0.99.0" value="${release}" /-->

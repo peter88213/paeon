@@ -2,7 +2,7 @@
 """Create a yWriter 7 project from a csv file exported
 by Aeon Timeline 2. 
 
-Version 0.1.3
+Version 0.1.4
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/Paeon
@@ -4207,7 +4207,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('csv timeline to yWriter converter 0.1.3')
+        ui = UiCmd('csv timeline to yWriter converter 0.1.4')
 
     converter = CsvConverter()
     converter.ui = ui
