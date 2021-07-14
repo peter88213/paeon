@@ -2,7 +2,7 @@
 """Create a yWriter 7 project from a csv file exported
 by Aeon Timeline 2. 
 
-Version 0.1.5
+Version 0.1.6
 Requires Python 3.7 or above
 
 Copyright (c) 2021 Peter Triesberger
@@ -1166,14 +1166,14 @@ class Yw7TreeBuilder():
                 xmlScn.remove(xmlScn.find('Unused'))
 
             if prjScn.isNotesScene:
+                scFields = xmlScn.find('Fields')
 
                 try:
-                    scFields = xmlScn.find('Fields')
+                    if scFields.find('Field_SceneType') is None:
+                        ET.SubElement(scFields, 'Field_SceneType').text = '1'
 
                 except(AttributeError):
                     scFields = ET.SubElement(xmlScn, 'Fields')
-
-                if scFields.find('Field_SceneType') is None:
                     ET.SubElement(scFields, 'Field_SceneType').text = '1'
 
             elif xmlScn.find('Fields') is not None:
@@ -1185,14 +1185,15 @@ class Yw7TreeBuilder():
                         scFields.remove(scFields.find('Field_SceneType'))
 
             if prjScn.isTodoScene:
+                scFields = xmlScn.find('Fields')
 
                 try:
-                    scFields = xmlScn.find('Fields')
+
+                    if scFields.find('Field_SceneType') is None:
+                        ET.SubElement(scFields, 'Field_SceneType').text = '2'
 
                 except(AttributeError):
                     scFields = ET.SubElement(xmlScn, 'Fields')
-
-                if scFields.find('Field_SceneType') is None:
                     ET.SubElement(scFields, 'Field_SceneType').text = '2'
 
             elif xmlScn.find('Fields') is not None:
@@ -4032,6 +4033,10 @@ class CsvTimeline(CsvFile):
     SUFFIX = ''
     _SEPARATOR = ','
 
+    NARRATIVE_ARC = 'Narrative'
+    # Events assigned to the "narrative arc" become regular scenes, the others
+    # become Notes scenes.
+
     fileHeader = '''"EventID","Title","Start Date",''' +\
         '''"Duration","End Date","Parent","Color",''' +\
         '''"Tags","Links","Tension","Complete","Summary"''' +\
@@ -4163,15 +4168,10 @@ class CsvTimeline(CsvFile):
             # Summary --> scene description.
             self.scenes[scId].desc = self.convert_to_yw(cells[i])
             i += 1
-            # Arc --> tags
+            # Arc is used as a filter.
 
-            if cells[i] != '':
-
-                if self.scenes[scId].tags is None:
-                    self.scenes[scId].tags = cells[i].split('|')
-
-                else:
-                    self.scenes[scId].tags.extend(cells[i].split('|'))
+            if not self.NARRATIVE_ARC in cells[i]:
+                self.scenes[scId].isNotesScene = True
 
             i += 1
             # Location
@@ -4212,7 +4212,7 @@ def run(sourcePath, silentMode=True):
         ui = Ui('')
 
     else:
-        ui = UiCmd('csv timeline to yWriter converter 0.1.5')
+        ui = UiCmd('csv timeline to yWriter converter 0.1.6')
 
     converter = CsvConverter()
     converter.ui = ui
