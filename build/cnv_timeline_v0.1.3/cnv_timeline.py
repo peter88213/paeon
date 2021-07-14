@@ -4038,9 +4038,10 @@ class CsvTimeline(CsvFile):
         if message.startswith('ERROR'):
             return message
 
-        self.chapters['1'] = Chapter()
-        self.chapters['1'].title = 'Chapter 1'
-        self.srtChapters = ['1']
+        chId = '1'
+        self.chapters[chId] = Chapter()
+        self.chapters[chId].title = 'Chapter 1'
+        self.srtChapters = [chId]
 
         for cells in self.rows:
 
@@ -4049,45 +4050,50 @@ class CsvTimeline(CsvFile):
                 continue
 
             i = 0
-
             # Event ID --> scene ID.
-
             scId = cells[i]
             self.scenes[scId] = Scene()
             i += 1
-
-            # Event title --> scene title.
-
+            # Title --> scene title.
             self.scenes[scId].title = cells[i]
             i += 1
-
-            # Date and time:
-
+            # Start Date --> Date and time:
             dt = cells[i].split(' ')
             self.scenes[scId].date = dt[0]
             self.scenes[scId].time = dt[1]
             i += 1
+            # Duration
             i += 1
+            # End Date
             i += 1
+            # Parent
             i += 1
+            # Color
             i += 1
+            # Tags
             i += 1
+            # Links
             i += 1
+            # Tension
             i += 1
+            # Complete
             i += 1
-
             # Summary --> scene description.
-
             self.scenes[scId].desc = self.convert_to_yw(cells[i])
             i += 1
-
-            # Arcs --> tags:
-
+            # Arc --> tags:
             self.scenes[scId].tags = cells[i].split('|')
+            i += 1
+            # Location
+            i += 1
+            # Observer
+            i += 1
+            # Participant
 
+            # Set scene status = "Outline".
             self.scenes[scId].status = 1
 
-            self.chapters['1'].srtScenes.append(scId)
+            self.chapters[chId].srtScenes.append(scId)
 
         # TODO: Sort self.chapters['1'].srtScenes by date/time
 
