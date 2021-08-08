@@ -7,6 +7,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import unittest
 import os
 import stat
+from shutil import copyfile
 
 from paeon.aeon.aeon3_fop import split_aeon3, join_aeon3
 
@@ -25,14 +26,6 @@ def read_file(inputFile):
         return f.read()
 
 
-def copy_file(inputFile, outputFile):
-    with open(inputFile, 'rb') as f:
-        myData = f.read()
-    with open(outputFile, 'wb') as f:
-        f.write(myData)
-    return()
-
-
 class NormalOperation(unittest.TestCase):
     """Operation under normal condition, i.e.:
     * Test data is present and readable 
@@ -42,7 +35,7 @@ class NormalOperation(unittest.TestCase):
     def setUp(self):
         """Create an example project file by copying a reference file.
         """
-        copy_file(TEST_DATA_REF, TEST_DATA)
+        copyfile(TEST_DATA_REF, TEST_DATA)
 
     def tearDown(self):
 
@@ -132,7 +125,7 @@ class FileAccessError(unittest.TestCase):
     def setUp(self):
         """Create an example project file by copying a reference file.
         """
-        copy_file(TEST_DATA_REF, TEST_DATA)
+        copyfile(TEST_DATA_REF, TEST_DATA)
 
     def tearDown(self):
 
