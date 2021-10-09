@@ -5,6 +5,7 @@ Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
+import codecs
 
 
 def scan_file(filePath):
@@ -24,8 +25,8 @@ def scan_file(filePath):
 
     # JSON part: all characters between the first and last curly bracket.
 
-    strData = []
-    binOutput = []
+    chrData = []
+    chrList = []
     inStr = False
     opening = ord('{')
     closing = ord('}')
@@ -36,18 +37,15 @@ def scan_file(filePath):
             inStr = True
 
         if inStr:
-            strData.append(c)
+            chrData.append(c)
 
             if c == closing:
-                binOutput.extend(strData)
-                strData = []
+                chrList.extend(chrData)
+                chrData = []
+    try:
+        jsonStr = codecs.decode(bytes(chrList), encoding='utf-8')
 
-    result = bytes(binOutput)
-
-    with open(filePath + '.json', 'wb') as f:
-        f.write(result)
-
-    with open(filePath + '.json', 'r', encoding='utf-8') as f:
-        jsonStr = f.read()
+    except:
+        return 'ERROR: Cannot decode "' + os.path.normpath(filePath) + '".'
 
     return jsonStr

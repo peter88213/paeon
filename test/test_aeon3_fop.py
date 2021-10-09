@@ -55,7 +55,6 @@ class NormalOperation(unittest.TestCase):
         """Read the data from the example project file,
         """
         result = scan_file(TEST_DATA)
-        self.assertEqual(read_file(TEST_JSON), read_file(TEST_JSON_REF))
         self.assertEqual(result, read_file(TEST_JSON_REF))
 
 
