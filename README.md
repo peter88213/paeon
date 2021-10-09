@@ -6,9 +6,11 @@ The paeon lib is intended to serve as the basis for applications such as:
 - ODT export for [OpenOffice](https://www.openoffice.org)/[LibreOffice](https://www.libreoffice.org)
 - Template based html export
 
-### Note 
-Because of the uncertainty about how the Aeon file format will be developed further, and because of fundamental difficulties, this project is on hold. Independently of this project, I have provided two other tools that link [yWriter](http://spacejock.com/yWriter7.html) to timelines:
+### Applications based on the paeon package:
 
-- [aeon2yw](https://peter88213.github.io/aeon2yw/): Generate a yWriter project from an Aeon Timeline 2 csv export.
-- [yw-timeline](https://peter88213.github.io/yw-timeline/): Synchronize yWriter with [Timeline](http://thetimelineproj.sourceforge.net/).
+- [aeon3odt](https://peter88213.github.io/aeon3odt/): Generate reports from an Aeon Timeline 3 csv export.
+- [aeon3yw](https://peter88213.github.io/aeon2yw/): Generate a yWriter project from an Aeon Timeline 3 csv export.
 
+## License
+
+The paeon package is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
