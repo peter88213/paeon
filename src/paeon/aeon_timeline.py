@@ -5,7 +5,6 @@ For further information see https://github.com/peter88213/aeon3yw
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-import csv
 
 from datetime import datetime
 
@@ -26,10 +25,6 @@ class AeonTimeline(FileExport):
     - Data fields are delimited by the _SEPARATOR character.
     """
 
-    EXTENSION = '.csv'
-    DESCRIPTION = 'Aeon Timeline CSV export'
-    SUFFIX = ''
-
     # Aeon 3 csv export structure (fix part)
 
     _SCENE_MARKER = 'Scene'
@@ -41,7 +36,6 @@ class AeonTimeline(FileExport):
     _STRUCT_MARKER = 'Narrative Folder'
     _START_DATE_TIME_LABEL = 'Start Date'
     _END_DATE_TIME_LABEL = 'End Date'
-    _SEPARATOR = ','
 
     NULL_DATE = '0001-01-01'
     NULL_TIME = '00:00:00'
@@ -54,6 +48,8 @@ class AeonTimeline(FileExport):
         defining instance variables.
         """
         FileExport.__init__(self, filePath, **kwargs)
+        self.labels = []
+        self.entities = []
         self.partNrPrefix = kwargs['part_number_prefix']
 
         if self.partNrPrefix:
@@ -76,22 +72,10 @@ class AeonTimeline(FileExport):
         self.viewpointLabel = kwargs['viewpoint_label']
 
     def read(self):
-        """Parse the csv file located at filePath, 
-        fetching the Scene attributes contained.
-
-        Create one single chapter containing all scenes.
+        """Parse the timeline structure.
 
         Return a message beginning with SUCCESS or ERROR.
         """
-        self.locationCount = 0
-        self.locIdsByTitle = {}
-        # key = location title
-        # value = location ID
-
-        self.itemCount = 0
-        self.itmIdsByTitle = {}
-        # key = item title
-        # value = item ID
 
         def get_lcIds(lcTitles):
             """Return a list of location IDs; Add new location to the project.
@@ -176,146 +160,150 @@ class AeonTimeline(FileExport):
 
             return crIds
 
-        self.rows = []
+        self.locationCount = 0
+        self.locIdsByTitle = {}
+        # key = location title
+        # value = location ID
 
-        #--- Read the csv file.
+        self.itemCount = 0
+        self.itmIdsByTitle = {}
+        # key = item title
+        # value = item ID
 
+        internalDelimiter = ','
         try:
-            with open(self.filePath, newline='', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter=self._SEPARATOR)
-                internalDelimiter = ','
 
-                for label in [self._SCENE_LABEL, self.sceneTitleLabel, self._START_DATE_TIME_LABEL, self._END_DATE_TIME_LABEL]:
+            for label in [self._SCENE_LABEL, self.sceneTitleLabel, self._START_DATE_TIME_LABEL, self._END_DATE_TIME_LABEL]:
 
-                    if not label in reader.fieldnames:
-                        return 'ERROR: Label "' + label + '" is missing in the CSV file.'
+                if not label in self.labels:
+                    return 'ERROR: Property "' + label + '" is missing.'
 
-                scIdsByStruc = {}
-                chIdsByStruc = {}
-                otherEvents = []
-                eventCount = 0
-                chapterCount = 0
+            scIdsByStruc = {}
+            chIdsByStruc = {}
+            otherEvents = []
+            eventCount = 0
+            chapterCount = 0
 
-                for row in reader:
+            for aeonEntity in self.entities:
 
-                    if row[self._SCENE_LABEL]:
-                        narrativeType, narrativePosition = row[self._SCENE_LABEL].split(' ')
+                if aeonEntity[self._SCENE_LABEL]:
+                    narrativeType, narrativePosition = aeonEntity[self._SCENE_LABEL].split(' ')
 
-                        # Make the narrative position a sortable string.
+                    # Make the narrative position a sortable string.
 
-                        numbers = narrativePosition.split('.')
+                    numbers = narrativePosition.split('.')
 
-                        for i in range(len(numbers)):
-                            numbers[i] = numbers[i].zfill(4)
-                            narrativePosition = ('.').join(numbers)
+                    for i in range(len(numbers)):
+                        numbers[i] = numbers[i].zfill(4)
+                        narrativePosition = ('.').join(numbers)
 
-                    else:
-                        narrativeType = ''
-                        narrativePosition = ''
+                else:
+                    narrativeType = ''
+                    narrativePosition = ''
 
-                    if row[self._TYPE_LABEL] == self._STRUCT_MARKER:
+                if aeonEntity[self._TYPE_LABEL] == self._STRUCT_MARKER:
 
-                        if narrativeType == self._CHAPTER_MARKER:
-                            chapterCount += 1
-                            chId = str(chapterCount)
-                            chIdsByStruc[narrativePosition] = chId
-                            self.chapters[chId] = Chapter()
-                            self.chapters[chId].chLevel = 0
+                    if narrativeType == self._CHAPTER_MARKER:
+                        chapterCount += 1
+                        chId = str(chapterCount)
+                        chIdsByStruc[narrativePosition] = chId
+                        self.chapters[chId] = Chapter()
+                        self.chapters[chId].chLevel = 0
 
-                            if self.chapterDescLabel:
-                                self.chapters[chId].desc = row[self.chapterDescLabel]
+                        if self.chapterDescLabel:
+                            self.chapters[chId].desc = aeonEntity[self.chapterDescLabel]
 
-                        elif narrativeType == self._PART_MARKER:
-                            chapterCount += 1
-                            chId = str(chapterCount)
-                            chIdsByStruc[narrativePosition] = chId
-                            self.chapters[chId] = Chapter()
-                            self.chapters[chId].chLevel = 1
-                            narrativePosition += '.0000'
+                    elif narrativeType == self._PART_MARKER:
+                        chapterCount += 1
+                        chId = str(chapterCount)
+                        chIdsByStruc[narrativePosition] = chId
+                        self.chapters[chId] = Chapter()
+                        self.chapters[chId].chLevel = 1
+                        narrativePosition += '.0000'
 
-                            if self.partDescLabel:
-                                self.chapters[chId].desc = row[self.partDescLabel]
+                        if self.partDescLabel:
+                            self.chapters[chId].desc = aeonEntity[self.partDescLabel]
 
-                        continue
+                    continue
 
-                    elif row[self._TYPE_LABEL] != self._EVENT_MARKER:
-                        continue
+                elif aeonEntity[self._TYPE_LABEL] != self._EVENT_MARKER:
+                    continue
 
-                    eventCount += 1
-                    scId = str(eventCount)
-                    self.scenes[scId] = Scene()
+                eventCount += 1
+                scId = str(eventCount)
+                self.scenes[scId] = Scene()
 
-                    if narrativeType == self._SCENE_MARKER:
-                        self.scenes[scId].isNotesScene = False
-                        scIdsByStruc[narrativePosition] = scId
+                if narrativeType == self._SCENE_MARKER:
+                    self.scenes[scId].isNotesScene = False
+                    scIdsByStruc[narrativePosition] = scId
 
-                    else:
-                        self.scenes[scId].isNotesScene = True
-                        otherEvents.append(scId)
+                else:
+                    self.scenes[scId].isNotesScene = True
+                    otherEvents.append(scId)
 
-                    self.scenes[scId].title = row[self.sceneTitleLabel]
+                self.scenes[scId].title = aeonEntity[self.sceneTitleLabel]
 
-                    startDateTimeStr = fix_iso_dt(row[self._START_DATE_TIME_LABEL])
+                startDateTimeStr = fix_iso_dt(aeonEntity[self._START_DATE_TIME_LABEL])
 
-                    if startDateTimeStr is not None:
-                        startDateTime = startDateTimeStr.split(' ')
-                        self.scenes[scId].date = startDateTime[0]
-                        self.scenes[scId].time = startDateTime[1]
-                        endDateTimeStr = fix_iso_dt(row[self._END_DATE_TIME_LABEL])
+                if startDateTimeStr is not None:
+                    startDateTime = startDateTimeStr.split(' ')
+                    self.scenes[scId].date = startDateTime[0]
+                    self.scenes[scId].time = startDateTime[1]
+                    endDateTimeStr = fix_iso_dt(aeonEntity[self._END_DATE_TIME_LABEL])
 
-                        if endDateTimeStr is not None:
+                    if endDateTimeStr is not None:
 
-                            # Calculate duration of scenes that begin after 99-12-31.
+                        # Calculate duration of scenes that begin after 99-12-31.
 
-                            sceneStart = datetime.fromisoformat(startDateTimeStr)
-                            sceneEnd = datetime.fromisoformat(endDateTimeStr)
-                            sceneDuration = sceneEnd - sceneStart
-                            lastsHours = sceneDuration.seconds // 3600
-                            lastsMinutes = (sceneDuration.seconds % 3600) // 60
+                        sceneStart = datetime.fromisoformat(startDateTimeStr)
+                        sceneEnd = datetime.fromisoformat(endDateTimeStr)
+                        sceneDuration = sceneEnd - sceneStart
+                        lastsHours = sceneDuration.seconds // 3600
+                        lastsMinutes = (sceneDuration.seconds % 3600) // 60
 
-                            self.scenes[scId].lastsDays = str(sceneDuration.days)
-                            self.scenes[scId].lastsHours = str(lastsHours)
-                            self.scenes[scId].lastsMinutes = str(lastsMinutes)
+                        self.scenes[scId].lastsDays = str(sceneDuration.days)
+                        self.scenes[scId].lastsHours = str(lastsHours)
+                        self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
-                    else:
-                        self.scenes[scId].date = self.NULL_DATE
-                        self.scenes[scId].time = self.NULL_TIME
+                else:
+                    self.scenes[scId].date = self.NULL_DATE
+                    self.scenes[scId].time = self.NULL_TIME
 
-                    if self.sceneDescLabel in row:
-                        self.scenes[scId].desc = row[self.sceneDescLabel]
+                if self.sceneDescLabel in aeonEntity:
+                    self.scenes[scId].desc = aeonEntity[self.sceneDescLabel]
 
-                    if self.notesLabel in row:
-                        self.scenes[scId].sceneNotes = row[self.notesLabel]
+                if self.notesLabel in aeonEntity:
+                    self.scenes[scId].sceneNotes = aeonEntity[self.notesLabel]
 
-                    if self.tagLabel in row and row[self.tagLabel] != '':
-                        self.scenes[scId].tags = row[self.tagLabel].split(internalDelimiter)
+                if self.tagLabel in aeonEntity and aeonEntity[self.tagLabel] != '':
+                    self.scenes[scId].tags = aeonEntity[self.tagLabel].split(internalDelimiter)
 
-                    if self.locationLabel in row:
-                        self.scenes[scId].locations = get_lcIds(row[self.locationLabel].split(internalDelimiter))
+                if self.locationLabel in aeonEntity:
+                    self.scenes[scId].locations = get_lcIds(aeonEntity[self.locationLabel].split(internalDelimiter))
 
-                    if self.characterLabel in row:
-                        self.scenes[scId].characters = get_crIds(row[self.characterLabel].split(internalDelimiter))
+                if self.characterLabel in aeonEntity:
+                    self.scenes[scId].characters = get_crIds(aeonEntity[self.characterLabel].split(internalDelimiter))
 
-                    if self.viewpointLabel in row:
-                        vpIds = get_crIds([row[self.viewpointLabel]])
+                if self.viewpointLabel in aeonEntity:
+                    vpIds = get_crIds([aeonEntity[self.viewpointLabel]])
 
-                        if vpIds is not None:
-                            vpId = vpIds[0]
+                    if vpIds is not None:
+                        vpId = vpIds[0]
 
-                            if self.scenes[scId].characters is None:
-                                self.scenes[scId].characters = []
+                        if self.scenes[scId].characters is None:
+                            self.scenes[scId].characters = []
 
-                            elif vpId in self.scenes[scId].characters:
-                                self.scenes[scId].characters.remove[vpId]
+                        elif vpId in self.scenes[scId].characters:
+                            self.scenes[scId].characters.remove[vpId]
 
-                            self.scenes[scId].characters.insert(0, vpId)
+                        self.scenes[scId].characters.insert(0, vpId)
 
-                    if self.itemLabel in row:
-                        self.scenes[scId].items = get_itIds(row[self.itemLabel].split(internalDelimiter))
+                if self.itemLabel in aeonEntity:
+                    self.scenes[scId].items = get_itIds(aeonEntity[self.itemLabel].split(internalDelimiter))
 
-                    # Set scene status = "Outline".
+                # Set scene status = "Outline".
 
-                    self.scenes[scId].status = 1
+                self.scenes[scId].status = 1
 
         except(FileNotFoundError):
             return 'ERROR: "' + os.path.normpath(self.filePath) + '" not found.'
