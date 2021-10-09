@@ -23,9 +23,6 @@ class CsvTimeline(AeonTimeline):
 
     _SEPARATOR = ','
 
-    def __init__(self, filePath, **kwargs):
-        AeonTimeline.__init__(self, filePath, **kwargs)
-
     def read(self):
         """Parse the csv file located at filePath, fetching the relevant data.
         Extend the superclass.
