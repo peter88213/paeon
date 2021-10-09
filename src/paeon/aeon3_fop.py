@@ -6,6 +6,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 
+
 def scan_file(filePath):
     """Read and scan the project file.
     Return a string containing the JSON part.
@@ -13,7 +14,7 @@ def scan_file(filePath):
 
     try:
         with open(filePath, 'rb') as f:
-            binData = f.read()
+            binInput = f.read()
 
     except(FileNotFoundError):
         return 'ERROR: "' + os.path.normpath(filePath) + '" not found.'
@@ -24,23 +25,29 @@ def scan_file(filePath):
     # JSON part: all characters between the first and last curly bracket.
 
     strData = []
-    jsonData = []
+    binOutput = []
     inStr = False
     opening = ord('{')
     closing = ord('}')
 
-    for c in binData:
+    for c in binInput:
 
         if c == opening:
             inStr = True
 
         if inStr:
-            strData.append(chr(c))
+            strData.append(c)
 
             if c == closing:
-                jsonData.append(('').join(strData))
+                binOutput.extend(strData)
                 strData = []
 
-    return ('').join(jsonData)
+    result = bytes(binOutput)
 
+    with open(filePath + '.json', 'wb') as f:
+        f.write(result)
 
+    with open(filePath + '.json', 'r', encoding='utf-8') as f:
+        jsonStr = f.read()
+
+    return jsonStr

@@ -15,12 +15,17 @@ from paeon.aeon3_fop import scan_file
 TEST_DATA_REF = 'data/normal.aeon'
 TEST_JSON_REF = 'data/fop/normal.json'
 TEST_DATA = 'yw7/project.aeon'
-TEST_JSON = 'yw7/project.json'
+TEST_JSON = 'yw7/project.aeon.json'
 
 
 def read_file(inputFile):
-    with open(inputFile, 'r') as f:
-        return f.read()
+
+    try:
+        with open(inputFile, 'r', encoding='utf-8') as f:
+            return f.read()
+    except:
+        with open(inputFile, 'r') as f:
+            return f.read()
 
 
 class NormalOperation(unittest.TestCase):
@@ -50,8 +55,8 @@ class NormalOperation(unittest.TestCase):
         """Read the data from the example project file,
         """
         result = scan_file(TEST_DATA)
-        reference = read_file(TEST_JSON_REF)
-        self.assertEqual(result, reference)
+        self.assertEqual(read_file(TEST_JSON), read_file(TEST_JSON_REF))
+        self.assertEqual(result, read_file(TEST_JSON_REF))
 
 
 class CorruptedData(unittest.TestCase):
