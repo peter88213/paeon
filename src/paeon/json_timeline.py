@@ -35,12 +35,18 @@ class JsonTimeline(AeonTimeline):
         elif jsonPart.startswith('ERROR'):
             return jsonPart
 
-        reader = json.loads(jsonPart)
+        try:
+            jsonData = json.loads(jsonPart)
 
-        for label in reader.fieldnames:
-            self.labels.append(label)
+        except('JSONDecodeError'):
+            return 'ERROR: Invalid JSON data.'
 
-        for row in reader:
+        # Check if gregorian calendar?
+
+        itemsById = jsonData['data']['items']['byId']
+
+        for uid in itemsById:
+            row = itemsById[uid]
             aeonEntity = {}
 
             for label in row:
