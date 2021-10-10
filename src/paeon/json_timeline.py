@@ -41,7 +41,16 @@ class JsonTimeline(AeonTimeline):
         except('JSONDecodeError'):
             return 'ERROR: Invalid JSON data.'
 
-        # Check if gregorian calendar?
+        # Make sure there is an "AD" era.
+
+        eras = jsonData['definitions']['calendar']['eras']
+        adEra = None
+
+        for i in range(len(eras)):
+
+            if eras[i]['name'] == 'AD':
+                adEra = i
+                break
 
         itemsById = jsonData['data']['items']['byId']
 
