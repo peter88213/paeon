@@ -12,6 +12,8 @@ def fix_iso_dt(dateTimeStr):
     and by the datetime.fromisoformat() method.
 
     Substitute missing time by "00:00:00".
+    Substitute missing month by '01'.
+    Substitute missing day by '01'.
     If the date is empty or out of yWriter's range, return None. 
     """
     if not dateTimeStr:
@@ -20,18 +22,23 @@ def fix_iso_dt(dateTimeStr):
     if dateTimeStr.startswith('BC'):
         return None
 
-    dt = dateTimeStr.split('-', 1)
+    dt = dateTimeStr.split(' ')
 
-    if int(dt[0]) < 100:
+    if len(dt) == 1:
+        dt.append('00:00:00')
+
+    date = dt[0].split('-')
+
+    while len(date) < 3:
+        date.append('01')
+
+    if int(date[0]) < 100:
         return None
 
-    if int(dt[0]) > 9999:
+    if int(date[0]) > 9999:
         return None
 
-    dt[0] = dt[0].zfill(4)
-    dateTimeStr = ('-').join(dt)
-
-    if not ':' in dateTimeStr:
-        dateTimeStr += ' 00:00:00'
-
+    date[0] = date[0].zfill(4)
+    dt[0] = ('-').join(date)
+    dateTimeStr = (' ').join(dt)
     return dateTimeStr
