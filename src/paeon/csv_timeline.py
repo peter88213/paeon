@@ -88,6 +88,12 @@ class CsvTimeline(FileExport):
         self.characterField = kwargs['character_label']
         self.viewpointField = kwargs['viewpoint_label']
         self.locationField = kwargs['location_label']
+        self.characterDescField1 = kwargs['character_desc_label1']
+        self.characterDescField2 = kwargs['character_desc_label2']
+        self.characterDescField3 = kwargs['character_desc_label3']
+        self.characterBioField = kwargs['character_bio_label']
+        self.characterAkaField = kwargs['character_aka_label']
+        self.locationDescField = kwargs['location_desc_label']
 
     def read(self):
         """Parse the timeline structure.
@@ -142,6 +148,8 @@ class CsvTimeline(FileExport):
 
         #--- Read the csv file.
 
+        internalDelimiter = ','
+
         try:
             with open(self.filePath, newline='', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=self._SEPARATOR)
@@ -184,6 +192,32 @@ class CsvTimeline(FileExport):
                         self.chrIdsByTitle[aeonEntity[self._LABEL_FIELD]] = crId
                         self.characters[crId] = Character()
                         self.characters[crId].title = aeonEntity[self._LABEL_FIELD]
+
+                        charDesc = []
+
+                        if self.characterDescField1 in aeonEntity:
+                            charDesc.append(aeonEntity[self.characterDescField1])
+
+                        if self.characterDescField2 and self.characterDescField2 in aeonEntity:
+                            charDesc.append(aeonEntity[self.characterDescField2])
+
+                        if self.characterDescField3 and self.characterDescField3 in aeonEntity:
+                            charDesc.append(aeonEntity[self.characterDescField3])
+
+                        self.characters[crId].desc = ('\n').join(charDesc)
+
+                        if self.characterBioField in aeonEntity:
+                            self.characters[crId].bio = aeonEntity[self.characterBioField]
+
+                        if self.characterAkaField in aeonEntity:
+                            self.characters[crId].aka = aeonEntity[self.characterAkaField]
+
+                        if self.tagField in aeonEntity and aeonEntity[self.tagField] != '':
+                            self.characters[crId].tags = aeonEntity[self.tagField].split(internalDelimiter)
+
+                        if self.notesField in aeonEntity:
+                            self.characters[crId].notes = aeonEntity[self.notesField]
+
                         self.srtCharacters.append(crId)
 
                     elif self.typeLocation == aeonEntity[self._TYPE_FIELD]:
@@ -193,6 +227,12 @@ class CsvTimeline(FileExport):
                         self.locations[lcId] = WorldElement()
                         self.locations[lcId].title = aeonEntity[self._LABEL_FIELD]
                         self.srtLocations.append(lcId)
+
+                        if 'Summary' in aeonEntity:
+                            self.locations[lcId].desc = aeonEntity['Summary']
+
+                        if self.tagField in aeonEntity:
+                            self.locations[lcId].tags = aeonEntity[self.tagField].split(internalDelimiter)
 
                     elif self.typeItem == aeonEntity[self._TYPE_FIELD]:
                         itemCount += 1
@@ -208,7 +248,6 @@ class CsvTimeline(FileExport):
         except:
             return 'ERROR: Can not parse csv file "' + os.path.normpath(self.filePath) + '".'
 
-        internalDelimiter = ','
         try:
 
             for label in [self._SCENE_FIELD, self.sceneTitleField, self._START_DATE_TIME_FIELD, self._END_DATE_TIME_FIELD]:
