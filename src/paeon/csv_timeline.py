@@ -228,8 +228,8 @@ class CsvTimeline(FileExport):
                         self.locations[lcId].title = aeonEntity[self._LABEL_FIELD]
                         self.srtLocations.append(lcId)
 
-                        if 'Summary' in aeonEntity:
-                            self.locations[lcId].desc = aeonEntity['Summary']
+                        if self.locationDescField in aeonEntity:
+                            self.locations[lcId].desc = aeonEntity[self.locationDescField]
 
                         if self.tagField in aeonEntity:
                             self.locations[lcId].tags = aeonEntity[self.tagField].split(internalDelimiter)
