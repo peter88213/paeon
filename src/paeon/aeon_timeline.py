@@ -37,10 +37,7 @@ class AeonTimeline(FileExport):
     _START_DATE_TIME_LABEL = 'Start Date'
     _END_DATE_TIME_LABEL = 'End Date'
 
-    NULL_DATE = '0001-01-01'
-    NULL_TIME = '00:00:00'
-
-    # Events assigned to the "varrative" become
+    # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
 
     def __init__(self, filePath, **kwargs):
@@ -266,8 +263,8 @@ class AeonTimeline(FileExport):
                         self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
                 else:
-                    self.scenes[scId].date = self.NULL_DATE
-                    self.scenes[scId].time = self.NULL_TIME
+                    self.scenes[scId].date = Scene.NULL_DATE
+                    self.scenes[scId].time = Scene.NULL_TIME
 
                 if self.sceneDescLabel in aeonEntity:
                     self.scenes[scId].desc = aeonEntity[self.sceneDescLabel]
