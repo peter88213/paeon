@@ -30,7 +30,8 @@ class JsonTimeline(FileExport):
 
     # Types
 
-    _TYPE_EVENT = 'Event'
+    _TYPE_EVENT = 'event'
+    _TYPE_CHARACTER = 'defaultPerson'
     _TYPE_NARRATIVE = 'Narrative Folder'
 
     # Field names
@@ -84,15 +85,27 @@ class JsonTimeline(FileExport):
                 break
 
         itemsById = jsonData['data']['items']['byId']
-        entities = []
+        events = {}
+        characters = {}
 
         for uid in itemsById:
             row = itemsById[uid]
             aeonEntity = {}
 
-            for label in row:
-                aeonEntity[label] = row[label]
+            if row['type'] == 'event':
+                labels = ['label', 'summary', 'startDate', 'duration', 'tags']
 
-            entities.append([aeonEntity])
+                for label in labels:
+                    aeonEntity[label] = row[label]
+
+                events[row['id']] = aeonEntity
+
+            elif row['type'] == 'defaultPerson':
+                labels = ['label', 'summary', 'tags']
+
+                for label in labels:
+                    aeonEntity[label] = row[label]
+
+                characters[row['id']] = aeonEntity
 
         return
