@@ -18,6 +18,12 @@ SETTINGS = dict(
     item_label='Item',
     character_label='Participant',
     viewpoint_label='Viewpoint',
+    character_bio_label='Summary',
+    character_aka_label='Nickname',
+    character_desc_label1='Characteristics',
+    character_desc_label2='Traits',
+    character_desc_label3='',
+    location_desc_label='Summary',
 )
 
 
