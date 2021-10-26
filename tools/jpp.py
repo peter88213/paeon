@@ -8,9 +8,9 @@ import json
 
 filename = sys.argv[1]
 
-with open(filename,'r') as f:
+with open(filename,'r', encoding='utf-8') as f:
     parsed = json.load(f)
     
-with open(filename + '.json','w') as f:
+with open(filename + '.json','w', encoding='utf-8') as f:
     f.write(json.dumps(parsed, indent=4, sort_keys=True))
     
