@@ -80,7 +80,7 @@ def run(filePath):
     except:
         return 'ERROR: Cannot write "' + os.path.normpath(outfile) + '".'
 
-    return 'SUCCESS: "' + outfile + '" written.'
+    return 'SUCCESS: "' + os.path.normpath(outfile) + '" written.'
 
 
 if __name__ == '__main__':
