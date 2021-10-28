@@ -58,7 +58,6 @@ def scan_file(filePath):
 
 def run(filePath):
     jsonPart = scan_file(filePath)
-    outfile = filePath + '.json'
 
     if not jsonPart:
         return 'ERROR: No JSON part found.'
@@ -71,6 +70,8 @@ def run(filePath):
 
     except('JSONDecodeError'):
         return 'ERROR: Invalid JSON data.'
+
+    outfile = filePath + '.json'
 
     try:
         with open(outfile, 'w', encoding='utf-8') as f:
