@@ -2,6 +2,9 @@
 """Extract the JSON part from an .aeon file
 input file : command line parameter
 output file : name of the input file with '.json' appended.
+
+Copyright (c) 2021 Peter Triesberger
+Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
 import json
@@ -12,6 +15,7 @@ from paeon.aeon3_fop import scan_file
 
 def run(filePath):
     jsonPart = scan_file(filePath)
+    outfile = filePath + '.json'
 
     if not jsonPart:
         return 'ERROR: No JSON part found.'
@@ -25,10 +29,14 @@ def run(filePath):
     except('JSONDecodeError'):
         return 'ERROR: Invalid JSON data.'
 
-    with open(filePath + '.json', 'w', encoding='utf-8') as f:
-        f.write(json.dumps(jsonData, indent=4, sort_keys=True))
+    try:
+        with open(outfile, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(jsonData, indent=4, sort_keys=True))
 
-    return 'SUCCESS: "' + os.path.normpath(filePath) + '.json" written.'
+    except:
+        return 'ERROR: Cannot write "' + os.path.normpath(outfile) + '".'
+
+    return 'SUCCESS: "' + outfile + '" written.'
 
 
 if __name__ == '__main__':
