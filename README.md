@@ -15,7 +15,7 @@ This is a *PyDev* project meant to be developed within the *Eclipse* IDE, and bu
 
 ### Tools:
 
-- [extract_json](https://raw.githubusercontent.com/peter88213/paeon/main/tools/extract_json.py): Extract the JSON part from an .aeon file (Download link).
+- [extract_json](https://raw.githubusercontent.com/peter88213/paeon/main/tools/extract_json.py): Extract and pretty-print the JSON part from an .aeonzip or .aeon file (Download link).
 
 
 ## License

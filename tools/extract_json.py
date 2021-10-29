@@ -16,7 +16,7 @@ import codecs
 
 def scan_file(filePath):
     """Read and scan the project file.
-    Return a string containing the JSON part.
+    Return a string containing either the JSON part or an error message.
     """
 
     try:
@@ -55,7 +55,6 @@ def scan_file(filePath):
         return 'ERROR: Cannot decode "' + os.path.normpath(filePath) + '".'
 
     return jsonStr
-
 
 VERSION = 'v1.0.0'
 AEON3_EXT = '.aeon'
