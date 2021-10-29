@@ -1,4 +1,4 @@
-"""Provide a class for Aeon Timeline 3 JSON representation.
+"""Provide a class for Aeon Timeline 2 JSON representation.
 
 Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/aeon3yw
@@ -15,17 +15,17 @@ from pywriter.model.world_element import WorldElement
 from pywriter.model.character import Character
 
 from paeon.dt_helper import fix_iso_dt
-from paeon.aeon3_fop import scan_file
+from paeon.aeon2_fop import extract_timeline
 
 
-class JsonTimeline3(FileExport):
-    """File representation of an Aeon Timeline 3 project. 
+class JsonTimeline2(FileExport):
+    """File representation of an Aeon Timeline 2 project. 
 
     Represents the JSON part of the project file.
     """
 
-    EXTENSION = '.aeon'
-    DESCRIPTION = 'Aeon Timeline 3 project'
+    EXTENSION = '.aeonzip'
+    DESCRIPTION = 'Aeon Timeline 2 project'
     SUFFIX = ''
 
     # Types
@@ -42,24 +42,23 @@ class JsonTimeline3(FileExport):
     _START_DATE_TIME_FIELD = 'Start Date'
     _END_DATE_TIME_FIELD = 'End Date'
 
-    # Narrative position markers
+    # User defined properties
 
-    _PART_MARKER = 'Part'
-    _CHAPTER_MARKER = 'Chapter'
     _SCENE_MARKER = 'Scene'
+    _DESC_MARKER = 'Description'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
 
     def read(self):
-        """Extract the JSON part of the Aeon Timeline 3 file located at filePath, 
+        """Extract the JSON part of the Aeon Timeline 2 file located at filePath, 
         fetching the relevant data.
         Extend the superclass.
 
         Return a message beginning with SUCCESS or ERROR.
         """
 
-        jsonPart = scan_file(self.filePath)
+        jsonPart = extract_timeline(self.filePath)
 
         if not jsonPart:
             return 'ERROR: No JSON part found.'
@@ -75,14 +74,28 @@ class JsonTimeline3(FileExport):
 
         # Make sure there is an "AD" era.
 
-        eras = jsonData['definitions']['calendar']['eras']
+        eras = jsonData['template']['rangeProperties'][0]['calendar']['eras']
         adEra = None
 
-        for i in range(len(eras)):
+        for era in eras:
 
-            if eras[i]['name'] == 'AD':
-                adEra = i
+            if era['name'] == 'AD':
+                adEra = eras.index(era)
                 break
+
+        # Get GUID of user defined properties.
+
+        properties = jsonData['template']['properties']
+        sceneGuid = None
+        descGuid = None
+
+        for property in properties:
+
+            if property['name'] == self._SCENE_MARKER:
+                sceneGuid = property['guid']
+
+            elif property['name'] == self._DESC_MARKER:
+                descGuid = property['guid']
 
         itemsById = jsonData['data']['items']['byId']
         events = {}
@@ -113,5 +126,5 @@ class JsonTimeline3(FileExport):
 
 if __name__ == '__main__':
     kwargs = {}
-    timeline = JsonTimeline3(sys.argv[1])
+    timeline = JsonTimeline2(sys.argv[1])
     timeline.read()
