@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
-"""Extract the JSON part from an .aeon or .aeonzip file
-input file : command line parameter
-output file : name of the input file with '.json' appended.
+"""Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
+
+Version @release
+
+usage: extract_json.py [-h] Sourcefile
+
+positional arguments:
+  Sourcefile  The path of the .aeonzip or .aeon file.
+
+optional arguments:
+  -h, --help  show this help message and exit
 
 Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
@@ -9,60 +17,48 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import os
 import json
 import argparse
-import zipfile
 
+from paeon.aeon2_fop import extract_timeline
 from paeon.aeon3_fop import scan_file
 
-VERSION = 'v1.0.0'
+VERSION = 'v@release'
 AEON3_EXT = '.aeon'
 AEON2_EXT = '.aeonzip'
 JSON_EXT = '.json'
 
 
 def run(sourcePath):
+    """Extract JSON data from an .aeonzip or .aeon file
+    and create a pretty-printed JSON file.
+    Return a message beginning with SUCCESS or ERROR.
+    """
 
     if sourcePath.endswith(AEON3_EXT):
         jsonPart = scan_file(sourcePath)
 
-        if not jsonPart:
-            return 'ERROR: No JSON part found.'
-
-        elif jsonPart.startswith('ERROR'):
-            return jsonPart
-
-        try:
-            jsonData = json.loads(jsonPart)
-
-        except('JSONDecodeError'):
-            return 'ERROR: Invalid JSON data.'
-
     elif sourcePath.endswith(AEON2_EXT):
-        dirName = os.path.split(sourcePath)[0]
-
-        if not dirName:
-            dirName = '.'
-
-        with zipfile.ZipFile(sourcePath, 'r') as myzip:
-            myzip.extract('timeline.json', dirName)
-            myzip.close
-
-        try:
-            with open(dirName + '/timeline.json', 'r', encoding='utf-8') as f:
-                jsonData = json.load(f)
-
-        except('JSONDecodeError'):
-            return 'ERROR: Invalid JSON data.'
-
-        os.remove(dirName + '/timeline.json')
+        jsonPart = extract_timeline(sourcePath)
 
     else:
         return('ERROR: File format not supported.')
+
+    if not jsonPart:
+        return 'ERROR: No JSON part found.'
+
+    elif jsonPart.startswith('ERROR'):
+        return jsonPart
+
+    try:
+        jsonData = json.loads(jsonPart)
+
+    except('JSONDecodeError'):
+        return 'ERROR: Invalid JSON data.'
 
     targetPath = sourcePath + JSON_EXT
 
     try:
         with open(targetPath, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(jsonData, indent=4, sort_keys=True))
+            f.write(json.dumps(jsonData, indent=4, sort_keys=True, ensure_ascii=False))
 
     except:
         return 'ERROR: Cannot write "' + os.path.normpath(targetPath) + '".'
@@ -72,7 +68,7 @@ def run(sourcePath):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Extract the JSON part from an Aeon Timeline 2/3 file ' + VERSION,
+        description='Create a pretty-printed JSON file from an Aeon Timeline 2/3 file ' + VERSION,
         epilog='')
     parser.add_argument('sourcePath', metavar='Sourcefile',
                         help='The path of the .aeonzip or .aeon file.')
