@@ -18,7 +18,7 @@ from pywriter.model.character import Character
 from paeon.dt_helper import fix_iso_dt
 
 
-class CsvTimeline(FileExport):
+class CsvTimeline3(FileExport):
     """File representation of a csv file exported by Aeon Timeline 3. 
 
     Represents a csv file with a record per scene.

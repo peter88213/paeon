@@ -12,6 +12,7 @@ This is a *PyDev* project meant to be developed within the *Eclipse* IDE, and bu
 
 - [aeon3odt](https://peter88213.github.io/aeon3odt/): Generate reports from an Aeon Timeline 3 csv export.
 - [aeon3yw](https://peter88213.github.io/aeon3yw/): Generate a yWriter project from an Aeon Timeline 3 csv export.
+- [aeon2yw](https://peter88213.github.io/aeon2yw/): Generate a yWriter project from an Aeon Timeline 2 csv export.
 
 ### Tools:
 

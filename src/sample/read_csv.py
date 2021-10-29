@@ -1,5 +1,5 @@
 import sys
-from paeon.csv_timeline import CsvTimeline
+from paeon.csv_timeline3 import CsvTimeline3
 
 
 SETTINGS = dict(
@@ -30,5 +30,5 @@ SETTINGS = dict(
 kwargs = {'suffix': ''}
 kwargs.update(SETTINGS)
 
-timeline = CsvTimeline(sys.argv[1], **kwargs)
+timeline = CsvTimeline3(sys.argv[1], **kwargs)
 print(timeline.read())

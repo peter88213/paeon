@@ -1,5 +1,5 @@
 import sys
-from paeon.json_timeline import JsonTimeline
+from paeon.json_timeline3 import JsonTimeline3
 
 
 SETTINGS = dict(
@@ -30,5 +30,5 @@ SETTINGS = dict(
 kwargs = {'suffix': ''}
 kwargs.update(SETTINGS)
 
-timeline = JsonTimeline(sys.argv[1], **kwargs)
+timeline = JsonTimeline3(sys.argv[1], **kwargs)
 print(timeline.read())
