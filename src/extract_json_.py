@@ -56,7 +56,7 @@ def run(sourcePath):
         os.remove(dirName + '/timeline.json')
 
     else:
-        return('ERROR: File format not supported')
+        return('ERROR: File format not supported.')
 
     targetPath = sourcePath + JSON_EXT
 

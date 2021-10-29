@@ -56,6 +56,7 @@ def scan_file(filePath):
 
     return jsonStr
 
+
 VERSION = 'v1.0.0'
 AEON3_EXT = '.aeon'
 AEON2_EXT = '.aeonzip'
@@ -99,7 +100,7 @@ def run(sourcePath):
         os.remove(dirName + '/timeline.json')
 
     else:
-        return('ERROR: File format not supported')
+        return('ERROR: File format not supported.')
 
     targetPath = sourcePath + JSON_EXT
 
