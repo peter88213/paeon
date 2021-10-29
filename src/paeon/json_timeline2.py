@@ -4,6 +4,7 @@ Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/aeon3yw
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
+import os
 import sys
 import json
 from datetime import datetime
@@ -28,24 +29,16 @@ class JsonTimeline2(FileExport):
     DESCRIPTION = 'Aeon Timeline 2 project'
     SUFFIX = ''
 
-    # Types
+    # JSON[template][types][name]
 
-    _TYPE_EVENT = 'event'
-    _TYPE_CHARACTER = 'defaultPerson'
-    _TYPE_NARRATIVE = 'Narrative Folder'
+    TYPE_CHARACTER = 'Person'
+    TYPE_LOCATION = 'Location'
+    TYPE_ITEM = 'Item'
 
-    # Field names
+    # JSON[template][properties][name]
 
-    _LABEL_FIELD = 'Label'
-    _TYPE_FIELD = 'Type'
-    _SCENE_FIELD = 'Narrative Position'
-    _START_DATE_TIME_FIELD = 'Start Date'
-    _END_DATE_TIME_FIELD = 'End Date'
-
-    # User defined properties
-
-    _SCENE_MARKER = 'Scene'
-    _DESC_MARKER = 'Description'
+    PROPERTY_SCENE = 'Scene'
+    PROPERTY_DESC = 'Description'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
@@ -83,45 +76,114 @@ class JsonTimeline2(FileExport):
                 adEra = eras.index(era)
                 break
 
+        # Get GUID of user defined types.
+
+        types = jsonData['template']['types']
+        typeCharacter = None
+        typeLocation = None
+        typeItem = None
+
+        for type in types:
+
+            if type['name'] == self.TYPE_CHARACTER:
+                typeCharacter = type['guid']
+
+            elif type['name'] == self.TYPE_LOCATION:
+                typeLocation = type['guid']
+
+            elif type['name'] == self.TYPE_ITEM:
+                typeItem = type['guid']
+
+        # Create characters, locations, and items.
+
+        entitiesById = jsonData['entities']
+        crIdsByGuid = {}
+        lcIdsByGuid = {}
+        itIdsByGuid = {}
+        characterCount = 0
+        locationCount = 0
+        itemCount = 0
+
+        labels = ['name', 'notes']
+
+        for entity in entitiesById:
+
+            if entity['entityType'] == typeCharacter:
+                characterCount += 1
+                crId = str(characterCount)
+                crIdsByGuid[entity['guid']] = crId
+                self.characters[crId] = Character()
+                self.characters[crId].title = entity['name']
+
+                if entity['notes']:
+                    self.characters[crId].notes = entity['notes']
+
+                self.srtCharacters.append(crId)
+
+            elif entity['entityType'] == typeLocation:
+                locationCount += 1
+                lcId = str(locationCount)
+                lcIdsByGuid[entity['guid']] = lcId
+                self.locations[lcId] = WorldElement()
+                self.locations[lcId].title = entity['name']
+                self.srtLocations.append(lcId)
+
+            elif entity['entityType'] == typeItem:
+                itemCount += 1
+                itId = str(itemCount)
+                itIdsByGuid[entity['guid']] = itId
+                self.items[itId] = WorldElement()
+                self.items[itId].title = entity['name']
+                self.srtItems.append(itId)
+
         # Get GUID of user defined properties.
 
         properties = jsonData['template']['properties']
-        sceneGuid = None
-        descGuid = None
+        propertyScene = None
+        propertyDescription = None
 
         for property in properties:
 
-            if property['name'] == self._SCENE_MARKER:
-                sceneGuid = property['guid']
+            if property['name'] == self.PROPERTY_SCENE:
+                propertyScene = property['guid']
 
-            elif property['name'] == self._DESC_MARKER:
-                descGuid = property['guid']
+            elif property['name'] == self.PROPERTY_DESC:
+                propertyDescription = property['guid']
 
-        itemsById = jsonData['data']['items']['byId']
-        events = {}
-        characters = {}
+        # Create scenes.
 
-        for uid in itemsById:
-            row = itemsById[uid]
-            aeonEntity = {}
+        eventsById = jsonData['events']
+        eventCount = 0
+        scIdsByDate = {}
 
-            if row['type'] == 'event':
-                labels = ['label', 'summary', 'startDate', 'duration', 'tags']
+        for event in eventsById:
+            eventCount += 1
+            scId = str(eventCount)
+            self.scenes[scId] = Scene()
+            #self.scenes[scId].isNotesScene = noScene
+            self.scenes[scId].title = event['title']
+            #self.scenes[scId].desc = event['title']
+            timestamp = event['rangeValues'][0]['position']['timestamp']
 
-                for label in labels:
-                    aeonEntity[label] = row[label]
+            if not timestamp in scIdsByDate:
+                scIdsByDate[timestamp] = []
 
-                events[row['id']] = aeonEntity
+            scIdsByDate[timestamp].append(scId)
 
-            elif row['type'] == 'defaultPerson':
-                labels = ['label', 'summary', 'tags']
+        # Sort scenes by date/time and place them in one single chapter.
 
-                for label in labels:
-                    aeonEntity[label] = row[label]
+        chId = '1'
+        self.chapters[chId] = Chapter()
+        self.chapters[chId].title = 'Chapter 1'
+        self.srtChapters = [chId]
+        srtScenes = sorted(scIdsByDate.items())
 
-                characters[row['id']] = aeonEntity
+        for date, scList in srtScenes:
 
-        return
+            for scId in scList:
+                self.chapters[chId].srtScenes.append(scId)
+
+        return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
 
 
 if __name__ == '__main__':
