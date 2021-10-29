@@ -4,6 +4,7 @@ Copyright (c) 2021 Peter Triesberger
 For further information see https://github.com/peter88213/aeon3yw
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
+import os
 import sys
 import json
 from datetime import datetime
@@ -28,25 +29,26 @@ class JsonTimeline3(FileExport):
     DESCRIPTION = 'Aeon Timeline 3 project'
     SUFFIX = ''
 
-    # Types
+    # JSON[data][items][byId][<uid>]
 
-    _TYPE_EVENT = 'event'
-    _TYPE_CHARACTER = 'defaultPerson'
-    _TYPE_NARRATIVE = 'Narrative Folder'
+    ITEM_DESCRIPTION = 'summary'
+    ITEM_START_DATE = 'startDate'
+    ITEM_DURATION = 'duration'
+    ITEM_LABEL = 'label'
+    ITEM_TAGS = 'tags'
+    ITEM_TYPE = 'type'
+    ITEM_ID = 'id'
 
-    # Field names
+    # JSON[definitions][types][byId]
 
-    _LABEL_FIELD = 'Label'
-    _TYPE_FIELD = 'Type'
-    _SCENE_FIELD = 'Narrative Position'
-    _START_DATE_TIME_FIELD = 'Start Date'
-    _END_DATE_TIME_FIELD = 'End Date'
+    TYPE_EVENT = 'defaultEvent'
+    TYPE_CHARACTER = 'defaultPerson'
+    TYPE_LOCATION = 'defaultLocation'
+    TYPE_NARRATIVE = 'narrativePart'
 
-    # Narrative position markers
+    # JSON[definitions][types][byId][<uid>]
 
-    _PART_MARKER = 'Part'
-    _CHAPTER_MARKER = 'Chapter'
-    _SCENE_MARKER = 'Scene'
+    TYPE_LABEL = 'label'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
@@ -84,31 +86,78 @@ class JsonTimeline3(FileExport):
                 adEra = i
                 break
 
+        # Create characters, locations, and items.
+
         itemsById = jsonData['data']['items']['byId']
-        events = {}
-        characters = {}
+        crIdsByGuid = {}
+        lcIdsByGuid = {}
+        itIdsByGuid = {}
+        characterCount = 0
+        locationCount = 0
+        itemCount = 0
 
         for uid in itemsById:
-            row = itemsById[uid]
-            aeonEntity = {}
+            aeonEntity = itemsById[uid]
 
-            if row['type'] == 'event':
-                labels = ['label', 'summary', 'startDate', 'duration', 'tags']
+            if aeonEntity[self.ITEM_TYPE] == self.TYPE_CHARACTER:
+                characterCount += 1
+                crId = str(characterCount)
+                crIdsByGuid[uid] = crId
+                self.characters[crId] = Character()
+                self.characters[crId].title = aeonEntity[self.ITEM_LABEL]
+                self.characters[crId].desc = aeonEntity[self.ITEM_DESCRIPTION]
+                self.srtCharacters.append(crId)
 
-                for label in labels:
-                    aeonEntity[label] = row[label]
+            elif aeonEntity[self.ITEM_TYPE] == self.TYPE_LOCATION:
+                locationCount += 1
+                lcId = str(locationCount)
+                lcIdsByGuid[uid] = lcId
+                self.locations[lcId] = WorldElement()
+                self.locations[crId].title = aeonEntity[self.ITEM_LABEL]
+                self.locations[crId].desc = aeonEntity[self.ITEM_DESCRIPTION]
+                self.srtLocations.append(lcId)
 
-                events[row['id']] = aeonEntity
+        # Create scenes.
 
-            elif row['type'] == 'defaultPerson':
-                labels = ['label', 'summary', 'tags']
+        eventCount = 0
+        scIdsByDate = {}
 
-                for label in labels:
-                    aeonEntity[label] = row[label]
+        for uid in itemsById:
+            aeonEntity = itemsById[uid]
 
-                characters[row['id']] = aeonEntity
+            if aeonEntity[self.ITEM_TYPE] == self.TYPE_EVENT:
+                eventCount += 1
+                scId = str(eventCount)
+                self.scenes[scId] = Scene()
+                #self.scenes[scId].isNotesScene = noScene
+                self.scenes[scId].title = aeonEntity[self.ITEM_LABEL]
+                self.scenes[scId].desc = aeonEntity[self.ITEM_DESCRIPTION]
+                timestamp = aeonEntity[self.ITEM_START_DATE]['timestamp']
 
-        return
+                if timestamp is None:
+                    timestamp = 0
+
+                timestamp = str(timestamp).zfill(15)
+
+                if not timestamp in scIdsByDate:
+                    scIdsByDate[timestamp] = []
+
+                scIdsByDate[timestamp].append(scId)
+
+        # Sort scenes by date/time and place them in one single chapter.
+
+        chId = '1'
+        self.chapters[chId] = Chapter()
+        self.chapters[chId].title = 'Chapter 1'
+        self.srtChapters = [chId]
+        srtScenes = sorted(scIdsByDate.items())
+
+        for date, scList in srtScenes:
+
+            for scId in scList:
+                self.chapters[chId].srtScenes.append(scId)
+
+        return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
 
 
 if __name__ == '__main__':

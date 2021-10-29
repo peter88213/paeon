@@ -165,6 +165,8 @@ class JsonTimeline2(FileExport):
             #self.scenes[scId].desc = event['title']
             timestamp = event['rangeValues'][0]['position']['timestamp']
 
+            timestamp = str(timestamp).zfill(15)
+
             if not timestamp in scIdsByDate:
                 scIdsByDate[timestamp] = []
 
