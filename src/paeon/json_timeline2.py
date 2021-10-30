@@ -32,12 +32,6 @@ class JsonTimeline2(FileExport):
     VALUE_TRUE = '1'
     DATE_LIMIT = datetime(100, 1, 1)
 
-    # JSON[template][types][name]
-
-    typeCharacter = 'Person'
-    typeLocation = 'Location'
-    typeItem = 'Item'
-
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
 
