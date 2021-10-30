@@ -267,8 +267,11 @@ class JsonTimeline2(FileExport):
             lastsHours = 0
             lastsMinutes = 0
 
+            if 'years' in span:
+                lastsDays = span['years'] * 365
+
             if 'days' in span:
-                lastsDays = span['days']
+                lastsDays += span['days']
 
             if 'hours' in span:
                 lastsHours = span['hours'] % 24
