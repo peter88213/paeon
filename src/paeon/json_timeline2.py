@@ -52,6 +52,7 @@ class JsonTimeline2(FileExport):
         self.roleLocation = kwargs['location_label']
         self.roleItem = kwargs['item_label']
         self.roleCharacter = kwargs['character_label']
+        self.roleViewpoint = kwargs['viewpoint_label']
 
         # JSON[template][types][name]
 
@@ -103,6 +104,7 @@ class JsonTimeline2(FileExport):
         typeLocation = None
         typeItem = None
         roleCharacter = None
+        roleViewpoint = None
         roleLocation = None
         roleItem = None
 
@@ -115,6 +117,9 @@ class JsonTimeline2(FileExport):
 
                     if aeon2Role['name'] == self.roleCharacter:
                         roleCharacter = aeon2Role['guid']
+
+                    if aeon2Role['name'] == self.roleViewpoint:
+                        roleViewpoint = aeon2Role['guid']
 
             elif aeon2Type['name'] == self.typeLocation:
                 typeLocation = aeon2Type['guid']
@@ -179,16 +184,16 @@ class JsonTimeline2(FileExport):
         propertyDescription = None
         propertyNotes = None
 
-        for property in properties:
+        for aeon2Property in properties:
 
-            if property['name'] == self.propertyScene:
-                propertyScene = property['guid']
+            if aeon2Property['name'] == self.propertyScene:
+                propertyScene = aeon2Property['guid']
 
-            elif property['name'] == self.propertyDesc:
-                propertyDescription = property['guid']
+            elif aeon2Property['name'] == self.propertyDesc:
+                propertyDescription = aeon2Property['guid']
 
-            elif property['name'] == self.propertyNotes:
-                propertyNotes = property['guid']
+            elif aeon2Property['name'] == self.propertyNotes:
+                propertyNotes = aeon2Property['guid']
 
         #--- Create scenes.
 
@@ -248,6 +253,18 @@ class JsonTimeline2(FileExport):
 
                     crId = crIdsByGuid[rel['entity']]
                     self.scenes[scId].characters.append(crId)
+
+                elif rel['role'] == roleViewpoint:
+
+                    crId = crIdsByGuid[rel['entity']]
+
+                    if self.scenes[scId].characters is None:
+                        self.scenes[scId].characters = []
+
+                    elif crId in self.scenes[scId].characters:
+                        self.scenes[scId].characters.remove[crId]
+
+                    self.scenes[scId].characters.insert(0, crId)
 
                 elif rel['role'] == roleLocation:
 

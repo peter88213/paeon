@@ -45,6 +45,7 @@ class CsvTimeline2(FileExport):
         self.locationLabel = kwargs['location_label']
         self.itemLabel = kwargs['item_label']
         self.characterLabel = kwargs['character_label']
+        self.viewpointLabel = kwargs['viewpoint_label']
 
     def read(self):
         """Parse the csv file located at filePath, 
@@ -223,11 +224,25 @@ class CsvTimeline2(FileExport):
                     if self.locationLabel in row:
                         self.scenes[scId].locations = get_lcIds(row[self.locationLabel].split(internalDelimiter))
 
+                    if self.itemLabel in row:
+                        self.scenes[scId].items = get_itIds(row[self.itemLabel].split(internalDelimiter))
+
                     if self.characterLabel in row:
                         self.scenes[scId].characters = get_crIds(row[self.characterLabel].split(internalDelimiter))
 
-                    if self.itemLabel in row:
-                        self.scenes[scId].items = get_itIds(row[self.itemLabel].split(internalDelimiter))
+                    if self.viewpointLabel in row:
+                        vpIds = get_crIds([row[self.viewpointLabel]])
+
+                        if vpIds is not None:
+                            vpId = vpIds[0]
+
+                            if self.scenes[scId].characters is None:
+                                self.scenes[scId].characters = []
+
+                            elif vpId in self.scenes[scId].characters:
+                                self.scenes[scId].characters.remove[vpId]
+
+                            self.scenes[scId].characters.insert(0, vpId)
 
         except(FileNotFoundError):
             return 'ERROR: "' + os.path.normpath(self.filePath) + '" not found.'
