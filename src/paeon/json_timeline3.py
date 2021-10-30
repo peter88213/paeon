@@ -15,7 +15,6 @@ from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
 from pywriter.model.character import Character
 
-from paeon.dt_helper import fix_iso_dt
 from paeon.aeon3_fop import scan_file
 
 
@@ -136,8 +135,6 @@ class JsonTimeline3(FileExport):
 
                 if timestamp is None:
                     timestamp = 0
-
-                timestamp = str(timestamp).zfill(15)
 
                 if not timestamp in scIdsByDate:
                     scIdsByDate[timestamp] = []

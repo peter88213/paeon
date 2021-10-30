@@ -15,7 +15,6 @@ from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
 from pywriter.model.character import Character
 
-from paeon.dt_helper import fix_iso_dt
 from paeon.aeon2_fop import extract_timeline
 
 
@@ -83,16 +82,16 @@ class JsonTimeline2(FileExport):
         typeLocation = None
         typeItem = None
 
-        for type in types:
+        for aeonType in types:
 
-            if type['name'] == self.TYPE_CHARACTER:
-                typeCharacter = type['guid']
+            if aeonType['name'] == self.TYPE_CHARACTER:
+                typeCharacter = aeonType['guid']
 
-            elif type['name'] == self.TYPE_LOCATION:
-                typeLocation = type['guid']
+            elif aeonType['name'] == self.TYPE_LOCATION:
+                typeLocation = aeonType['guid']
 
-            elif type['name'] == self.TYPE_ITEM:
-                typeItem = type['guid']
+            elif aeonType['name'] == self.TYPE_ITEM:
+                typeItem = aeonType['guid']
 
         # Create characters, locations, and items.
 
@@ -164,8 +163,6 @@ class JsonTimeline2(FileExport):
             self.scenes[scId].title = event['title']
             #self.scenes[scId].desc = event['title']
             timestamp = event['rangeValues'][0]['position']['timestamp']
-
-            timestamp = str(timestamp).zfill(15)
 
             if not timestamp in scIdsByDate:
                 scIdsByDate[timestamp] = []
