@@ -28,6 +28,18 @@ class JsonTimeline2(FileExport):
     DESCRIPTION = 'Aeon Timeline 2 project'
     SUFFIX = ''
 
+    # JSON[entities]
+
+    ENTITY_TYPE = 'entityType'
+    ENTITY_ID = 'guid'
+    ENTITY_LABEL = 'name'
+    ENTITY_NOTES = 'notes'
+
+    # JSON[events]
+
+    EVENT_TAGS = 'tags'
+    EVENT_LABEL = 'title'
+
     # JSON[template][types][name]
 
     TYPE_CHARACTER = 'Person'
@@ -38,6 +50,7 @@ class JsonTimeline2(FileExport):
 
     PROPERTY_SCENE = 'Scene'
     PROPERTY_DESC = 'Description'
+    VALUE_FALSE = '0'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
@@ -71,7 +84,7 @@ class JsonTimeline2(FileExport):
 
         for era in eras:
 
-            if era['name'] == 'AD':
+            if era[self.ENTITY_LABEL] == 'AD':
                 adEra = eras.index(era)
                 break
 
@@ -82,20 +95,20 @@ class JsonTimeline2(FileExport):
         typeLocation = None
         typeItem = None
 
-        for aeonType in types:
+        for aeon2Type in types:
 
-            if aeonType['name'] == self.TYPE_CHARACTER:
-                typeCharacter = aeonType['guid']
+            if aeon2Type[self.ENTITY_LABEL] == self.TYPE_CHARACTER:
+                typeCharacter = aeon2Type[self.ENTITY_ID]
 
-            elif aeonType['name'] == self.TYPE_LOCATION:
-                typeLocation = aeonType['guid']
+            elif aeon2Type[self.ENTITY_LABEL] == self.TYPE_LOCATION:
+                typeLocation = aeon2Type[self.ENTITY_ID]
 
-            elif aeonType['name'] == self.TYPE_ITEM:
-                typeItem = aeonType['guid']
+            elif aeon2Type[self.ENTITY_LABEL] == self.TYPE_ITEM:
+                typeItem = aeon2Type[self.ENTITY_ID]
 
         # Create characters, locations, and items.
 
-        entitiesById = jsonData['entities']
+        aeon2Entities = jsonData['entities']
         crIdsByGuid = {}
         lcIdsByGuid = {}
         itIdsByGuid = {}
@@ -103,36 +116,34 @@ class JsonTimeline2(FileExport):
         locationCount = 0
         itemCount = 0
 
-        labels = ['name', 'notes']
+        for aeon2Entity in aeon2Entities:
 
-        for entity in entitiesById:
-
-            if entity['entityType'] == typeCharacter:
+            if aeon2Entity[self.ENTITY_TYPE] == typeCharacter:
                 characterCount += 1
                 crId = str(characterCount)
-                crIdsByGuid[entity['guid']] = crId
+                crIdsByGuid[aeon2Entity[self.ENTITY_ID]] = crId
                 self.characters[crId] = Character()
-                self.characters[crId].title = entity['name']
+                self.characters[crId].title = aeon2Entity[self.ENTITY_LABEL]
 
-                if entity['notes']:
-                    self.characters[crId].notes = entity['notes']
+                if aeon2Entity['notes']:
+                    self.characters[crId].notes = aeon2Entity['notes']
 
                 self.srtCharacters.append(crId)
 
-            elif entity['entityType'] == typeLocation:
+            elif aeon2Entity[self.ENTITY_TYPE] == typeLocation:
                 locationCount += 1
                 lcId = str(locationCount)
-                lcIdsByGuid[entity['guid']] = lcId
+                lcIdsByGuid[aeon2Entity[self.ENTITY_ID]] = lcId
                 self.locations[lcId] = WorldElement()
-                self.locations[lcId].title = entity['name']
+                self.locations[lcId].title = aeon2Entity[self.ENTITY_LABEL]
                 self.srtLocations.append(lcId)
 
-            elif entity['entityType'] == typeItem:
+            elif aeon2Entity[self.ENTITY_TYPE] == typeItem:
                 itemCount += 1
                 itId = str(itemCount)
-                itIdsByGuid[entity['guid']] = itId
+                itIdsByGuid[aeon2Entity[self.ENTITY_ID]] = itId
                 self.items[itId] = WorldElement()
-                self.items[itId].title = entity['name']
+                self.items[itId].title = aeon2Entity[self.ENTITY_LABEL]
                 self.srtItems.append(itId)
 
         # Get GUID of user defined properties.
@@ -143,26 +154,48 @@ class JsonTimeline2(FileExport):
 
         for property in properties:
 
-            if property['name'] == self.PROPERTY_SCENE:
-                propertyScene = property['guid']
+            if property[self.ENTITY_LABEL] == self.PROPERTY_SCENE:
+                propertyScene = property[self.ENTITY_ID]
 
-            elif property['name'] == self.PROPERTY_DESC:
-                propertyDescription = property['guid']
+            elif property[self.ENTITY_LABEL] == self.PROPERTY_DESC:
+                propertyDescription = property[self.ENTITY_ID]
 
         # Create scenes.
 
-        eventsById = jsonData['events']
+        aeon2Events = jsonData['events']
         eventCount = 0
         scIdsByDate = {}
 
-        for event in eventsById:
+        for aeon2Event in aeon2Events:
             eventCount += 1
             scId = str(eventCount)
             self.scenes[scId] = Scene()
-            #self.scenes[scId].isNotesScene = noScene
-            self.scenes[scId].title = event['title']
-            #self.scenes[scId].desc = event['title']
-            timestamp = event['rangeValues'][0]['position']['timestamp']
+            self.scenes[scId].title = aeon2Event[self.EVENT_LABEL]
+
+            for eventVal in aeon2Event['values']:
+
+                if eventVal['property'] == propertyScene:
+
+                    if eventVal['value'] == self.VALUE_FALSE:
+                        self.scenes[scId].isNotesScene = True
+
+                    else:
+                        self.scenes[scId].isNotesScene = False
+
+                elif eventVal['property'] == propertyDescription:
+
+                    if eventVal['value']:
+                        self.scenes[scId].desc = eventVal['value']
+
+            if aeon2Event[self.EVENT_TAGS]:
+
+                if self.scenes[scId].tags is None:
+                    self.scenes[scId].tags = []
+
+                for tag in aeon2Event[self.EVENT_TAGS]:
+                    self.scenes[scId].tags.append(tag)
+
+            timestamp = aeon2Event['rangeValues'][0]['position']['timestamp']
 
             if not timestamp in scIdsByDate:
                 scIdsByDate[timestamp] = []

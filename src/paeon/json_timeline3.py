@@ -96,24 +96,24 @@ class JsonTimeline3(FileExport):
         itemCount = 0
 
         for uid in itemsById:
-            aeonEntity = itemsById[uid]
+            aeon3Item = itemsById[uid]
 
-            if aeonEntity[self.ITEM_TYPE] == self.TYPE_CHARACTER:
+            if aeon3Item[self.ITEM_TYPE] == self.TYPE_CHARACTER:
                 characterCount += 1
                 crId = str(characterCount)
                 crIdsByGuid[uid] = crId
                 self.characters[crId] = Character()
-                self.characters[crId].title = aeonEntity[self.ITEM_LABEL]
-                self.characters[crId].desc = aeonEntity[self.ITEM_DESCRIPTION]
+                self.characters[crId].title = aeon3Item[self.ITEM_LABEL]
+                self.characters[crId].desc = aeon3Item[self.ITEM_DESCRIPTION]
                 self.srtCharacters.append(crId)
 
-            elif aeonEntity[self.ITEM_TYPE] == self.TYPE_LOCATION:
+            elif aeon3Item[self.ITEM_TYPE] == self.TYPE_LOCATION:
                 locationCount += 1
                 lcId = str(locationCount)
                 lcIdsByGuid[uid] = lcId
                 self.locations[lcId] = WorldElement()
-                self.locations[crId].title = aeonEntity[self.ITEM_LABEL]
-                self.locations[crId].desc = aeonEntity[self.ITEM_DESCRIPTION]
+                self.locations[crId].title = aeon3Item[self.ITEM_LABEL]
+                self.locations[crId].desc = aeon3Item[self.ITEM_DESCRIPTION]
                 self.srtLocations.append(lcId)
 
         # Create scenes.
@@ -122,16 +122,16 @@ class JsonTimeline3(FileExport):
         scIdsByDate = {}
 
         for uid in itemsById:
-            aeonEntity = itemsById[uid]
+            aeon3Item = itemsById[uid]
 
-            if aeonEntity[self.ITEM_TYPE] == self.TYPE_EVENT:
+            if aeon3Item[self.ITEM_TYPE] == self.TYPE_EVENT:
                 eventCount += 1
                 scId = str(eventCount)
                 self.scenes[scId] = Scene()
                 #self.scenes[scId].isNotesScene = noScene
-                self.scenes[scId].title = aeonEntity[self.ITEM_LABEL]
-                self.scenes[scId].desc = aeonEntity[self.ITEM_DESCRIPTION]
-                timestamp = aeonEntity[self.ITEM_START_DATE]['timestamp']
+                self.scenes[scId].title = aeon3Item[self.ITEM_LABEL]
+                self.scenes[scId].desc = aeon3Item[self.ITEM_DESCRIPTION]
+                timestamp = aeon3Item[self.ITEM_START_DATE]['timestamp']
 
                 if timestamp is None:
                     timestamp = 0
