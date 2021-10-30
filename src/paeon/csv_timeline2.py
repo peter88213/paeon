@@ -27,10 +27,8 @@ class CsvTimeline2(FileExport):
     EXTENSION = '.csv'
     DESCRIPTION = 'Aeon Timeline CSV export'
     SUFFIX = ''
-    _SEPARATOR = ','
 
-    NULL_DATE = '0001-01-01'
-    NULL_TIME = '00:00:00'
+    _SEPARATOR = ','
 
     # Events marked as "Scene" become
     # regular scenes, the others become Notes scenes.
@@ -41,18 +39,12 @@ class CsvTimeline2(FileExport):
         """
         FileExport.__init__(self, filePath, **kwargs)
         self.sceneMarker = kwargs['scene_marker']
-        self.titleLabel = kwargs['title_label']
         self.sceneLabel = kwargs['scene_label']
-        self.startDateTimeLabel = kwargs['start_date_time_label']
-        self.endDateTimeLabel = kwargs['end_date_time_label']
         self.descriptionLabel = kwargs['description_label']
         self.notesLabel = kwargs['notes_label']
-        self.tagLabel = kwargs['tag_label']
         self.locationLabel = kwargs['location_label']
         self.itemLabel = kwargs['item_label']
         self.characterLabel = kwargs['character_label']
-        self.viewpointLabel = kwargs['viewpoint_label']
-        self.importAllEvents = kwargs['import_all_events']
 
     def read(self):
         """Parse the csv file located at filePath, 
@@ -164,7 +156,7 @@ class CsvTimeline2(FileExport):
                 reader = csv.DictReader(f, delimiter=self._SEPARATOR)
                 internalDelimiter = '|'
 
-                for label in [self.sceneLabel, self.titleLabel, self.startDateTimeLabel, self.endDateTimeLabel]:
+                for label in [self.sceneLabel, 'Title', 'Start Date', 'End Date']:
 
                     if not label in reader.fieldnames:
                         return 'ERROR: Label "' + label + '" is missing in the CSV file.'
@@ -174,37 +166,34 @@ class CsvTimeline2(FileExport):
 
                 for row in reader:
                     eventCount += 1
-
-                    if self.sceneMarker == '':
-                        noScene = False
-
-                    elif not self.sceneMarker in row[self.sceneLabel]:
-                        noScene = True
-
-                        if not self.importAllEvents:
-                            continue
-
-                    else:
-                        noScene = False
-
                     scId = str(eventCount)
                     self.scenes[scId] = Scene()
-                    self.scenes[scId].isNotesScene = noScene
-                    self.scenes[scId].title = row[self.titleLabel]
+                    self.scenes[scId].title = row['Title']
 
-                    if not row[self.startDateTimeLabel] in scIdsByDate:
-                        scIdsByDate[row[self.startDateTimeLabel]] = []
+                    # Set scene status = "Outline".
 
-                    scIdsByDate[row[self.startDateTimeLabel]].append(scId)
-                    startDateTime = row[self.startDateTimeLabel].split(' ')
+                    self.scenes[scId].status = 1
+
+                    #--- Make non-scene events "Note" type scenes.
+
+                    self.scenes[scId].isNotesScene = True
+
+                    if self.sceneMarker in row[self.sceneLabel]:
+                        self.scenes[scId].isNotesScene = False
+
+                    if not row['Start Date'] in scIdsByDate:
+                        scIdsByDate[row['Start Date']] = []
+
+                    scIdsByDate[row['Start Date']].append(scId)
+                    startDateTime = row['Start Date'].split(' ')
                     startYear = int(startDateTime[0].split('-')[0])
 
                     if len(startDateTime) > 2 or startYear < 100:
 
                         # Substitute date/time, so yWriter would not prefix them with '19' or '20'.
 
-                        self.scenes[scId].date = self.NULL_DATE
-                        self.scenes[scId].time = self.NULL_TIME
+                        self.scenes[scId].date = Scene.NULL_DATE
+                        self.scenes[scId].time = Scene.NULL_TIME
 
                     else:
                         self.scenes[scId].date = startDateTime[0]
@@ -212,8 +201,8 @@ class CsvTimeline2(FileExport):
 
                         # Calculate duration of scenes that begin after 99-12-31.
 
-                        sceneStart = datetime.fromisoformat(row[self.startDateTimeLabel])
-                        sceneEnd = datetime.fromisoformat(row[self.endDateTimeLabel])
+                        sceneStart = datetime.fromisoformat(row['Start Date'])
+                        sceneEnd = datetime.fromisoformat(row['End Date'])
                         sceneDuration = sceneEnd - sceneStart
                         lastsHours = sceneDuration.seconds // 3600
                         lastsMinutes = (sceneDuration.seconds % 3600) // 60
@@ -228,8 +217,8 @@ class CsvTimeline2(FileExport):
                     if self.notesLabel in row:
                         self.scenes[scId].sceneNotes = row[self.notesLabel]
 
-                    if self.tagLabel in row and row[self.tagLabel] != '':
-                        self.scenes[scId].tags = row[self.tagLabel].split(internalDelimiter)
+                    if 'Tags' in row and row['Tags'] != '':
+                        self.scenes[scId].tags = row['Tags'].split(internalDelimiter)
 
                     if self.locationLabel in row:
                         self.scenes[scId].locations = get_lcIds(row[self.locationLabel].split(internalDelimiter))
@@ -237,26 +226,8 @@ class CsvTimeline2(FileExport):
                     if self.characterLabel in row:
                         self.scenes[scId].characters = get_crIds(row[self.characterLabel].split(internalDelimiter))
 
-                    if self.viewpointLabel in row:
-                        vpIds = get_crIds([row[self.viewpointLabel]])
-
-                        if vpIds is not None:
-                            vpId = vpIds[0]
-
-                            if self.scenes[scId].characters is None:
-                                self.scenes[scId].characters = []
-
-                            elif vpId in self.scenes[scId].characters:
-                                self.scenes[scId].characters.remove[vpId]
-
-                            self.scenes[scId].characters.insert(0, vpId)
-
                     if self.itemLabel in row:
                         self.scenes[scId].items = get_itIds(row[self.itemLabel].split(internalDelimiter))
-
-                    # Set scene status = "Outline".
-
-                    self.scenes[scId].status = 1
 
         except(FileNotFoundError):
             return 'ERROR: "' + os.path.normpath(self.filePath) + '" not found.'
@@ -270,17 +241,31 @@ class CsvTimeline2(FileExport):
         except:
             return 'ERROR: Can not parse "' + os.path.normpath(self.filePath) + '".'
 
-        # Sort scenes by date/time and place them in one single chapter.
+        #--- Sort scenes by date/time and place them in chapters.
 
-        chId = '1'
-        self.chapters[chId] = Chapter()
-        self.chapters[chId].title = 'Chapter 1'
-        self.srtChapters = [chId]
+        chIdNarrative = '1'
+        chIdBackground = '2'
+
+        self.chapters[chIdNarrative] = Chapter()
+        self.chapters[chIdNarrative].title = 'Chapter 1'
+        self.chapters[chIdNarrative].chType = 0
+        self.srtChapters.append(chIdNarrative)
+
+        self.chapters[chIdBackground] = Chapter()
+        self.chapters[chIdBackground].title = 'Background'
+        self.chapters[chIdBackground].chType = 1
+        self.srtChapters.append(chIdBackground)
+
         srtScenes = sorted(scIdsByDate.items())
 
         for date, scList in srtScenes:
 
             for scId in scList:
-                self.chapters[chId].srtScenes.append(scId)
+
+                if self.scenes[scId].isNotesScene:
+                    self.chapters[chIdBackground].srtScenes.append(scId)
+
+                else:
+                    self.chapters[chIdNarrative].srtScenes.append(scId)
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'

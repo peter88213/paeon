@@ -29,39 +29,41 @@ class JsonTimeline2(FileExport):
     DESCRIPTION = 'Aeon Timeline 2 project'
     SUFFIX = ''
 
-    # JSON[entities]
-
-    ENTITY_TYPE = 'entityType'
-    ENTITY_TITLE = 'name'
-    ENTITY_NOTES = 'notes'
-
-    # JSON[events]
-
-    EVENT_TAGS = 'tags'
-    EVENT_TITLE = 'title'
+    VALUE_TRUE = '1'
+    DATE_LIMIT = datetime(100, 1, 1)
 
     # JSON[template][types][name]
 
-    TYPE_CHARACTER = 'Person'
-    TYPE_LOCATION = 'Location'
-    TYPE_ITEM = 'Item'
-
-    # JSON[template][types][name][roles]
-
-    ROLE_CHARACTER = 'Participant'
-    ROLE_LOCATION = 'Location'
-    ROLE_ITEM = 'Item'
-
-    # JSON[template][properties][name]
-
-    PROPERTY_SCENE = 'Scene'
-    PROPERTY_DESC = 'Description'
-    VALUE_TRUE = '1'
-
-    DATE_LIMIT = datetime(100, 1, 1)
+    typeCharacter = 'Person'
+    typeLocation = 'Location'
+    typeItem = 'Item'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
+
+    def __init__(self, filePath, **kwargs):
+        """Extend the superclass constructor,
+        defining instance variables.
+        """
+        FileExport.__init__(self, filePath, **kwargs)
+
+        # JSON[template][properties][name]
+
+        self.propertyScene = kwargs['scene_label']
+        self.propertyDesc = kwargs['description_label']
+        self.propertyNotes = kwargs['notes_label']
+
+        # JSON[template][types][name][roles]
+
+        self.roleLocation = kwargs['location_label']
+        self.roleItem = kwargs['item_label']
+        self.roleCharacter = kwargs['character_label']
+
+        # JSON[template][types][name]
+
+        self.typeCharacter = kwargs['type_character']
+        self.typeLocation = kwargs['type_location']
+        self.typeItem = kwargs['type_item']
 
     def read(self):
         """Extract the JSON part of the Aeon Timeline 2 file located at filePath, 
@@ -112,28 +114,28 @@ class JsonTimeline2(FileExport):
 
         for aeon2Type in types:
 
-            if aeon2Type['name'] == self.TYPE_CHARACTER:
+            if aeon2Type['name'] == self.typeCharacter:
                 typeCharacter = aeon2Type['guid']
 
                 for aeon2Role in aeon2Type['roles']:
 
-                    if aeon2Role['name'] == self.ROLE_CHARACTER:
+                    if aeon2Role['name'] == self.roleCharacter:
                         roleCharacter = aeon2Role['guid']
 
-            elif aeon2Type['name'] == self.TYPE_LOCATION:
+            elif aeon2Type['name'] == self.typeLocation:
                 typeLocation = aeon2Type['guid']
 
                 for aeon2Role in aeon2Type['roles']:
 
-                    if aeon2Role['name'] == self.ROLE_LOCATION:
+                    if aeon2Role['name'] == self.roleLocation:
                         roleLocation = aeon2Role['guid']
 
-            elif aeon2Type['name'] == self.TYPE_ITEM:
+            elif aeon2Type['name'] == self.typeItem:
                 typeItem = aeon2Type['guid']
 
                 for aeon2Role in aeon2Type['roles']:
 
-                    if aeon2Role['name'] == self.ROLE_ITEM:
+                    if aeon2Role['name'] == self.roleItem:
                         roleItem = aeon2Role['guid']
 
         #--- Create characters, locations, and items.
@@ -148,32 +150,32 @@ class JsonTimeline2(FileExport):
 
         for aeon2Entity in aeon2Entities:
 
-            if aeon2Entity[self.ENTITY_TYPE] == typeCharacter:
+            if aeon2Entity['entityType'] == typeCharacter:
                 characterCount += 1
                 crId = str(characterCount)
                 crIdsByGuid[aeon2Entity['guid']] = crId
                 self.characters[crId] = Character()
-                self.characters[crId].title = aeon2Entity[self.ENTITY_TITLE]
+                self.characters[crId].title = aeon2Entity['name']
 
                 if aeon2Entity['notes']:
                     self.characters[crId].notes = aeon2Entity['notes']
 
                 self.srtCharacters.append(crId)
 
-            elif aeon2Entity[self.ENTITY_TYPE] == typeLocation:
+            elif aeon2Entity['entityType'] == typeLocation:
                 locationCount += 1
                 lcId = str(locationCount)
                 lcIdsByGuid[aeon2Entity['guid']] = lcId
                 self.locations[lcId] = WorldElement()
-                self.locations[lcId].title = aeon2Entity[self.ENTITY_TITLE]
+                self.locations[lcId].title = aeon2Entity['name']
                 self.srtLocations.append(lcId)
 
-            elif aeon2Entity[self.ENTITY_TYPE] == typeItem:
+            elif aeon2Entity['entityType'] == typeItem:
                 itemCount += 1
                 itId = str(itemCount)
                 itIdsByGuid[aeon2Entity['guid']] = itId
                 self.items[itId] = WorldElement()
-                self.items[itId].title = aeon2Entity[self.ENTITY_TITLE]
+                self.items[itId].title = aeon2Entity['name']
                 self.srtItems.append(itId)
 
         #--- Get GUID of user defined properties.
@@ -181,14 +183,18 @@ class JsonTimeline2(FileExport):
         properties = jsonData['template']['properties']
         propertyScene = None
         propertyDescription = None
+        propertyNotes = None
 
         for property in properties:
 
-            if property[self.ENTITY_TITLE] == self.PROPERTY_SCENE:
+            if property['name'] == self.propertyScene:
                 propertyScene = property['guid']
 
-            elif property[self.ENTITY_TITLE] == self.PROPERTY_DESC:
+            elif property['name'] == self.propertyDesc:
                 propertyDescription = property['guid']
+
+            elif property['name'] == self.propertyNotes:
+                propertyNotes = property['guid']
 
         #--- Create scenes.
 
@@ -200,7 +206,11 @@ class JsonTimeline2(FileExport):
             eventCount += 1
             scId = str(eventCount)
             self.scenes[scId] = Scene()
-            self.scenes[scId].title = aeon2Event[self.EVENT_TITLE]
+            self.scenes[scId].title = aeon2Event['title']
+
+            # Set scene status = "Outline".
+
+            self.scenes[scId].status = 1
 
             #--- Make non-scene events "Note" type scenes.
 
@@ -218,14 +228,19 @@ class JsonTimeline2(FileExport):
                     if eventVal['value']:
                         self.scenes[scId].desc = eventVal['value']
 
+                elif eventVal['property'] == propertyNotes:
+
+                    if eventVal['value']:
+                        self.scenes[scId].sceneNotes = eventVal['value']
+
             #--- Get scene tags.
 
-            if aeon2Event[self.EVENT_TAGS]:
+            if aeon2Event['tags']:
 
                 if self.scenes[scId].tags is None:
                     self.scenes[scId].tags = []
 
-                for tag in aeon2Event[self.EVENT_TAGS]:
+                for tag in aeon2Event['tags']:
                     self.scenes[scId].tags.append(tag)
 
             #--- Get characters, locations, and items.
@@ -264,45 +279,47 @@ class JsonTimeline2(FileExport):
 
                 if rv['rangeProperty'] == aeonDate:
                     timestamp = rv['position']['timestamp']
-                    dt = datetime.min + timedelta(seconds=timestamp)
 
-                    if dt >= self.DATE_LIMIT:
-                        startDateTime = dt.isoformat().split('T')
-                        self.scenes[scId].date = startDateTime[0]
-                        self.scenes[scId].time = startDateTime[1]
+                    if timestamp > 0:
+                        dt = datetime.min + timedelta(seconds=timestamp)
 
-                    #--- Get scene duration.
+                        if dt >= self.DATE_LIMIT:
+                            startDateTime = dt.isoformat().split('T')
+                            self.scenes[scId].date = startDateTime[0]
+                            self.scenes[scId].time = startDateTime[1]
 
-                    lastsDays = 0
-                    lastsHours = 0
-                    lastsMinutes = 0
+                #--- Get scene duration.
 
-                    if 'years' in rv['span']:
-                        lastsDays = rv['span']['years'] * 365
-                        # Leap years are not taken into account
+                lastsDays = 0
+                lastsHours = 0
+                lastsMinutes = 0
 
-                    if 'days' in rv['span']:
-                        lastsDays += rv['span']['days']
+                if 'years' in rv['span']:
+                    lastsDays = rv['span']['years'] * 365
+                    # Leap years are not taken into account
 
-                    if 'hours' in rv['span']:
-                        lastsHours = rv['span']['hours'] % 24
-                        lastsDays += rv['span']['hours'] // 24
+                if 'days' in rv['span']:
+                    lastsDays += rv['span']['days']
 
-                    if 'minutes' in rv['span']:
-                        lastsMinutes = rv['span']['minutes'] % 60
-                        lastsHours += rv['span']['minutes'] // 60
+                if 'hours' in rv['span']:
+                    lastsHours = rv['span']['hours'] % 24
+                    lastsDays += rv['span']['hours'] // 24
 
-                    if 'seconds' in rv['span']:
-                        lastsMinutes += rv['span']['seconds'] // 60
+                if 'minutes' in rv['span']:
+                    lastsMinutes = rv['span']['minutes'] % 60
+                    lastsHours += rv['span']['minutes'] // 60
 
-                    lastsHours += lastsMinutes // 60
-                    lastsMinutes %= 60
-                    lastsDays += lastsHours // 24
-                    lastsHours %= 24
+                if 'seconds' in rv['span']:
+                    lastsMinutes += rv['span']['seconds'] // 60
 
-                    self.scenes[scId].lastsDays = str(lastsDays)
-                    self.scenes[scId].lastsHours = str(lastsHours)
-                    self.scenes[scId].lastsMinutes = str(lastsMinutes)
+                lastsHours += lastsMinutes // 60
+                lastsMinutes %= 60
+                lastsDays += lastsHours // 24
+                lastsHours %= 24
+
+                self.scenes[scId].lastsDays = str(lastsDays)
+                self.scenes[scId].lastsHours = str(lastsHours)
+                self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
             # Use the timestamp for chronological sorting.
 
@@ -339,9 +356,3 @@ class JsonTimeline2(FileExport):
                     self.chapters[chIdNarrative].srtScenes.append(scId)
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
-
-
-if __name__ == '__main__':
-    kwargs = {}
-    timeline = JsonTimeline2(sys.argv[1])
-    timeline.read()
