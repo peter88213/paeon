@@ -31,7 +31,6 @@ class JsonTimeline2(FileExport):
     # JSON[entities]
 
     ENTITY_TYPE = 'entityType'
-    ENTITY_GUID = 'guid'
     ENTITY_TITLE = 'name'
     ENTITY_NOTES = 'notes'
 
@@ -46,11 +45,17 @@ class JsonTimeline2(FileExport):
     TYPE_LOCATION = 'Location'
     TYPE_ITEM = 'Item'
 
+    # JSON[template][types][name][roles]
+
+    ROLE_CHARACTER = 'Participant'
+    ROLE_LOCATION = 'Location'
+    ROLE_ITEM = 'Item'
+
     # JSON[template][properties][name]
 
     PROPERTY_SCENE = 'Scene'
     PROPERTY_DESC = 'Description'
-    VALUE_FALSE = '0'
+    VALUE_TRUE = '1'
 
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
@@ -77,7 +82,7 @@ class JsonTimeline2(FileExport):
         except('JSONDecodeError'):
             return 'ERROR: Invalid JSON data.'
 
-        # Make sure there is an "AD" era.
+        #--- Get the "AD" era indicator.
 
         eras = jsonData['template']['rangeProperties'][0]['calendar']['eras']
         adEra = None
@@ -88,25 +93,43 @@ class JsonTimeline2(FileExport):
                 adEra = eras.index(era)
                 break
 
-        # Get GUID of user defined types.
+        #--- Get GUID of user defined types and roles.
 
         types = jsonData['template']['types']
         typeCharacter = None
         typeLocation = None
         typeItem = None
+        roleCharacter = None
+        roleLocation = None
+        roleItem = None
 
         for aeon2Type in types:
 
-            if aeon2Type[self.ENTITY_TITLE] == self.TYPE_CHARACTER:
-                typeCharacter = aeon2Type[self.ENTITY_GUID]
+            if aeon2Type['name'] == self.TYPE_CHARACTER:
+                typeCharacter = aeon2Type['guid']
 
-            elif aeon2Type[self.ENTITY_TITLE] == self.TYPE_LOCATION:
-                typeLocation = aeon2Type[self.ENTITY_GUID]
+                for aeon2Role in aeon2Type['roles']:
 
-            elif aeon2Type[self.ENTITY_TITLE] == self.TYPE_ITEM:
-                typeItem = aeon2Type[self.ENTITY_GUID]
+                    if aeon2Role['name'] == self.ROLE_CHARACTER:
+                        roleCharacter = aeon2Role['guid']
 
-        # Create characters, locations, and items.
+            elif aeon2Type['name'] == self.TYPE_LOCATION:
+                typeLocation = aeon2Type['guid']
+
+                for aeon2Role in aeon2Type['roles']:
+
+                    if aeon2Role['name'] == self.ROLE_LOCATION:
+                        roleLocation = aeon2Role['guid']
+
+            elif aeon2Type['name'] == self.TYPE_ITEM:
+                typeItem = aeon2Type['guid']
+
+                for aeon2Role in aeon2Type['roles']:
+
+                    if aeon2Role['name'] == self.ROLE_ITEM:
+                        roleItem = aeon2Role['guid']
+
+        #--- Create characters, locations, and items.
 
         aeon2Entities = jsonData['entities']
         crIdsByGuid = {}
@@ -121,7 +144,7 @@ class JsonTimeline2(FileExport):
             if aeon2Entity[self.ENTITY_TYPE] == typeCharacter:
                 characterCount += 1
                 crId = str(characterCount)
-                crIdsByGuid[aeon2Entity[self.ENTITY_GUID]] = crId
+                crIdsByGuid[aeon2Entity['guid']] = crId
                 self.characters[crId] = Character()
                 self.characters[crId].title = aeon2Entity[self.ENTITY_TITLE]
 
@@ -133,7 +156,7 @@ class JsonTimeline2(FileExport):
             elif aeon2Entity[self.ENTITY_TYPE] == typeLocation:
                 locationCount += 1
                 lcId = str(locationCount)
-                lcIdsByGuid[aeon2Entity[self.ENTITY_GUID]] = lcId
+                lcIdsByGuid[aeon2Entity['guid']] = lcId
                 self.locations[lcId] = WorldElement()
                 self.locations[lcId].title = aeon2Entity[self.ENTITY_TITLE]
                 self.srtLocations.append(lcId)
@@ -141,12 +164,12 @@ class JsonTimeline2(FileExport):
             elif aeon2Entity[self.ENTITY_TYPE] == typeItem:
                 itemCount += 1
                 itId = str(itemCount)
-                itIdsByGuid[aeon2Entity[self.ENTITY_GUID]] = itId
+                itIdsByGuid[aeon2Entity['guid']] = itId
                 self.items[itId] = WorldElement()
                 self.items[itId].title = aeon2Entity[self.ENTITY_TITLE]
                 self.srtItems.append(itId)
 
-        # Get GUID of user defined properties.
+        #--- Get GUID of user defined properties.
 
         properties = jsonData['template']['properties']
         propertyScene = None
@@ -155,12 +178,12 @@ class JsonTimeline2(FileExport):
         for property in properties:
 
             if property[self.ENTITY_TITLE] == self.PROPERTY_SCENE:
-                propertyScene = property[self.ENTITY_GUID]
+                propertyScene = property['guid']
 
             elif property[self.ENTITY_TITLE] == self.PROPERTY_DESC:
-                propertyDescription = property[self.ENTITY_GUID]
+                propertyDescription = property['guid']
 
-        # Create scenes.
+        #--- Create scenes.
 
         aeon2Events = jsonData['events']
         eventCount = 0
@@ -172,20 +195,23 @@ class JsonTimeline2(FileExport):
             self.scenes[scId] = Scene()
             self.scenes[scId].title = aeon2Event[self.EVENT_TITLE]
 
+            #--- Make non-scene events "Note" type scenes.
+
+            self.scenes[scId].isNotesScene = True
+
             for eventVal in aeon2Event['values']:
 
                 if eventVal['property'] == propertyScene:
 
-                    if eventVal['value'] == self.VALUE_FALSE:
-                        self.scenes[scId].isNotesScene = True
-
-                    else:
+                    if eventVal['value'] == self.VALUE_TRUE:
                         self.scenes[scId].isNotesScene = False
 
                 elif eventVal['property'] == propertyDescription:
 
                     if eventVal['value']:
                         self.scenes[scId].desc = eventVal['value']
+
+            #--- Get scene tags.
 
             if aeon2Event[self.EVENT_TAGS]:
 
@@ -195,6 +221,36 @@ class JsonTimeline2(FileExport):
                 for tag in aeon2Event[self.EVENT_TAGS]:
                     self.scenes[scId].tags.append(tag)
 
+            #--- Get characters, locations, and items.
+
+            for relation in aeon2Event['relationships']:
+
+                if relation['role'] == roleCharacter:
+
+                    if self.scenes[scId].characters is None:
+                        self.scenes[scId].characters = []
+
+                    crId = crIdsByGuid[relation['entity']]
+                    self.scenes[scId].characters.append(crId)
+
+                elif relation['role'] == roleLocation:
+
+                    if self.scenes[scId].locations is None:
+                        self.scenes[scId].locations = []
+
+                    lcId = lcIdsByGuid[relation['entity']]
+                    self.scenes[scId].locations.append(lcId)
+
+                elif relation['role'] == roleItem:
+
+                    if self.scenes[scId].items is None:
+                        self.scenes[scId].items = []
+
+                    itId = itIdsByGuid[relation['entity']]
+                    self.scenes[scId].items.append(itId)
+
+            #--- Get the timestamp for chronological sorting.
+
             timestamp = aeon2Event['rangeValues'][0]['position']['timestamp']
 
             if not timestamp in scIdsByDate:
@@ -202,7 +258,39 @@ class JsonTimeline2(FileExport):
 
             scIdsByDate[timestamp].append(scId)
 
-        # Sort scenes by date/time and place them in chapters.
+            #--- Get date/time
+
+            #--- Get scene duration.
+
+            span = aeon2Event['rangeValues'][0]['span']
+            lastsDays = 0
+            lastsHours = 0
+            lastsMinutes = 0
+
+            if 'days' in span:
+                lastsDays = span['days']
+
+            if 'hours' in span:
+                lastsHours = span['hours'] % 24
+                lastsDays += span['hours'] // 24
+
+            if 'minutes' in span:
+                lastsMinutes = span['minutes'] % 60
+                lastsHours += span['minutes'] // 60
+
+            if 'seconds' in span:
+                lastsMinutes += span['seconds'] // 60
+
+            lastsHours += lastsMinutes // 60
+            lastsMinutes %= 60
+            lastsDays += lastsHours // 24
+            lastsHours %= 24
+
+            self.scenes[scId].lastsDays = str(lastsDays)
+            self.scenes[scId].lastsHours = str(lastsHours)
+            self.scenes[scId].lastsMinutes = str(lastsMinutes)
+
+        #--- Sort scenes by date/time and place them in chapters.
 
         chIdNarrative = '1'
         chIdBackground = '2'
