@@ -8,6 +8,7 @@ import os
 import sys
 import json
 from datetime import datetime
+from datetime import timedelta
 
 from pywriter.file.file_export import FileExport
 from pywriter.model.scene import Scene
@@ -57,6 +58,8 @@ class JsonTimeline2(FileExport):
     PROPERTY_DESC = 'Description'
     VALUE_TRUE = '1'
 
+    DATE_LIMIT = datetime(100, 1, 1)
+
     # Events assigned to the "narrative" become
     # regular scenes, the others become Notes scenes.
 
@@ -82,16 +85,20 @@ class JsonTimeline2(FileExport):
         except('JSONDecodeError'):
             return 'ERROR: Invalid JSON data.'
 
-        #--- Get the "AD" era indicator.
+        #--- Get the date definition.
 
-        eras = jsonData['template']['rangeProperties'][0]['calendar']['eras']
-        adEra = None
+        for rp in jsonData['template']['rangeProperties']:
 
-        for era in eras:
+            if rp['type'] == 'date':
+                aeonDate = ''
+                adEra = None
 
-            if era['name'] == 'AD':
-                adEra = eras.index(era)
-                break
+                for era in rp['calendar']['eras']:
+
+                    if era['name'] == 'AD':
+                        adEra = rp['calendar']['eras'].index(era)
+                        aeonDate = rp['guid']
+                        break
 
         #--- Get GUID of user defined types and roles.
 
@@ -223,75 +230,86 @@ class JsonTimeline2(FileExport):
 
             #--- Get characters, locations, and items.
 
-            for relation in aeon2Event['relationships']:
+            for rel in aeon2Event['relationships']:
 
-                if relation['role'] == roleCharacter:
+                if rel['role'] == roleCharacter:
 
                     if self.scenes[scId].characters is None:
                         self.scenes[scId].characters = []
 
-                    crId = crIdsByGuid[relation['entity']]
+                    crId = crIdsByGuid[rel['entity']]
                     self.scenes[scId].characters.append(crId)
 
-                elif relation['role'] == roleLocation:
+                elif rel['role'] == roleLocation:
 
                     if self.scenes[scId].locations is None:
                         self.scenes[scId].locations = []
 
-                    lcId = lcIdsByGuid[relation['entity']]
+                    lcId = lcIdsByGuid[rel['entity']]
                     self.scenes[scId].locations.append(lcId)
 
-                elif relation['role'] == roleItem:
+                elif rel['role'] == roleItem:
 
                     if self.scenes[scId].items is None:
                         self.scenes[scId].items = []
 
-                    itId = itIdsByGuid[relation['entity']]
+                    itId = itIdsByGuid[rel['entity']]
                     self.scenes[scId].items.append(itId)
 
-            #--- Get the timestamp for chronological sorting.
+            #--- Get date/time
 
-            timestamp = aeon2Event['rangeValues'][0]['position']['timestamp']
+            timestamp = 0
+
+            for rv in aeon2Event['rangeValues']:
+
+                if rv['rangeProperty'] == aeonDate:
+                    timestamp = rv['position']['timestamp']
+                    dt = datetime.min + timedelta(seconds=timestamp)
+
+                    if dt >= self.DATE_LIMIT:
+                        startDateTime = dt.isoformat().split('T')
+                        self.scenes[scId].date = startDateTime[0]
+                        self.scenes[scId].time = startDateTime[1]
+
+                    #--- Get scene duration.
+
+                    lastsDays = 0
+                    lastsHours = 0
+                    lastsMinutes = 0
+
+                    if 'years' in rv['span']:
+                        lastsDays = rv['span']['years'] * 365
+                        # Leap years are not taken into account
+
+                    if 'days' in rv['span']:
+                        lastsDays += rv['span']['days']
+
+                    if 'hours' in rv['span']:
+                        lastsHours = rv['span']['hours'] % 24
+                        lastsDays += rv['span']['hours'] // 24
+
+                    if 'minutes' in rv['span']:
+                        lastsMinutes = rv['span']['minutes'] % 60
+                        lastsHours += rv['span']['minutes'] // 60
+
+                    if 'seconds' in rv['span']:
+                        lastsMinutes += rv['span']['seconds'] // 60
+
+                    lastsHours += lastsMinutes // 60
+                    lastsMinutes %= 60
+                    lastsDays += lastsHours // 24
+                    lastsHours %= 24
+
+                    self.scenes[scId].lastsDays = str(lastsDays)
+                    self.scenes[scId].lastsHours = str(lastsHours)
+                    self.scenes[scId].lastsMinutes = str(lastsMinutes)
+
+            # Use the timestamp for chronological sorting.
 
             if not timestamp in scIdsByDate:
                 scIdsByDate[timestamp] = []
 
             scIdsByDate[timestamp].append(scId)
-
-            #--- Get date/time
-
-            #--- Get scene duration.
-
-            span = aeon2Event['rangeValues'][0]['span']
-            lastsDays = 0
-            lastsHours = 0
-            lastsMinutes = 0
-
-            if 'years' in span:
-                lastsDays = span['years'] * 365
-
-            if 'days' in span:
-                lastsDays += span['days']
-
-            if 'hours' in span:
-                lastsHours = span['hours'] % 24
-                lastsDays += span['hours'] // 24
-
-            if 'minutes' in span:
-                lastsMinutes = span['minutes'] % 60
-                lastsHours += span['minutes'] // 60
-
-            if 'seconds' in span:
-                lastsMinutes += span['seconds'] // 60
-
-            lastsHours += lastsMinutes // 60
-            lastsMinutes %= 60
-            lastsDays += lastsHours // 24
-            lastsHours %= 24
-
-            self.scenes[scId].lastsDays = str(lastsDays)
-            self.scenes[scId].lastsHours = str(lastsHours)
-            self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
         #--- Sort scenes by date/time and place them in chapters.
 
