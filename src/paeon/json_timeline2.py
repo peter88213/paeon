@@ -211,21 +211,27 @@ class JsonTimeline2(FileExport):
 
             self.scenes[scId].status = 1
 
-            #--- Make non-scene events "Note" type scenes.
+            #--- Evaluate properties.
 
             self.scenes[scId].isNotesScene = True
 
             for eventVal in aeon2Event['values']:
+
+                # Make scene event "Normal" type scene.
 
                 if eventVal['property'] == propertyScene:
 
                     if eventVal['value'] == self.VALUE_TRUE:
                         self.scenes[scId].isNotesScene = False
 
+                # Get scene description.
+
                 elif eventVal['property'] == propertyDescription:
 
                     if eventVal['value']:
                         self.scenes[scId].desc = eventVal['value']
+
+                # Get scene notes.
 
                 elif eventVal['property'] == propertyNotes:
 

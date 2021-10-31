@@ -182,6 +182,8 @@ class CsvTimeline2(FileExport):
                     if self.sceneMarker in row[self.sceneLabel]:
                         self.scenes[scId].isNotesScene = False
 
+                    #--- Get date/time of scenes that begin after 99-12-31 AD.
+
                     if not row['Start Date'] in scIdsByDate:
                         scIdsByDate[row['Start Date']] = []
 
@@ -189,18 +191,11 @@ class CsvTimeline2(FileExport):
                     startDateTime = row['Start Date'].split(' ')
                     startYear = int(startDateTime[0].split('-')[0])
 
-                    if len(startDateTime) > 2 or startYear < 100:
-
-                        # Substitute date/time, so yWriter would not prefix them with '19' or '20'.
-
-                        self.scenes[scId].date = Scene.NULL_DATE
-                        self.scenes[scId].time = Scene.NULL_TIME
-
-                    else:
+                    if len(startDateTime) <= 2 and startYear > 99:
                         self.scenes[scId].date = startDateTime[0]
                         self.scenes[scId].time = startDateTime[1]
 
-                        # Calculate duration of scenes that begin after 99-12-31.
+                        # Calculate duration.
 
                         sceneStart = datetime.fromisoformat(row['Start Date'])
                         sceneEnd = datetime.fromisoformat(row['End Date'])
@@ -212,20 +207,32 @@ class CsvTimeline2(FileExport):
                         self.scenes[scId].lastsHours = str(lastsHours)
                         self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
-                    if self.descriptionLabel in row:
+                    # Get scene description.
+
+                    if self.descriptionLabel in row and row[self.descriptionLabel]:
                         self.scenes[scId].desc = row[self.descriptionLabel]
 
-                    if self.notesLabel in row:
+                    # Get scene notes.
+
+                    if self.notesLabel in row and row[self.notesLabel]:
                         self.scenes[scId].sceneNotes = row[self.notesLabel]
+
+                    # Get scene tags.
 
                     if 'Tags' in row and row['Tags'] != '':
                         self.scenes[scId].tags = row['Tags'].split(internalDelimiter)
 
+                    # Get scene locations.
+
                     if self.locationLabel in row:
                         self.scenes[scId].locations = get_lcIds(row[self.locationLabel].split(internalDelimiter))
 
+                    # Get scene items.
+
                     if self.itemLabel in row:
                         self.scenes[scId].items = get_itIds(row[self.itemLabel].split(internalDelimiter))
+
+                    # Get scene characters and viewpoint.
 
                     if self.characterLabel in row:
                         self.scenes[scId].characters = get_crIds(row[self.characterLabel].split(internalDelimiter))
