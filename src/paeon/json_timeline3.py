@@ -85,9 +85,8 @@ class JsonTimeline3(FileExport):
                 adEra = i
                 break
 
-        # Create characters, locations, and items.
+        #--- Create characters, locations, and items.
 
-        itemsById = jsonData['data']['items']['byId']
         crIdsByGuid = {}
         lcIdsByGuid = {}
         itIdsByGuid = {}
@@ -95,43 +94,54 @@ class JsonTimeline3(FileExport):
         locationCount = 0
         itemCount = 0
 
-        for uid in itemsById:
-            aeon3Item = itemsById[uid]
+        for uid in jsonData['data']['items']['byId']:
+            dataItem = jsonData['data']['items']['byId'][uid]
 
-            if aeon3Item[self.ITEM_TYPE] == self.TYPE_CHARACTER:
+            if dataItem[self.ITEM_TYPE] == self.TYPE_CHARACTER:
                 characterCount += 1
                 crId = str(characterCount)
                 crIdsByGuid[uid] = crId
                 self.characters[crId] = Character()
-                self.characters[crId].title = aeon3Item[self.ITEM_LABEL]
-                self.characters[crId].desc = aeon3Item[self.ITEM_DESCRIPTION]
+                self.characters[crId].title = dataItem[self.ITEM_LABEL]
+                self.characters[crId].desc = dataItem[self.ITEM_DESCRIPTION]
                 self.srtCharacters.append(crId)
 
-            elif aeon3Item[self.ITEM_TYPE] == self.TYPE_LOCATION:
+            elif dataItem[self.ITEM_TYPE] == self.TYPE_LOCATION:
                 locationCount += 1
                 lcId = str(locationCount)
                 lcIdsByGuid[uid] = lcId
                 self.locations[lcId] = WorldElement()
-                self.locations[crId].title = aeon3Item[self.ITEM_LABEL]
-                self.locations[crId].desc = aeon3Item[self.ITEM_DESCRIPTION]
+                self.locations[crId].title = dataItem[self.ITEM_LABEL]
+                self.locations[crId].desc = dataItem[self.ITEM_DESCRIPTION]
                 self.srtLocations.append(lcId)
 
-        # Create scenes.
+            '''
+            elif dataItem[self.ITEM_TYPE] == self.TYPE_ITEM:
+                itemCount += 1
+                itId = str(itemCount)
+                itIdsByGuid[uid] = itId
+                self.items[itId] = WorldElement()
+                self.items[itId].title = dataItem[self.ITEM_LABEL]
+                self.items[itId].desc = dataItem[self.ITEM_DESCRIPTION]
+                self.srtItems.append(itId)
+            '''
+
+        #--- Create scenes.
 
         eventCount = 0
         scIdsByDate = {}
 
-        for uid in itemsById:
-            aeon3Item = itemsById[uid]
+        for uid in jsonData['data']['items']['byId']:
+            dataItem = jsonData['data']['items']['byId'][uid]
 
-            if aeon3Item[self.ITEM_TYPE] == self.TYPE_EVENT:
+            if dataItem[self.ITEM_TYPE] == self.TYPE_EVENT:
                 eventCount += 1
                 scId = str(eventCount)
                 self.scenes[scId] = Scene()
                 #self.scenes[scId].isNotesScene = noScene
-                self.scenes[scId].title = aeon3Item[self.ITEM_LABEL]
-                self.scenes[scId].desc = aeon3Item[self.ITEM_DESCRIPTION]
-                timestamp = aeon3Item[self.ITEM_START_DATE]['timestamp']
+                self.scenes[scId].title = dataItem[self.ITEM_LABEL]
+                self.scenes[scId].desc = dataItem[self.ITEM_DESCRIPTION]
+                timestamp = dataItem[self.ITEM_START_DATE]['timestamp']
 
                 if timestamp is None:
                     timestamp = 0
@@ -141,23 +151,31 @@ class JsonTimeline3(FileExport):
 
                 scIdsByDate[timestamp].append(scId)
 
-        # Sort scenes by date/time and place them in one single chapter.
+        #--- Sort scenes by date/time and place them in chapters.
 
-        chId = '1'
-        self.chapters[chId] = Chapter()
-        self.chapters[chId].title = 'Chapter 1'
-        self.srtChapters = [chId]
+        chIdNarrative = '1'
+        chIdBackground = '2'
+
+        self.chapters[chIdNarrative] = Chapter()
+        self.chapters[chIdNarrative].title = 'Chapter 1'
+        self.chapters[chIdNarrative].chType = 0
+        self.srtChapters.append(chIdNarrative)
+
+        self.chapters[chIdBackground] = Chapter()
+        self.chapters[chIdBackground].title = 'Background'
+        self.chapters[chIdBackground].chType = 1
+        self.srtChapters.append(chIdBackground)
+
         srtScenes = sorted(scIdsByDate.items())
 
         for date, scList in srtScenes:
 
             for scId in scList:
-                self.chapters[chId].srtScenes.append(scId)
+
+                if self.scenes[scId].isNotesScene:
+                    self.chapters[chIdBackground].srtScenes.append(scId)
+
+                else:
+                    self.chapters[chIdNarrative].srtScenes.append(scId)
 
         return 'SUCCESS: Data read from "' + os.path.normpath(self.filePath) + '".'
-
-
-if __name__ == '__main__':
-    kwargs = {}
-    timeline = JsonTimeline3(sys.argv[1])
-    timeline.read()
