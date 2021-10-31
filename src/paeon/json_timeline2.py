@@ -5,7 +5,6 @@ For further information see https://github.com/peter88213/aeon3yw
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-import sys
 import json
 from datetime import datetime
 from datetime import timedelta
@@ -43,16 +42,16 @@ class JsonTimeline2(FileExport):
 
         # JSON[template][properties][name]
 
-        self.propertyScene = kwargs['scene_label']
-        self.propertyDesc = kwargs['description_label']
-        self.propertyNotes = kwargs['notes_label']
+        self.propertyScene = kwargs['property_scene']
+        self.propertyDesc = kwargs['property_description']
+        self.propertyNotes = kwargs['property_notes']
 
         # JSON[template][types][name][roles]
 
-        self.roleLocation = kwargs['location_label']
-        self.roleItem = kwargs['item_label']
-        self.roleCharacter = kwargs['character_label']
-        self.roleViewpoint = kwargs['viewpoint_label']
+        self.roleLocation = kwargs['role_location']
+        self.roleItem = kwargs['role_item']
+        self.roleCharacter = kwargs['role_character']
+        self.roleViewpoint = kwargs['role_viewpoint']
 
         # JSON[template][types][name]
 

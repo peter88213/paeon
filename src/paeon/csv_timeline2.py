@@ -39,13 +39,13 @@ class CsvTimeline2(FileExport):
         """
         FileExport.__init__(self, filePath, **kwargs)
         self.sceneMarker = kwargs['scene_marker']
-        self.sceneLabel = kwargs['scene_label']
-        self.descriptionLabel = kwargs['description_label']
-        self.notesLabel = kwargs['notes_label']
-        self.locationLabel = kwargs['location_label']
-        self.itemLabel = kwargs['item_label']
-        self.characterLabel = kwargs['character_label']
-        self.viewpointLabel = kwargs['viewpoint_label']
+        self.sceneLabel = kwargs['property_scene']
+        self.descriptionLabel = kwargs['property_description']
+        self.notesLabel = kwargs['property_notes']
+        self.locationLabel = kwargs['role_location']
+        self.itemLabel = kwargs['role_item']
+        self.characterLabel = kwargs['role_character']
+        self.viewpointLabel = kwargs['role_viewpoint']
 
     def read(self):
         """Parse the csv file located at filePath, 
