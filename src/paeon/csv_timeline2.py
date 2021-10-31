@@ -22,6 +22,7 @@ class CsvTimeline2(FileExport):
     Represents a csv file with a record per scene.
     - Records are separated by line breaks.
     - Data fields are delimited by the _SEPARATOR character.
+    - Date/time is specified in  in ISO 8601 format (YYYY-MM-DD hh:mm:ss).
     """
 
     EXTENSION = '.csv'
@@ -29,9 +30,6 @@ class CsvTimeline2(FileExport):
     SUFFIX = ''
 
     _SEPARATOR = ','
-
-    # Events marked as "Scene" become
-    # regular scenes, the others become Notes scenes.
 
     def __init__(self, filePath, **kwargs):
         """Extend the superclass constructor,
@@ -48,12 +46,12 @@ class CsvTimeline2(FileExport):
         self.viewpointLabel = kwargs['role_viewpoint']
 
     def read(self):
-        """Parse the csv file located at filePath, 
-        fetching the Scene attributes contained.
-
-        Create one single chapter containing all scenes.
-
+        """Read the csv file located at filePath, and build a 
+        yWriter novel structure.
+        - Events marked as scenes are converted to scenes in one single chapter.
+        - Other events are converted to “Notes” scenes in another chapter.
         Return a message beginning with SUCCESS or ERROR.
+        Override the superclass method.
         """
         self.locationCount = 0
         self.locIdsByTitle = {}

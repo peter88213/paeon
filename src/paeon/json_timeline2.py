@@ -20,8 +20,7 @@ from paeon.aeon2_fop import extract_timeline
 
 class JsonTimeline2(FileExport):
     """File representation of an Aeon Timeline 2 project. 
-
-    Represents the JSON part of the project file.
+    Represents the .aeonzip file containing 'timeline.json'.
     """
 
     EXTENSION = '.aeonzip'
@@ -30,9 +29,6 @@ class JsonTimeline2(FileExport):
 
     VALUE_TRUE = '1'
     DATE_LIMIT = datetime(100, 1, 1)
-
-    # Events assigned to the "narrative" become
-    # regular scenes, the others become Notes scenes.
 
     def __init__(self, filePath, **kwargs):
         """Extend the superclass constructor,
@@ -60,11 +56,12 @@ class JsonTimeline2(FileExport):
         self.typeItem = kwargs['type_item']
 
     def read(self):
-        """Extract the JSON part of the Aeon Timeline 2 file located at filePath, 
-        fetching the relevant data.
-        Extend the superclass.
-
+        """Read the JSON part of the Aeon Timeline 2 file located at filePath, 
+        and build a yWriter novel structure.
+        - Events marked as scenes are converted to scenes in one single chapter.
+        - Other events are converted to “Notes” scenes in another chapter.
         Return a message beginning with SUCCESS or ERROR.
+        Override the superclass method.
         """
 
         jsonPart = extract_timeline(self.filePath)
