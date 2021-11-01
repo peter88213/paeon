@@ -9,7 +9,7 @@ import sys
 import json
 from datetime import datetime
 
-from pywriter.file.file_export import FileExport
+from pywriter.model.novel import Novel
 from pywriter.model.scene import Scene
 from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
@@ -18,7 +18,7 @@ from pywriter.model.character import Character
 from paeon.aeon3_fop import scan_file
 
 
-class JsonTimeline3(FileExport):
+class JsonTimeline3(Novel):
     """File representation of an Aeon Timeline 3 project. 
 
     Represents the JSON part of the project file.

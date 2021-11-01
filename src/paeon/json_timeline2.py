@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 from datetime import timedelta
 
-from pywriter.file.file_export import FileExport
+from pywriter.model.novel import Novel
 from pywriter.model.scene import Scene
 from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
@@ -18,7 +18,7 @@ from pywriter.model.character import Character
 from paeon.aeon2_fop import extract_timeline
 
 
-class JsonTimeline2(FileExport):
+class JsonTimeline2(Novel):
     """File representation of an Aeon Timeline 2 project. 
     Represents the .aeonzip file containing 'timeline.json'.
     """
@@ -34,7 +34,7 @@ class JsonTimeline2(FileExport):
         """Extend the superclass constructor,
         defining instance variables.
         """
-        FileExport.__init__(self, filePath, **kwargs)
+        Novel.__init__(self, filePath, **kwargs)
 
         # JSON[template][properties][name]
 

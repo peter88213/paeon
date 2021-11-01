@@ -9,14 +9,14 @@ import csv
 
 from datetime import datetime
 
-from pywriter.file.file_export import FileExport
+from pywriter.model.novel import Novel
 from pywriter.model.scene import Scene
 from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
 from pywriter.model.character import Character
 
 
-class CsvTimeline2(FileExport):
+class CsvTimeline2(Novel):
     """File representation of a csv file exported by Aeon Timeline 2. 
 
     Represents a csv file with a record per scene.
@@ -35,7 +35,7 @@ class CsvTimeline2(FileExport):
         """Extend the superclass constructor,
         defining instance variables.
         """
-        FileExport.__init__(self, filePath, **kwargs)
+        Novel.__init__(self, filePath, **kwargs)
         self.sceneMarker = kwargs['scene_marker']
         self.sceneLabel = kwargs['property_scene']
         self.descriptionLabel = kwargs['property_description']

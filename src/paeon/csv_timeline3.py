@@ -9,7 +9,7 @@ import csv
 
 from datetime import datetime
 
-from pywriter.file.file_export import FileExport
+from pywriter.model.novel import Novel
 from pywriter.model.scene import Scene
 from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
@@ -18,7 +18,7 @@ from pywriter.model.character import Character
 from paeon.dt_helper import fix_iso_dt
 
 
-class CsvTimeline3(FileExport):
+class CsvTimeline3(Novel):
     """File representation of a csv file exported by Aeon Timeline 3. 
 
     Represents a csv file with a record per scene.
@@ -60,7 +60,7 @@ class CsvTimeline3(FileExport):
         """Extend the superclass constructor,
         defining instance variables.
         """
-        FileExport.__init__(self, filePath, **kwargs)
+        Novel.__init__(self, filePath, **kwargs)
         self.labels = []
         self.partNrPrefix = kwargs['part_number_prefix']
 
