@@ -304,18 +304,21 @@ class JsonTimeline2(Novel):
                 lastsMinutes = 0
 
                 if 'years' in evtRgv['span']:
-                    lastsDays = evtRgv['span']['years'] * 365
-                    # Leap years are not taken into account
+                    lastsDays += evtRgv['span']['years'] * 365
+                    # Todo: Process months and take leap years into account.
+
+                if 'weeks' in evtRgv['span']:
+                    lastsDays += evtRgv['span']['weeks'] * 7
 
                 if 'days' in evtRgv['span']:
                     lastsDays += evtRgv['span']['days']
 
                 if 'hours' in evtRgv['span']:
-                    lastsHours = evtRgv['span']['hours'] % 24
+                    lastsHours += evtRgv['span']['hours'] % 24
                     lastsDays += evtRgv['span']['hours'] // 24
 
                 if 'minutes' in evtRgv['span']:
-                    lastsMinutes = evtRgv['span']['minutes'] % 60
+                    lastsMinutes += evtRgv['span']['minutes'] % 60
                     lastsHours += evtRgv['span']['minutes'] // 60
 
                 if 'seconds' in evtRgv['span']:
