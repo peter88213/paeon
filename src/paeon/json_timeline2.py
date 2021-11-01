@@ -111,7 +111,7 @@ class JsonTimeline2(FileExport):
                     if tplTypRol['name'] == self.roleCharacter:
                         roleCharacter = tplTypRol['guid']
 
-                    if tplTypRol['name'] == self.roleViewpoint:
+                    elif tplTypRol['name'] == self.roleViewpoint:
                         roleViewpoint = tplTypRol['guid']
 
             elif tplTyp['name'] == self.typeLocation:
@@ -121,6 +121,7 @@ class JsonTimeline2(FileExport):
 
                     if tplTypRol['name'] == self.roleLocation:
                         roleLocation = tplTypRol['guid']
+                        break
 
             elif tplTyp['name'] == self.typeItem:
                 typeItem = tplTyp['guid']
@@ -129,6 +130,7 @@ class JsonTimeline2(FileExport):
 
                     if tplTypRol['name'] == self.roleItem:
                         roleItem = tplTypRol['guid']
+                        break
 
         #--- Create characters, locations, and items.
 
