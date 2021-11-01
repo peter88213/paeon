@@ -66,7 +66,7 @@ class CorruptedData(unittest.TestCase):
     def setUp(self):
         """Create an example project file with corrupted data.
         """
-        corruptedContent = 'abcdefg{123'
+        corruptedContent = '   (               3333""""""""{"definitions"'
 
         with open(TEST_DATA, 'w') as f:
             f.write(corruptedContent)
@@ -87,7 +87,7 @@ class CorruptedData(unittest.TestCase):
         Expected result: program abort with error message.
         """
         message = scan_file(TEST_DATA)
-        self.assertEqual(message, '')
+        self.assertEqual(message, 'ERROR: Corrupted data.')
 
 
 class FileAccessError(unittest.TestCase):

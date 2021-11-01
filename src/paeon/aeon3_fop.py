@@ -26,7 +26,6 @@ def scan_file(filePath):
     # JSON part: all characters between the first and last curly bracket.
 
     chrData = []
-    chrList = []
     opening = ord('{')
     closing = ord('}')
     level = 0
@@ -40,15 +39,16 @@ def scan_file(filePath):
             chrData.append(c)
 
             if c == closing:
-                chrList.extend(chrData)
-                chrData = []
                 level -= 1
 
                 if level == 0:
                     break
 
+    if level != 0:
+        return 'ERROR: Corrupted data.'
+
     try:
-        jsonStr = codecs.decode(bytes(chrList), encoding='utf-8')
+        jsonStr = codecs.decode(bytes(chrData), encoding='utf-8')
 
     except:
         return 'ERROR: Cannot decode "' + os.path.normpath(filePath) + '".'
