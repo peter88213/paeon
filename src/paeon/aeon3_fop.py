@@ -27,21 +27,26 @@ def scan_file(filePath):
 
     chrData = []
     chrList = []
-    inStr = False
     opening = ord('{')
     closing = ord('}')
+    level = 0
 
     for c in binInput:
 
         if c == opening:
-            inStr = True
+            level += 1
 
-        if inStr:
+        if level > 0:
             chrData.append(c)
 
             if c == closing:
                 chrList.extend(chrData)
                 chrData = []
+                level -= 1
+
+                if level == 0:
+                    break
+
     try:
         jsonStr = codecs.decode(bytes(chrList), encoding='utf-8')
 
