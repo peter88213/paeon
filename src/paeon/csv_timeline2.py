@@ -176,9 +176,11 @@ class CsvTimeline2(Novel):
                     #--- Make non-scene events "Note" type scenes.
 
                     self.scenes[scId].isNotesScene = True
+                    self.scenes[scId].isUnused = True
 
                     if self.sceneMarker in row[self.sceneLabel]:
                         self.scenes[scId].isNotesScene = False
+                        self.scenes[scId].isUnused = False
 
                     #--- Get date/time of scenes that begin after 99-12-31 AD.
 

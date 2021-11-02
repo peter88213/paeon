@@ -209,6 +209,7 @@ class JsonTimeline2(Novel):
             #--- Evaluate properties.
 
             self.scenes[scId].isNotesScene = True
+            self.scenes[scId].isUnused = True
 
             for evtVal in evt['values']:
 
@@ -218,6 +219,7 @@ class JsonTimeline2(Novel):
 
                     if evtVal['value'] == self.VALUE_YES:
                         self.scenes[scId].isNotesScene = False
+                        self.scenes[scId].isUnused = False
 
                 # Get scene description.
 
