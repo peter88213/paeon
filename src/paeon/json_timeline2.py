@@ -27,8 +27,11 @@ class JsonTimeline2(Novel):
     DESCRIPTION = 'Aeon Timeline 2 project'
     SUFFIX = ''
 
-    VALUE_TRUE = '1'
-    DATE_LIMIT = datetime(100, 1, 1)
+    VALUE_YES = '1'
+    # JSON representation of "yes" in Aeon2 "yes/no" properties
+
+    DATE_LIMIT = (datetime(100, 1, 1) - datetime.min).total_seconds()
+    # Dates before 100-01-01 can not be displayed properly in yWriter
 
     def __init__(self, filePath, **kwargs):
         """Extend the superclass constructor,
@@ -213,7 +216,7 @@ class JsonTimeline2(Novel):
 
                 if evtVal['property'] == propertyScene:
 
-                    if evtVal['value'] == self.VALUE_TRUE:
+                    if evtVal['value'] == self.VALUE_YES:
                         self.scenes[scId].isNotesScene = False
 
                 # Get scene description.
@@ -289,65 +292,67 @@ class JsonTimeline2(Novel):
                 if evtRgv['rangeProperty'] == aeonDate:
                     timestamp = evtRgv['position']['timestamp']
 
-                    if timestamp > 0:
+                    if timestamp >= self.DATE_LIMIT:
+                        # Restrict date/time calculation to dates within yWriter's range
+
                         sceneStart = datetime.min + timedelta(seconds=timestamp)
+                        startDateTime = sceneStart.isoformat().split('T')
+                        self.scenes[scId].date = startDateTime[0]
+                        self.scenes[scId].time = startDateTime[1]
 
-                        if sceneStart >= self.DATE_LIMIT:
-                            startDateTime = sceneStart.isoformat().split('T')
-                            self.scenes[scId].date = startDateTime[0]
-                            self.scenes[scId].time = startDateTime[1]
+                        # Calculate duration
 
-                            # Calculate duration
+                        if 'years' in evtRgv['span'] or 'months' in evtRgv['span']:
+                            endYear = sceneStart.year
+                            endMonth = sceneStart.month
 
-                            if 'years' in evtRgv['span'] or 'months' in evtRgv['span']:
-                                endYear = sceneStart.year
-                                endMonth = sceneStart.month
+                            if 'years' in evtRgv['span']:
+                                endYear += evtRgv['span']['years']
 
-                                if 'years' in evtRgv['span']:
-                                    endYear += evtRgv['span']['years']
+                            if 'months' in evtRgv['span']:
+                                endYear += evtRgv['span']['months'] // 12
+                                endMonth += evtRgv['span']['months']
 
-                                if 'months' in evtRgv['span']:
-                                    endYear += evtRgv['span']['months'] // 12
-                                    endMonth += evtRgv['span']['months']
+                                while endMonth > 12:
+                                    endMonth -= 12
 
-                                    while endMonth > 12:
-                                        endMonth -= 12
+                            sceneEnd = datetime(endYear, endMonth, sceneStart.day)
+                            sceneDuration = sceneEnd - sceneStart
+                            lastsDays = sceneDuration.days
+                            lastsHours = sceneDuration.seconds // 3600
+                            lastsMinutes = (sceneDuration.seconds % 3600) // 60
 
-                                sceneEnd = datetime(endYear, endMonth, sceneStart.day)
-                                sceneDuration = sceneEnd - sceneStart
-                                lastsDays = sceneDuration.days
-                                lastsHours = sceneDuration.seconds // 3600
-                                lastsMinutes = (sceneDuration.seconds % 3600) // 60
+                        else:
+                            lastsDays = 0
+                            lastsHours = 0
+                            lastsMinutes = 0
 
-                            else:
-                                lastsDays = 0
-                                lastsHours = 0
-                                lastsMinutes = 0
+                        if 'weeks' in evtRgv['span']:
+                            lastsDays += evtRgv['span']['weeks'] * 7
 
-                            if 'weeks' in evtRgv['span']:
-                                lastsDays += evtRgv['span']['weeks'] * 7
+                        if 'days' in evtRgv['span']:
+                            lastsDays += evtRgv['span']['days']
 
-                            if 'days' in evtRgv['span']:
-                                lastsDays += evtRgv['span']['days']
+                        if 'hours' in evtRgv['span']:
+                            lastsDays += evtRgv['span']['hours'] // 24
+                            lastsHours += evtRgv['span']['hours'] % 24
 
-                            if 'hours' in evtRgv['span']:
-                                lastsDays += evtRgv['span']['hours'] // 24
-                                lastsHours += evtRgv['span']['hours'] % 24
+                        if 'minutes' in evtRgv['span']:
+                            lastsHours += evtRgv['span']['minutes'] // 60
+                            lastsMinutes += evtRgv['span']['minutes'] % 60
 
-                            if 'minutes' in evtRgv['span']:
-                                lastsHours += evtRgv['span']['minutes'] // 60
-                                lastsMinutes += evtRgv['span']['minutes'] % 60
+                        if 'seconds' in evtRgv['span']:
+                            lastsMinutes += evtRgv['span']['seconds'] // 60
 
-                            if 'seconds' in evtRgv['span']:
-                                lastsMinutes += evtRgv['span']['seconds'] // 60
+                        lastsHours += lastsMinutes // 60
+                        lastsMinutes %= 60
+                        lastsDays += lastsHours // 24
+                        lastsHours %= 24
+                        self.scenes[scId].lastsDays = str(lastsDays)
+                        self.scenes[scId].lastsHours = str(lastsHours)
+                        self.scenes[scId].lastsMinutes = str(lastsMinutes)
 
-                            lastsHours += lastsMinutes // 60
-                            lastsMinutes %= 60
-                            lastsDays += lastsHours // 24
-                            lastsHours %= 24
-                            self.scenes[scId].lastsDays = str(lastsDays)
-                            self.scenes[scId].lastsHours = str(lastsHours)
-                            self.scenes[scId].lastsMinutes = str(lastsMinutes)
+                break
 
             # Use the timestamp for chronological sorting.
 
