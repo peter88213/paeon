@@ -41,7 +41,7 @@ class JsonTimeline2(Novel):
 
         # JSON[entities][name]
 
-        self.entitiyNarrative = kwargs['entity_narrative']
+        self.entityNarrative = kwargs['narrative_arc']
 
         # JSON[template][properties][name]
 
@@ -53,7 +53,6 @@ class JsonTimeline2(Novel):
         self.roleLocation = kwargs['role_location']
         self.roleItem = kwargs['role_item']
         self.roleCharacter = kwargs['role_character']
-        self.roleViewpoint = kwargs['role_viewpoint']
 
         # JSON[template][types][name]
 
@@ -105,7 +104,6 @@ class JsonTimeline2(Novel):
         typeItem = None
         roleArc = None
         roleCharacter = None
-        roleViewpoint = None
         roleLocation = None
         roleItem = None
 
@@ -126,9 +124,6 @@ class JsonTimeline2(Novel):
 
                     if tplTypRol['name'] == self.roleCharacter:
                         roleCharacter = tplTypRol['guid']
-
-                    elif tplTypRol['name'] == self.roleViewpoint:
-                        roleViewpoint = tplTypRol['guid']
 
             elif tplTyp['name'] == self.typeLocation:
                 typeLocation = tplTyp['guid']
@@ -162,7 +157,7 @@ class JsonTimeline2(Novel):
 
             if ent['entityType'] == typeArc:
 
-                if ent['name'] == self.entitiyNarrative:
+                if ent['name'] == self.entityNarrative:
                     entityNarrative = ent['guid']
 
             elif ent['entityType'] == typeCharacter:
@@ -195,7 +190,6 @@ class JsonTimeline2(Novel):
 
         #--- Get GUID of user defined properties.
 
-        propertyScene = None
         propertyDescription = None
         propertyNotes = None
 
