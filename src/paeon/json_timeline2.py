@@ -39,9 +39,12 @@ class JsonTimeline2(Novel):
         """
         Novel.__init__(self, filePath, **kwargs)
 
+        # JSON[entities][name]
+
+        self.entitiyNarrative = kwargs['entity_narrative']
+
         # JSON[template][properties][name]
 
-        self.propertyScene = kwargs['property_scene']
         self.propertyDesc = kwargs['property_description']
         self.propertyNotes = kwargs['property_notes']
 
@@ -96,9 +99,11 @@ class JsonTimeline2(Novel):
 
         #--- Get GUID of user defined types and roles.
 
+        typeArc = None
         typeCharacter = None
         typeLocation = None
         typeItem = None
+        roleArc = None
         roleCharacter = None
         roleViewpoint = None
         roleLocation = None
@@ -106,7 +111,15 @@ class JsonTimeline2(Novel):
 
         for tplTyp in jsonData['template']['types']:
 
-            if tplTyp['name'] == self.typeCharacter:
+            if tplTyp['name'] == 'Arc':
+                typeArc = tplTyp['guid']
+
+                for tplTypRol in tplTyp['roles']:
+
+                    if tplTypRol['name'] == 'Arc':
+                        roleArc = tplTypRol['guid']
+
+            elif tplTyp['name'] == self.typeCharacter:
                 typeCharacter = tplTyp['guid']
 
                 for tplTypRol in tplTyp['roles']:
@@ -143,10 +156,16 @@ class JsonTimeline2(Novel):
         characterCount = 0
         locationCount = 0
         itemCount = 0
+        entityNarrative = None
 
         for ent in jsonData['entities']:
 
-            if ent['entityType'] == typeCharacter:
+            if ent['entityType'] == typeArc:
+
+                if ent['name'] == self.entitiyNarrative:
+                    entityNarrative = ent['guid']
+
+            elif ent['entityType'] == typeCharacter:
                 characterCount += 1
                 crId = str(characterCount)
                 crIdsByGuid[ent['guid']] = crId
@@ -182,10 +201,7 @@ class JsonTimeline2(Novel):
 
         for tplPrp in jsonData['template']['properties']:
 
-            if tplPrp['name'] == self.propertyScene:
-                propertyScene = tplPrp['guid']
-
-            elif tplPrp['name'] == self.propertyDesc:
+            if tplPrp['name'] == self.propertyDesc:
                 propertyDescription = tplPrp['guid']
 
             elif tplPrp['name'] == self.propertyNotes:
@@ -208,22 +224,11 @@ class JsonTimeline2(Novel):
 
             #--- Evaluate properties.
 
-            self.scenes[scId].isNotesScene = True
-            self.scenes[scId].isUnused = True
-
             for evtVal in evt['values']:
-
-                # Make scene event "Normal" type scene.
-
-                if evtVal['property'] == propertyScene:
-
-                    if evtVal['value'] == self.VALUE_YES:
-                        self.scenes[scId].isNotesScene = False
-                        self.scenes[scId].isUnused = False
 
                 # Get scene description.
 
-                elif evtVal['property'] == propertyDescription:
+                if evtVal['property'] == propertyDescription:
 
                     if evtVal['value']:
                         self.scenes[scId].desc = evtVal['value']
@@ -245,29 +250,28 @@ class JsonTimeline2(Novel):
                 for evtTag in evt['tags']:
                     self.scenes[scId].tags.append(evtTag)
 
-            #--- Get characters, locations, and items.
+            #--- Find scenes and get characters, locations, and items.
+
+            self.scenes[scId].isNotesScene = True
+            self.scenes[scId].isUnused = True
 
             for evtRel in evt['relationships']:
 
-                if evtRel['role'] == roleCharacter:
+                if evtRel['role'] == roleArc:
+
+                    # Make scene event "Normal" type scene.
+
+                    if entityNarrative and evtRel['entity'] == entityNarrative:
+                        self.scenes[scId].isNotesScene = False
+                        self.scenes[scId].isUnused = False
+
+                elif evtRel['role'] == roleCharacter:
 
                     if self.scenes[scId].characters is None:
                         self.scenes[scId].characters = []
 
                     crId = crIdsByGuid[evtRel['entity']]
                     self.scenes[scId].characters.append(crId)
-
-                elif evtRel['role'] == roleViewpoint:
-
-                    crId = crIdsByGuid[evtRel['entity']]
-
-                    if self.scenes[scId].characters is None:
-                        self.scenes[scId].characters = []
-
-                    elif crId in self.scenes[scId].characters:
-                        self.scenes[scId].characters.remove[crId]
-
-                    self.scenes[scId].characters.insert(0, crId)
 
                 elif evtRel['role'] == roleLocation:
 
