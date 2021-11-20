@@ -6,11 +6,13 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import zipfile
 import codecs
+import json
 
 
-def extract_timeline(filePath):
+def open_timeline(filePath):
     """Unzip the project file and read 'timeline.json'.
-    Return a string containing either the JSON string or an error message.
+    Return a message beginning with SUCCESS or ERROR
+    and the JSON timeline structure.
     """
 
     try:
@@ -19,6 +21,31 @@ def extract_timeline(filePath):
             jsonStr = codecs.decode(jsonBytes, encoding='utf-8')
 
     except:
-        return 'ERROR: Cannot read JSON data.'
+        return 'ERROR: Cannot read JSON data.', None
 
-    return jsonStr
+    if not jsonStr:
+        return 'ERROR: No JSON part found.', None
+
+    try:
+        jsonData = json.loads(jsonStr)
+
+    except('JSONDecodeError'):
+        return 'ERROR: Invalid JSON data.'
+        None
+
+    return 'SUCCESS', jsonData
+
+
+def save_timeline(jsonData, filePath):
+    """Write the jsonData structure to a zipfile located at filePath.
+    Return a message beginning with SUCCESS or ERROR.
+    """
+
+    try:
+        with zipfile.ZipFile(filePath, 'w', encoding='utf-8', compress_type=zipfile.ZIP_DEFLATED) as f:
+            f.writestr('timeline.json', json.dumps(jsonData))
+
+    except:
+        return 'ERROR: Cannot write JSON data.'
+
+    return 'SUCCESS'

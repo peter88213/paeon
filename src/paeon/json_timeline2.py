@@ -15,7 +15,8 @@ from pywriter.model.chapter import Chapter
 from pywriter.model.world_element import WorldElement
 from pywriter.model.character import Character
 
-from paeon.aeon2_fop import extract_timeline
+from paeon.aeon2_fop import open_timeline
+from paeon.aeon2_fop import save_timeline
 
 
 class JsonTimeline2(Novel):
@@ -60,6 +61,8 @@ class JsonTimeline2(Novel):
         self.typeLocation = kwargs['type_location']
         self.typeItem = kwargs['type_item']
 
+        self.jsonData = None
+
     def read(self):
         """Read the JSON part of the Aeon Timeline 2 file located at filePath, 
         and build a yWriter novel structure.
@@ -69,23 +72,14 @@ class JsonTimeline2(Novel):
         Override the superclass method.
         """
 
-        jsonPart = extract_timeline(self.filePath)
+        message, self.jsonData = open_timeline(self.filePath)
 
-        if not jsonPart:
-            return 'ERROR: No JSON part found.'
-
-        elif jsonPart.startswith('ERROR'):
-            return jsonPart
-
-        try:
-            jsonData = json.loads(jsonPart)
-
-        except('JSONDecodeError'):
-            return 'ERROR: Invalid JSON data.'
+        if message.startswith('ERROR'):
+            return message
 
         #--- Get the date definition.
 
-        for tplRgp in jsonData['template']['rangeProperties']:
+        for tplRgp in self.jsonData['template']['rangeProperties']:
 
             if tplRgp['type'] == 'date':
                 aeonDate = ''
@@ -107,7 +101,7 @@ class JsonTimeline2(Novel):
         roleLocation = None
         roleItem = None
 
-        for tplTyp in jsonData['template']['types']:
+        for tplTyp in self.jsonData['template']['types']:
 
             if tplTyp['name'] == 'Arc':
                 typeArc = tplTyp['guid']
@@ -153,7 +147,7 @@ class JsonTimeline2(Novel):
         itemCount = 0
         entityNarrative = None
 
-        for ent in jsonData['entities']:
+        for ent in self.jsonData['entities']:
 
             if ent['entityType'] == typeArc:
 
@@ -193,7 +187,7 @@ class JsonTimeline2(Novel):
         propertyDescription = None
         propertyNotes = None
 
-        for tplPrp in jsonData['template']['properties']:
+        for tplPrp in self.jsonData['template']['properties']:
 
             if tplPrp['name'] == self.propertyDesc:
                 propertyDescription = tplPrp['guid']
@@ -206,7 +200,7 @@ class JsonTimeline2(Novel):
         eventCount = 0
         scIdsByDate = {}
 
-        for evt in jsonData['events']:
+        for evt in self.jsonData['events']:
             eventCount += 1
             scId = str(eventCount)
             self.scenes[scId] = Scene()
@@ -465,16 +459,5 @@ class JsonTimeline2(Novel):
     def write(self):
         """Write selected properties to the file.
         """
-        jsonPart = extract_timeline(self.filePath)
 
-        if not jsonPart:
-            return 'ERROR: No JSON part found.'
-
-        elif jsonPart.startswith('ERROR'):
-            return jsonPart
-
-        try:
-            jsonData = json.loads(jsonPart)
-
-        except('JSONDecodeError'):
-            return 'ERROR: Invalid JSON data.'
+        message = save_timeline(self.jsonData, self.filePath)
