@@ -17,6 +17,7 @@ from pywriter.model.character import Character
 
 from paeon.aeon2_fop import open_timeline
 from paeon.aeon2_fop import save_timeline
+from paeon.uid_helper import get_uid
 
 
 class JsonTimeline2(Novel):
@@ -34,11 +35,16 @@ class JsonTimeline2(Novel):
     DATE_LIMIT = (datetime(100, 1, 1) - datetime.min).total_seconds()
     # Dates before 100-01-01 can not be displayed properly in yWriter
 
+    DEFAULT_COLOR = 'Red'
+    # Default color for scene events
+
     def __init__(self, filePath, **kwargs):
         """Extend the superclass constructor,
         defining instance variables.
         """
         Novel.__init__(self, filePath, **kwargs)
+
+        self.jsonData = None
 
         # JSON[entities][name]
 
@@ -61,7 +67,22 @@ class JsonTimeline2(Novel):
         self.typeLocation = kwargs['type_location']
         self.typeItem = kwargs['type_item']
 
-        self.jsonData = None
+        # GUIDs
+
+        self.tplDateGuid = None
+        self.typeArcGuid = None
+        self.typeCharacterGuid = None
+        self.typeLocationGuid = None
+        self.typeItemGuid = None
+        self.roleArcGuid = None
+        self.roleCharacterGuid = None
+        self.roleLocationGuid = None
+        self.roleItemGuid = None
+
+        # Miscellaneous
+
+        self.displayIdMax = 0.0
+        self.colors = {}
 
     def read(self):
         """Read the JSON part of the Aeon Timeline 2 file located at filePath, 
@@ -77,64 +98,60 @@ class JsonTimeline2(Novel):
         if message.startswith('ERROR'):
             return message
 
+        #--- Get the color definitions.
+
+        for tplCol in self.jsonData['template']['colors']:
+            self.colors[tplCol['name']] = tplCol['guid']
+
         #--- Get the date definition.
 
         for tplRgp in self.jsonData['template']['rangeProperties']:
 
             if tplRgp['type'] == 'date':
-                aeonDate = ''
+                self.tplDateGuid = ''
 
                 for tplRgpCalEra in tplRgp['calendar']['eras']:
 
                     if tplRgpCalEra['name'] == 'AD':
-                        aeonDate = tplRgp['guid']
+                        self.tplDateGuid = tplRgp['guid']
                         break
 
         #--- Get GUID of user defined types and roles.
 
-        typeArc = None
-        typeCharacter = None
-        typeLocation = None
-        typeItem = None
-        roleArc = None
-        roleCharacter = None
-        roleLocation = None
-        roleItem = None
-
         for tplTyp in self.jsonData['template']['types']:
 
             if tplTyp['name'] == 'Arc':
-                typeArc = tplTyp['guid']
+                self.typeArcGuid = tplTyp['guid']
 
                 for tplTypRol in tplTyp['roles']:
 
                     if tplTypRol['name'] == 'Arc':
-                        roleArc = tplTypRol['guid']
+                        self.roleArcGuid = tplTypRol['guid']
 
             elif tplTyp['name'] == self.typeCharacter:
-                typeCharacter = tplTyp['guid']
+                self.typeCharacterGuid = tplTyp['guid']
 
                 for tplTypRol in tplTyp['roles']:
 
                     if tplTypRol['name'] == self.roleCharacter:
-                        roleCharacter = tplTypRol['guid']
+                        self.roleCharacterGuid = tplTypRol['guid']
 
             elif tplTyp['name'] == self.typeLocation:
-                typeLocation = tplTyp['guid']
+                self.typeLocationGuid = tplTyp['guid']
 
                 for tplTypRol in tplTyp['roles']:
 
                     if tplTypRol['name'] == self.roleLocation:
-                        roleLocation = tplTypRol['guid']
+                        self.roleLocationGuid = tplTypRol['guid']
                         break
 
             elif tplTyp['name'] == self.typeItem:
-                typeItem = tplTyp['guid']
+                self.typeItemGuid = tplTyp['guid']
 
                 for tplTypRol in tplTyp['roles']:
 
                     if tplTypRol['name'] == self.roleItem:
-                        roleItem = tplTypRol['guid']
+                        self.roleItemGuid = tplTypRol['guid']
                         break
 
         #--- Create characters, locations, and items.
@@ -149,12 +166,12 @@ class JsonTimeline2(Novel):
 
         for ent in self.jsonData['entities']:
 
-            if ent['entityType'] == typeArc:
+            if ent['entityType'] == self.typeArcGuid:
 
                 if ent['name'] == self.entityNarrative:
                     entityNarrative = ent['guid']
 
-            elif ent['entityType'] == typeCharacter:
+            elif ent['entityType'] == self.typeCharacterGuid:
                 characterCount += 1
                 crId = str(characterCount)
                 crIdsByGuid[ent['guid']] = crId
@@ -166,7 +183,7 @@ class JsonTimeline2(Novel):
 
                 self.srtCharacters.append(crId)
 
-            elif ent['entityType'] == typeLocation:
+            elif ent['entityType'] == self.typeLocationGuid:
                 locationCount += 1
                 lcId = str(locationCount)
                 lcIdsByGuid[ent['guid']] = lcId
@@ -174,7 +191,7 @@ class JsonTimeline2(Novel):
                 self.locations[lcId].title = ent['name']
                 self.srtLocations.append(lcId)
 
-            elif ent['entityType'] == typeItem:
+            elif ent['entityType'] == self.typeItemGuid:
                 itemCount += 1
                 itId = str(itemCount)
                 itIdsByGuid[ent['guid']] = itId
@@ -205,6 +222,11 @@ class JsonTimeline2(Novel):
             scId = str(eventCount)
             self.scenes[scId] = Scene()
             self.scenes[scId].title = evt['title']
+
+            displayId = float(evt['displayId'])
+
+            if displayId > self.displayIdMax:
+                self.displayIdMax = displayId
 
             # Set scene status = "Outline".
 
@@ -245,7 +267,7 @@ class JsonTimeline2(Novel):
 
             for evtRel in evt['relationships']:
 
-                if evtRel['role'] == roleArc:
+                if evtRel['role'] == self.roleArcGuid:
 
                     # Make scene event "Normal" type scene.
 
@@ -253,7 +275,7 @@ class JsonTimeline2(Novel):
                         self.scenes[scId].isNotesScene = False
                         self.scenes[scId].isUnused = False
 
-                elif evtRel['role'] == roleCharacter:
+                elif evtRel['role'] == self.roleCharacterGuid:
 
                     if self.scenes[scId].characters is None:
                         self.scenes[scId].characters = []
@@ -261,7 +283,7 @@ class JsonTimeline2(Novel):
                     crId = crIdsByGuid[evtRel['entity']]
                     self.scenes[scId].characters.append(crId)
 
-                elif evtRel['role'] == roleLocation:
+                elif evtRel['role'] == self.roleLocationGuid:
 
                     if self.scenes[scId].locations is None:
                         self.scenes[scId].locations = []
@@ -269,7 +291,7 @@ class JsonTimeline2(Novel):
                     lcId = lcIdsByGuid[evtRel['entity']]
                     self.scenes[scId].locations.append(lcId)
 
-                elif evtRel['role'] == roleItem:
+                elif evtRel['role'] == self.roleItemGuid:
 
                     if self.scenes[scId].items is None:
                         self.scenes[scId].items = []
@@ -283,7 +305,7 @@ class JsonTimeline2(Novel):
 
             for evtRgv in evt['rangeValues']:
 
-                if evtRgv['rangeProperty'] == aeonDate:
+                if evtRgv['rangeProperty'] == self.tplDateGuid:
                     timestamp = evtRgv['position']['timestamp']
 
                     if timestamp >= self.DATE_LIMIT:
@@ -459,5 +481,38 @@ class JsonTimeline2(Novel):
     def write(self):
         """Write selected properties to the file.
         """
+        def get_display_id():
+            self.displayIdMax += 1
+            return str(int(self.displayIdMax))
 
-        message = save_timeline(self.jsonData, self.filePath)
+        def build_event(scene):
+            """Convert a scene into an event.
+            """
+            rangeValue = dict(
+                minimumZoom=-1,
+                position={
+                    'precision': 'minute',
+                    'timestamp': get_timestamp(scene)
+                },
+                rangeProperty=self.tplDateGuid,
+                span=get_span(scene),
+            )
+
+            event = dict(
+                attachments=[],
+                color=self.colors[self.DEFAULT_COLOR],
+                displayId=get_display_id(),
+                guid=get_uid(),
+                links=[],
+                locked=False,
+                priority='500',
+                rangeValues=[],
+                relationships=[],
+                tags=scene.tags,
+                title=scene.title,
+                values=[],
+            )
+
+            return event
+
+        return save_timeline(self.jsonData, self.filePath)
