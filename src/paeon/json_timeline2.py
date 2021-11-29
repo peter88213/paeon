@@ -5,7 +5,6 @@ For further information see https://github.com/peter88213/paeon
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-import json
 from datetime import datetime
 from datetime import timedelta
 
@@ -84,6 +83,7 @@ class JsonTimeline2(Novel):
 
         # Miscellaneous
 
+        self.timestampMax = 0
         self.displayIdMax = 0.0
         self.colors = {}
 
@@ -262,45 +262,6 @@ class JsonTimeline2(Novel):
                 for evtTag in evt['tags']:
                     self.scenes[scId].tags.append(evtTag)
 
-            #--- Find scenes and get characters, locations, and items.
-
-            self.scenes[scId].isNotesScene = True
-            self.scenes[scId].isUnused = True
-
-            for evtRel in evt['relationships']:
-
-                if evtRel['role'] == self.roleArcGuid:
-
-                    # Make scene event "Normal" type scene.
-
-                    if self.entityNarrativeGuid and evtRel['entity'] == self.entityNarrativeGuid:
-                        self.scenes[scId].isNotesScene = False
-                        self.scenes[scId].isUnused = False
-
-                elif evtRel['role'] == self.roleCharacterGuid:
-
-                    if self.scenes[scId].characters is None:
-                        self.scenes[scId].characters = []
-
-                    crId = crIdsByGuid[evtRel['entity']]
-                    self.scenes[scId].characters.append(crId)
-
-                elif evtRel['role'] == self.roleLocationGuid:
-
-                    if self.scenes[scId].locations is None:
-                        self.scenes[scId].locations = []
-
-                    lcId = lcIdsByGuid[evtRel['entity']]
-                    self.scenes[scId].locations.append(lcId)
-
-                elif evtRel['role'] == self.roleItemGuid:
-
-                    if self.scenes[scId].items is None:
-                        self.scenes[scId].items = []
-
-                    itId = itIdsByGuid[evtRel['entity']]
-                    self.scenes[scId].items.append(itId)
-
             #--- Get date/time/duration
 
             timestamp = 0
@@ -378,6 +339,48 @@ class JsonTimeline2(Novel):
                 scIdsByDate[timestamp] = []
 
             scIdsByDate[timestamp].append(scId)
+
+            #--- Find scenes and get characters, locations, and items.
+
+            self.scenes[scId].isNotesScene = True
+            self.scenes[scId].isUnused = True
+
+            for evtRel in evt['relationships']:
+
+                if evtRel['role'] == self.roleArcGuid:
+
+                    # Make scene event "Normal" type scene.
+
+                    if self.entityNarrativeGuid and evtRel['entity'] == self.entityNarrativeGuid:
+                        self.scenes[scId].isNotesScene = False
+                        self.scenes[scId].isUnused = False
+
+                        if timestamp > self.timestampMax:
+                            self.timestampMax = timestamp
+
+                elif evtRel['role'] == self.roleCharacterGuid:
+
+                    if self.scenes[scId].characters is None:
+                        self.scenes[scId].characters = []
+
+                    crId = crIdsByGuid[evtRel['entity']]
+                    self.scenes[scId].characters.append(crId)
+
+                elif evtRel['role'] == self.roleLocationGuid:
+
+                    if self.scenes[scId].locations is None:
+                        self.scenes[scId].locations = []
+
+                    lcId = lcIdsByGuid[evtRel['entity']]
+                    self.scenes[scId].locations.append(lcId)
+
+                elif evtRel['role'] == self.roleItemGuid:
+
+                    if self.scenes[scId].items is None:
+                        self.scenes[scId].items = []
+
+                    itId = itIdsByGuid[evtRel['entity']]
+                    self.scenes[scId].items.append(itId)
 
         #--- Sort scenes by date/time and place them in chapters.
 
@@ -489,7 +492,7 @@ class JsonTimeline2(Novel):
         def get_timestamp(scene):
             """Return a timestamp integer from the scene date.
             """
-            timestamp = int(self.DEFAULT_TIMESTAMP)
+            timestamp = int(self.timestampMax)
 
             try:
 
