@@ -7,6 +7,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 import zipfile
 import codecs
 import json
+import os
 
 
 def open_timeline(filePath):
@@ -42,10 +43,11 @@ def save_timeline(jsonData, filePath):
     """
 
     try:
-        with zipfile.ZipFile(filePath, 'w', encoding='utf-8', compress_type=zipfile.ZIP_DEFLATED) as f:
+
+        with zipfile.ZipFile(filePath, 'w') as f:
             f.writestr('timeline.json', json.dumps(jsonData))
 
     except:
         return 'ERROR: Cannot write JSON data.'
 
-    return 'SUCCESS'
+    return 'SUCCESS: "' + os.path.normpath(filePath) + '" written.'

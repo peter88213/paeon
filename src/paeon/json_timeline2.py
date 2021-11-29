@@ -80,6 +80,7 @@ class JsonTimeline2(Novel):
         self.roleCharacterGuid = None
         self.roleLocationGuid = None
         self.roleItemGuid = None
+        self.entityNarrativeGuid = None
 
         # Miscellaneous
 
@@ -164,14 +165,13 @@ class JsonTimeline2(Novel):
         characterCount = 0
         locationCount = 0
         itemCount = 0
-        entityNarrative = None
 
         for ent in self.jsonData['entities']:
 
             if ent['entityType'] == self.typeArcGuid:
 
                 if ent['name'] == self.entityNarrative:
-                    entityNarrative = ent['guid']
+                    self.entityNarrativeGuid = ent['guid']
 
             elif ent['entityType'] == self.typeCharacterGuid:
                 characterCount += 1
@@ -273,7 +273,7 @@ class JsonTimeline2(Novel):
 
                     # Make scene event "Normal" type scene.
 
-                    if entityNarrative and evtRel['entity'] == entityNarrative:
+                    if self.entityNarrativeGuid and evtRel['entity'] == self.entityNarrativeGuid:
                         self.scenes[scId].isNotesScene = False
                         self.scenes[scId].isUnused = False
 
@@ -476,7 +476,6 @@ class JsonTimeline2(Novel):
                 scIdMax += 1
                 newId = str(scIdMax)
                 self.scenes[newId] = source.scenes[srcId]
-                self.srtScenes.append(newId)
 
         return 'SUCCESS'
 
@@ -488,9 +487,9 @@ class JsonTimeline2(Novel):
             return str(int(self.displayIdMax))
 
         def get_timestamp(scene):
-            """Return a timestamp string from the scene date.
+            """Return a timestamp integer from the scene date.
             """
-            isoDt = self.DEFAULT_TIMESTAMP
+            timestamp = int(self.DEFAULT_TIMESTAMP)
 
             try:
 
@@ -500,25 +499,26 @@ class JsonTimeline2(Novel):
                     if scene.time:
                         isoDt += (' ' + scene.time)
 
-                    timestamp = (datetime.fromisoformat(isoDt) - datetime.min).total_seconds()
+                timestamp = int((datetime.fromisoformat(isoDt) - datetime.min).total_seconds())
 
             except:
                 pass
 
-            return str(timestamp)
+            return timestamp
 
         def get_span(scene):
             """Return a time span dictionary from the scene duration.
             """
             span = {}
 
-            try:
-                span['days'] = scene.lastsDays
-                span['hours'] = scene.lastsHours
-                span['minutes'] = scene.lastsMinutes
+            if scene.lastsDays:
+                span['days'] = int(scene.lastsDays)
 
-            except:
-                pass
+            if scene.lastsHours:
+                span['hours'] = int(scene.lastsHours)
+
+            if scene.lastsMinutes:
+                span['minutes'] = int(scene.lastsMinutes)
 
             return span
 
@@ -535,6 +535,12 @@ class JsonTimeline2(Novel):
                 span=get_span(scene),
             )
 
+            roleArc = dict(
+                entity=self.entityNarrativeGuid,
+                percentAllocated=1,
+                role=self.roleArcGuid,
+            )
+
             event = dict(
                 attachments=[],
                 color=self.colors[self.DEFAULT_COLOR],
@@ -542,14 +548,31 @@ class JsonTimeline2(Novel):
                 guid=get_uid(),
                 links=[],
                 locked=False,
-                priority='500',
-                rangeValues=[],
-                relationships=[],
-                tags=scene.tags,
+                priority=500,
+                rangeValues=[rangeValue],
+                relationships=[roleArc],
+                tags=[],
                 title=scene.title,
                 values=[],
             )
+            if scene.tags:
+                event['tags'] = scene.tags
 
             return event
+
+        #--- Create a list of event titles.
+
+        eventTitles = []
+
+        for evt in self.jsonData['events']:
+            eventTitles.append(evt['title'])
+
+        #--- Create new events from scenes not listed.
+
+        for scId in self.scenes:
+
+            if not self.scenes[scId].title in eventTitles:
+                newEvent = build_event(self.scenes[scId])
+                self.jsonData['events'].append(newEvent)
 
         return save_timeline(self.jsonData, self.filePath)
