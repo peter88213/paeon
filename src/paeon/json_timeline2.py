@@ -38,6 +38,8 @@ class JsonTimeline2(Novel):
     DEFAULT_COLOR = 'Red'
     # Default color for scene events
 
+    DEFAULT_TIMESTAMP = (datetime.now() - datetime.min).total_seconds()
+
     def __init__(self, filePath, **kwargs):
         """Extend the superclass constructor,
         defining instance variables.
@@ -484,6 +486,41 @@ class JsonTimeline2(Novel):
         def get_display_id():
             self.displayIdMax += 1
             return str(int(self.displayIdMax))
+
+        def get_timestamp(scene):
+            """Return a timestamp string from the scene date.
+            """
+            isoDt = self.DEFAULT_TIMESTAMP
+
+            try:
+
+                if scene.date:
+                    isoDt = scene.date
+
+                    if scene.time:
+                        isoDt += (' ' + scene.time)
+
+                    timestamp = (datetime.fromisoformat(isoDt) - datetime.min).total_seconds()
+
+            except:
+                pass
+
+            return str(timestamp)
+
+        def get_span(scene):
+            """Return a time span dictionary from the scene duration.
+            """
+            span = {}
+
+            try:
+                span['days'] = scene.lastsDays
+                span['hours'] = scene.lastsHours
+                span['minutes'] = scene.lastsMinutes
+
+            except:
+                pass
+
+            return span
 
         def build_event(scene):
             """Convert a scene into an event.
