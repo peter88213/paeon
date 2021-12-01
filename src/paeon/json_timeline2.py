@@ -165,10 +165,12 @@ class JsonTimeline2(Novel):
         characterCount = 0
         locationCount = 0
         itemCount = 0
+        arcCount = 0
 
         for ent in self.jsonData['entities']:
 
             if ent['entityType'] == self.typeArcGuid:
+                arcCount += 1
 
                 if ent['name'] == self.entityNarrative:
                     self.entityNarrativeGuid = ent['guid']
@@ -382,12 +384,55 @@ class JsonTimeline2(Novel):
                     itId = itIdsByGuid[evtRel['entity']]
                     self.scenes[scId].items.append(itId)
 
-        if self.roleArcGuid is not None and self.entityNarrativeGuid is not None:
-            self.narrativeArc = dict(
-                entity=self.entityNarrativeGuid,
-                percentAllocated=1,
-                role=self.roleArcGuid,
-            )
+        #--- Add "Arc" type, if missing.
+
+        if self.typeArcGuid is None:
+            self.typeArcGuid = get_uid()
+            self.roleArcGuid = get_uid()
+            typeCount = len(self.jsonData['template']['types'])
+            self.jsonData['template']['types'].append(
+                {
+                    'color': 'iconYellow',
+                    'guid': self.typeArcGuid,
+                    'icon': 'book',
+                    'name': 'Arc',
+                    'persistent': True,
+                    'roles': [
+                        {
+                            'allowsMultipleForEntity': True,
+                            'allowsMultipleForEvent': True,
+                            'allowsPercentAllocated': False,
+                            'guid': self.roleArcGuid,
+                            'icon': 'circle text',
+                            'mandatoryForEntity': False,
+                            'mandatoryForEvent': False,
+                            'name': 'Arc',
+                            'sortOrder': 0
+                        }
+                    ],
+                    'sortOrder': typeCount + 1
+                })
+
+        #--- Add "Narrative" arc, if missing.
+
+        if self.entityNarrativeGuid is None:
+            self.entityNarrativeGuid = get_uid()
+            self.jsonData['entities'].append(
+                {
+                    'entityType': self.typeArcGuid,
+                    'guid': self.entityNarrativeGuid,
+                    'icon': 'book',
+                    'name': self.entityNarrative,
+                    'notes': '',
+                    'sortOrder': arcCount + 1,
+                    'swatchColor': 'orange'
+                })
+
+        self.narrativeArc = dict(
+            entity=self.entityNarrativeGuid,
+            percentAllocated=1,
+            role=self.roleArcGuid,
+        )
 
         #--- Sort scenes by date/time and place them in chapters.
 
