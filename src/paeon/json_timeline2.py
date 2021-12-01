@@ -34,9 +34,6 @@ class JsonTimeline2(Novel):
     DATE_LIMIT = (datetime(100, 1, 1) - datetime.min).total_seconds()
     # Dates before 100-01-01 can not be displayed properly in yWriter
 
-    DEFAULT_COLOR = 'Red'
-    # Default color for scene events
-
     DEFAULT_TIMESTAMP = (datetime.now() - datetime.min).total_seconds()
 
     def __init__(self, filePath, **kwargs):
@@ -83,6 +80,8 @@ class JsonTimeline2(Novel):
 
         # Miscellaneous
 
+        self.sceneColor = kwargs['color_scene']
+        self.eventColor = kwargs['color_event']
         self.timestampMax = 0
         self.displayIdMax = 0.0
         self.colors = {}
@@ -473,7 +472,7 @@ class JsonTimeline2(Novel):
                 if source.scenes[srcId].lastsDays is not None:
                     self.scenes[scId].lastsDays = source.scenes[srcId].lastsDays
 
-            else:
+            elif source.scenes[srcId].isNotesScene or not source.scenes[srcId].isUnused:
                 # Create a new event.
 
                 scIdMax += 1
@@ -538,22 +537,30 @@ class JsonTimeline2(Novel):
                 span=get_span(scene),
             )
 
-            roleArc = dict(
-                entity=self.entityNarrativeGuid,
-                percentAllocated=1,
-                role=self.roleArcGuid,
-            )
+            relationships = []
+
+            if scene.isNotesScene:
+                evColor = self.colors[self.eventColor]
+
+            else:
+                narrativeArc = dict(
+                    entity=self.entityNarrativeGuid,
+                    percentAllocated=1,
+                    role=self.roleArcGuid,
+                )
+                relationships.append(narrativeArc)
+                evColor = self.colors[self.sceneColor]
 
             event = dict(
                 attachments=[],
-                color=self.colors[self.DEFAULT_COLOR],
+                color=evColor,
                 displayId=get_display_id(),
                 guid=get_uid(),
                 links=[],
                 locked=False,
                 priority=500,
                 rangeValues=[rangeValue],
-                relationships=[roleArc],
+                relationships=relationships,
                 tags=[],
                 title=scene.title,
                 values=[],
