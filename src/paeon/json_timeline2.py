@@ -419,6 +419,26 @@ class JsonTimeline2(Novel):
         if message.startswith('ERROR'):
             return message
 
+        # Check the source for ambiguous titles.
+
+        scIdsByTitles = {}
+
+        for chId in source.chapters:
+
+            if source.chapters[chId].isTrash:
+                continue
+
+            for scId in source.chapters[chId].srtScenes:
+
+                if source.scenes[scId].isUnused and not source.scenes[scId].isNotesScene:
+                    continue
+
+                if source.scenes[scId].title in scIdsByTitles:
+                    return 'ERROR: Ambiguous yWriter scene title "' + source.scenes[scId].title + '".'
+
+                else:
+                    scIdsByTitles[source.scenes[scId].title] = scId
+
         # Get scene titles.
 
         scIdsByTitles = {}
@@ -427,7 +447,7 @@ class JsonTimeline2(Novel):
         for scId in self.scenes:
 
             if self.scenes[scId].title in scIdsByTitles:
-                return 'ERROR: Cannot update because of ambiguous scene titles.'
+                return 'ERROR: Ambiguous Aeon event title "' + self.scenes[scId].title + '".'
 
             else:
                 scIdsByTitles[self.scenes[scId].title] = scId
