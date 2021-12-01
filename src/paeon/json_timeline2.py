@@ -85,6 +85,7 @@ class JsonTimeline2(Novel):
         self.timestampMax = 0
         self.displayIdMax = 0.0
         self.colors = {}
+        self.narrativeArc = {}
 
     def read(self):
         """Read the JSON part of the Aeon Timeline 2 file located at filePath, 
@@ -381,6 +382,13 @@ class JsonTimeline2(Novel):
                     itId = itIdsByGuid[evtRel['entity']]
                     self.scenes[scId].items.append(itId)
 
+        if self.roleArcGuid is not None and self.entityNarrativeGuid is not None:
+            self.narrativeArc = dict(
+                entity=self.entityNarrativeGuid,
+                percentAllocated=1,
+                role=self.roleArcGuid,
+            )
+
         #--- Sort scenes by date/time and place them in chapters.
 
         chIdNarrative = '1'
@@ -457,47 +465,52 @@ class JsonTimeline2(Novel):
 
         # Get date/time/duration from the source, if the scene title matches.
 
-        for srcId in source.scenes:
+        for chId in source.chapters:
 
-            if source.scenes[srcId].title in scIdsByTitles:
-                scId = scIdsByTitles[source.scenes[srcId].title]
+            if source.chapters[chId].isTrash:
+                continue
 
-                if source.scenes[srcId].date or source.scenes[srcId].time:
+            for srcId in source.chapters[chId].srtScenes:
 
-                    if source.scenes[srcId].date is not None:
-                        self.scenes[scId].date = source.scenes[srcId].date
+                if source.scenes[srcId].title in scIdsByTitles:
+                    scId = scIdsByTitles[source.scenes[srcId].title]
 
-                    if source.scenes[srcId].time is not None:
-                        self.scenes[scId].time = source.scenes[srcId].time
+                    if source.scenes[srcId].date or source.scenes[srcId].time:
 
-                elif source.scenes[srcId].minute or source.scenes[srcId].hour or source.scenes[srcId].day:
-                    self.scenes[scId].date = None
-                    self.scenes[scId].time = None
+                        if source.scenes[srcId].date is not None:
+                            self.scenes[scId].date = source.scenes[srcId].date
 
-                if source.scenes[srcId].minute is not None:
-                    self.scenes[scId].minute = source.scenes[srcId].minute
+                        if source.scenes[srcId].time is not None:
+                            self.scenes[scId].time = source.scenes[srcId].time
 
-                if source.scenes[srcId].hour is not None:
-                    self.scenes[scId].hour = source.scenes[srcId].hour
+                    elif source.scenes[srcId].minute or source.scenes[srcId].hour or source.scenes[srcId].day:
+                        self.scenes[scId].date = None
+                        self.scenes[scId].time = None
 
-                if source.scenes[srcId].day is not None:
-                    self.scenes[scId].day = source.scenes[srcId].day
+                    if source.scenes[srcId].minute is not None:
+                        self.scenes[scId].minute = source.scenes[srcId].minute
 
-                if source.scenes[srcId].lastsMinutes is not None:
-                    self.scenes[scId].lastsMinutes = source.scenes[srcId].lastsMinutes
+                    if source.scenes[srcId].hour is not None:
+                        self.scenes[scId].hour = source.scenes[srcId].hour
 
-                if source.scenes[srcId].lastsHours is not None:
-                    self.scenes[scId].lastsHours = source.scenes[srcId].lastsHours
+                    if source.scenes[srcId].day is not None:
+                        self.scenes[scId].day = source.scenes[srcId].day
 
-                if source.scenes[srcId].lastsDays is not None:
-                    self.scenes[scId].lastsDays = source.scenes[srcId].lastsDays
+                    if source.scenes[srcId].lastsMinutes is not None:
+                        self.scenes[scId].lastsMinutes = source.scenes[srcId].lastsMinutes
 
-            elif source.scenes[srcId].isNotesScene or not source.scenes[srcId].isUnused:
-                # Create a new event.
+                    if source.scenes[srcId].lastsHours is not None:
+                        self.scenes[scId].lastsHours = source.scenes[srcId].lastsHours
 
-                scIdMax += 1
-                newId = str(scIdMax)
-                self.scenes[newId] = source.scenes[srcId]
+                    if source.scenes[srcId].lastsDays is not None:
+                        self.scenes[scId].lastsDays = source.scenes[srcId].lastsDays
+
+                elif source.scenes[srcId].isNotesScene or not source.scenes[srcId].isUnused:
+                    # Create a new event.
+
+                    scIdMax += 1
+                    newId = str(scIdMax)
+                    self.scenes[newId] = source.scenes[srcId]
 
         return 'SUCCESS'
 
@@ -563,13 +576,10 @@ class JsonTimeline2(Novel):
                 evColor = self.colors[self.eventColor]
 
             else:
-                narrativeArc = dict(
-                    entity=self.entityNarrativeGuid,
-                    percentAllocated=1,
-                    role=self.roleArcGuid,
-                )
-                relationships.append(narrativeArc)
                 evColor = self.colors[self.sceneColor]
+
+                if self.narrativeArc:
+                    relationships.append(self.narrativeArc)
 
             event = dict(
                 attachments=[],
