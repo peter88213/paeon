@@ -18,7 +18,7 @@ import os
 import json
 import argparse
 
-from paeon.aeon2_fop import extract_timeline
+from pywaeon2.aeon2_fop import open_timeline
 from paeon.aeon3_fop import scan_file
 
 VERSION = 'v@release'
@@ -36,23 +36,26 @@ def run(sourcePath):
     if sourcePath.endswith(AEON3_EXT):
         jsonPart = scan_file(sourcePath)
 
+        if not jsonPart:
+            return 'ERROR: No JSON part found.'
+
+        elif jsonPart.startswith('ERROR'):
+            return jsonPart
+
+        try:
+            jsonData = json.loads(jsonPart)
+
+        except('JSONDecodeError'):
+            return 'ERROR: Invalid JSON data.'
+
     elif sourcePath.endswith(AEON2_EXT):
-        jsonPart = extract_timeline(sourcePath)
+        message, jsonData = open_timeline(sourcePath)
+
+        if message.startswith('ERROR'):
+            return message
 
     else:
         return('ERROR: File format not supported.')
-
-    if not jsonPart:
-        return 'ERROR: No JSON part found.'
-
-    elif jsonPart.startswith('ERROR'):
-        return jsonPart
-
-    try:
-        jsonData = json.loads(jsonPart)
-
-    except('JSONDecodeError'):
-        return 'ERROR: Invalid JSON data.'
 
     targetPath = sourcePath + JSON_EXT
 

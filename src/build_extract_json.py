@@ -24,8 +24,8 @@ def main():
     except:
         pass
 
-    inliner.run(SOURCE_FILE,
-                TARGET_FILE, 'paeon', '../src/')
+    inliner.run(SOURCE_FILE, TARGET_FILE, 'pywaeon2', '../../aeon2yw/src/')
+    inliner.run(TARGET_FILE, TARGET_FILE, 'paeon', '../src/')
     print('Done.')
 
 

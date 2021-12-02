@@ -5,18 +5,12 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 import unittest
-import json_timeline2
 import json_timeline3
 from shutil import copyfile
 
 TEST_PATH = os.getcwd() + '/../test'
 TEST_DATA_PATH = TEST_PATH + '/data/'
 TEST_EXEC_PATH = TEST_PATH + '/yw7/'
-
-AEON2 = TEST_DATA_PATH + 'normal.aeonzip'
-REF_JSON2 = TEST_DATA_PATH + 'extract_json/normal.aeonzip.json'
-TEST_AEON2 = TEST_EXEC_PATH + 'project.aeonzip'
-TEST_JSON2 = TEST_EXEC_PATH + 'project.aeonzip.json'
 
 AEON3 = TEST_DATA_PATH + 'normal.aeon'
 REF_JSON3 = TEST_DATA_PATH + 'extract_json/normal.aeon.json'
@@ -43,16 +37,6 @@ class NormalOperation(unittest.TestCase):
     def tearDown(self):
 
         try:
-            os.remove(TEST_AEON2)
-        except:
-            pass
-
-        try:
-            os.remove(TEST_JSON2)
-        except:
-            pass
-
-        try:
             os.remove(TEST_AEON3)
         except:
             pass
@@ -61,11 +45,6 @@ class NormalOperation(unittest.TestCase):
             os.remove(TEST_JSON3)
         except:
             pass
-
-    def test_aeon2(self):
-        copyfile(AEON2, TEST_AEON2)
-        timeline = JsonTimeline2(TEST_AEON2)
-        self.assertEqual()
 
     def test_aeon3(self):
         copyfile(AEON3, TEST_AEON3)
