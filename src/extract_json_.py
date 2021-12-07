@@ -19,7 +19,7 @@ import json
 import argparse
 
 from pywaeon2.aeon2_fop import open_timeline
-from paeon.aeon3_fop import scan_file
+from pywaeon3.aeon3_fop import scan_file
 
 VERSION = 'v@release'
 AEON3_EXT = '.aeon'

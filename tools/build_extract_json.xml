@@ -40,7 +40,6 @@
 
 		<copy file="${docs}/template/index.md" overwrite="True" todir="${docs}" />
 		<replace encoding="utf-8" file="${docs}/index.md" token="extract_json_v0.99.0" value="extract_json_v${release}" />
-		<copy file="${docs}/index.md" overwrite="True" tofile="../README.md" />
 	</target>
 
 	<target name="clean" description="clean up">
