@@ -4,7 +4,7 @@
 
 # aeon2moon.py
 
-Aeon Timeline 2 - Add/update moon phase at event start date (at the moment, the algorithm is only valid for the 20th and 21st centuries).
+Aeon Timeline 2 - Add/update moon phase at event start date.
 
 ## Requirements
 

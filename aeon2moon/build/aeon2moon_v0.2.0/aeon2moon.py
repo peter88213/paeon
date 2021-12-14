@@ -106,6 +106,13 @@ import math
 
 
 def get_moon_phase(dateStr):
+    """Return a single value - the phase day (0 to 29, where 0=new moon, 15=full etc.) 
+    for the selected date.
+    Date format is 'yyyy-mm-dd'.
+    This is based on a 'do it in your head' algorithm by John Conway. 
+    In its current form, it's only valid for the 20th and 21st centuries.
+    See: http://www.ben-daglish.net/moon.shtml
+    """
 
     y, m, d = dateStr.split('-')
     year = int(y)
