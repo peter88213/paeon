@@ -23,7 +23,7 @@ from datetime import timedelta
 from pywaeon2.aeon2_fop import open_timeline
 from pywaeon2.aeon2_fop import save_timeline
 from pywaeon2.uid_helper import get_uid
-from pywaeon2.moonphase import get_moon_phase_plus
+from pywaeon.moonphase import get_moon_phase_plus
 
 VERSION = 'v@release'
 AEON2_EXT = '.aeonzip'
