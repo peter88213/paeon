@@ -36,7 +36,7 @@ positional arguments:
 optional arguments:
   `-h, --help`  show this help message and exit
   
-Moon phase = Phase day (0 to 29, where 0=new moon, 15=full etc.)
+"Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
 ## License
 
