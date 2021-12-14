@@ -2,7 +2,7 @@
 
 ------------------------------------------------------------------
 
-# extract_json
+# extract_json.py
 
 Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
@@ -39,4 +39,4 @@ optional arguments:
 
 ## License
 
-The scripts are distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+extract_json.py is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).

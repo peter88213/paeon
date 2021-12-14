@@ -2,7 +2,7 @@
 
 ------------------------------------------------------------------
 
-# aeon2moon
+# aeon2moon.py
 
 Aeon Timeline 2 - Add/update moon phase at event start date.
 
@@ -40,4 +40,4 @@ Moon phase = Phase day (0 to 29, where 0=new moon, 15=full etc.)
 
 ## License
 
-The scripts are distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+aeon2moon.py is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
