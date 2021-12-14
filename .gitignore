@@ -5,6 +5,7 @@
 /src/sample/__pycache__/
 /test/__pycache__/
 /tools/__pycache__/
-/build/
+extract_json/build/
+aeon2moon/build/
 /standalone/__pycache__/
 /test/yw7/
