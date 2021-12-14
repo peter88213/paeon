@@ -12,13 +12,25 @@ Aeon Timeline 2 - Add/update moon phase at event start date.
 
 ### Instructions for use:
 
-usage: aeon2moon.py [-h] Sourcefile
+### Intended usage
+
+Unzip the Python script and create a shortcut on the desktop. 
+- If you drag an *.aeonzip* file onto it and drop it, the event start moon phases are added or updated. 
+
+### Command line usage
+
+Alternatively, you can
+
+- launch the program on the command line passing the *.aeonzip* file as an argument, or
+- launch the program via a batch file.
+
+usage: `aeon2moon.py [-h] Sourcefile`
 
 positional arguments:
-  Sourcefile  The path of the .aeonzip file.
+  `Sourcefile`  The path of the .aeonzip file.
 
 optional arguments:
-  -h, --help  show this help message and exit
+  `-h, --help`  show this help message and exit
   
 Moon phase = Phase day (0 to 29, where 0=new moon, 15=full etc.)
 

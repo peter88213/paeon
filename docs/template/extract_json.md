@@ -12,13 +12,25 @@ Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 ### Instructions for use:
 
-usage: extract_json.py [-h] Sourcefile
+### Intended usage
+
+Unzip the Python script and create a shortcut on the desktop. 
+- If you drag an *.aeonzip* or an *.aeon* file onto it and drop it, a JSON file is placed in the same directory. 
+
+### Command line usage
+
+Alternatively, you can
+
+- launch the program on the command line passing the *.aeonzip* or *.aeon* file as an argument, or
+- launch the program via a batch file.
+
+usage: `extract_json.py [-h] Sourcefile`
 
 positional arguments:
-  Sourcefile  The path of the .aeonzip or .aeon file.
+  `Sourcefile`  The path of the .aeonzip or .aeon file.
 
 optional arguments:
-  -h, --help  show this help message and exit
+  `-h, --help`  show this help message and exit
 
 
 ## License
