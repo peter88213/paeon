@@ -38,6 +38,11 @@ optional arguments:
   
 "Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
+
+## Credits
+
+- Ben Daglish published an [exemplary implementation](http://www.ben-daglish.net/moon.shtml) of John Conway's moon phase algorithm, though in JavaScript.
+
 ## License
 
 aeon2moon.py is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
