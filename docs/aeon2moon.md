@@ -1,6 +1,6 @@
 # aeon2moon
 
-Aeon Timeline 2 moon phase at event start date.
+Aeon Timeline 2 - Add/update moon phase at event start date.
 
 ## Requirements
 
@@ -8,7 +8,7 @@ Aeon Timeline 2 moon phase at event start date.
 
 ### Download:
 
-- [aeon2moon_v0.1.0.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/aeon2moon/dist/aeon2moon_v0.1.0.zip)
+- [aeon2moon_v0.2.0.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/aeon2moon/dist/aeon2moon_v0.2.0.zip)
 
 ### Instructions for use:
 
@@ -20,7 +20,7 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
   
-Add the phase day (0 to 29, where 0=new moon, 15=full etc.) to each event.
+Moon phase = Phase day (0 to 29, where 0=new moon, 15=full etc.)
 
 ## License
 
