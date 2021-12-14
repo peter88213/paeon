@@ -17,6 +17,8 @@ Copyright (c) 2021 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import argparse
+from shutil import copy2
+
 from datetime import datetime
 from datetime import timedelta
 
@@ -31,14 +33,14 @@ AEON2_EXT = '.aeonzip'
 PROPERTY_MOONPHASE = 'Moon phase'
 
 
-def run(sourcePath):
+def run(filePath):
     """Extract JSON data from an .aeonzip file
     and add or update the "Moon phase" property. 
     Return a message beginning with SUCCESS or ERROR.
     """
 
-    if sourcePath.endswith(AEON2_EXT):
-        message, jsonData = open_timeline(sourcePath)
+    if filePath.endswith(AEON2_EXT):
+        message, jsonData = open_timeline(filePath)
 
         if message.startswith('ERROR'):
             return message
@@ -121,7 +123,11 @@ def run(sourcePath):
         if not hasMoonphase:
             evt['values'].append({'property': propertyMoonphaseGuid, 'value': eventMoonphase})
 
-    return save_timeline(jsonData, sourcePath)
+    # Create a backup file.
+
+    copy2(filePath, filePath + '.bak')
+
+    return save_timeline(jsonData, filePath)
 
 
 if __name__ == '__main__':
