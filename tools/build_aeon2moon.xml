@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="extract_json" basedir=".">
-	<property name="release" value="1.0.2" />
+<project name="aeon2moon" basedir=".">
+	<property name="release" value="0.1.0" />
 	<property name="src" location="../src" />
 	<property name="test" location="../test" />
 	<property name="build" location="../${ant.project.name}/build" />

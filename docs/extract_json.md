@@ -8,7 +8,7 @@ Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 ### Download:
 
-- [extract_json_v0.99.0.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/dist/extract_json_v0.99.0.zip): Extract and pretty-print the JSON part from an .aeonzip or .aeon file. A Python 3 installation is required.
+[extract_json_v1.0.2.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/extract_json/dist/extract_json_v1.0.2.zip)
 
 ### Instructions for use:
 
@@ -23,4 +23,4 @@ optional arguments:
 
 ## License
 
-The extract_json script is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+The scripts are distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
