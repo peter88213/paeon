@@ -13,7 +13,6 @@
 		<exec executable="python" failonerror="true">
 		    <arg value="${src}/build_${ant.project.name}.py"/>
 		</exec>
-		<fixcrlf encoding="utf-8" eol="lf" srcdir="${test}" includes="**/*.py" />
 	</target>
 
 	<target name="test" description="test the script">
@@ -22,8 +21,7 @@
 		</exec>
 	</target>
 
-	<target name="dist" description="generate the distribution">
-		
+	<target name="dist" description="generate the distribution">		
 		<delete dir="${build}" />
 		<mkdir dir="${build}" />
 		<delete dir="${dist}" />
@@ -35,16 +33,16 @@
 
 		<copy file="../LICENSE" todir="${build}/${release-name}" />
 
+		<fixcrlf encoding="utf-8" eol="lf" srcdir="${test}" includes="**/*.*" />
+
 		<zip destfile="${dist}/${release-name}.zip" basedir="${build}/${release-name}" />
 
 		<copy file="${docs}/template/${ant.project.name}.md" overwrite="True" todir="${docs}" />
 		<replace encoding="utf-8" file="${docs}/${ant.project.name}.md" token="${ant.project.name}_v0.99.0" value="${ant.project.name}_v${release}" />
 	</target>
 
-	<target name="clean" description="clean up">
-		
+	<target name="clean" description="clean up">		
 		<delete file="${test}/${ant.project.name}.py" />
-		
 	</target>
 
 </project>
