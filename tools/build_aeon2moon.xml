@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="aeon2moon" basedir=".">
-	<property name="release" value="0.4.1" />
-	<property name="src" location="../src" />
-	<property name="test" location="../test" />
-	<property name="build" location="../${ant.project.name}/build" />
-	<property name="dist" location="../${ant.project.name}/dist" />
-	<property name="docs" location="../docs" />
-	<property name="release-name" value="${ant.project.name}_v${release}" />
+	<property name="version" value="0.4.1" />
+	<property name="test-app" value="aeon2moon" />
+
+	<property name="application" value="${ant.project.name}" />
+	<property name="source-path" location="../src" />
+	<property name="test-path" location="../test" />
+	<property name="build-path" location="../${application}/build" />
+	<property name="dist-path" location="../${application}/dist" />
+	<property name="docs-path" location="../docs" />
+	<property name="release" value="${application}_v${version}" />
 
 	<target name="build" description="inline all library modules">
-		<delete file="${test}/${ant.project.name}.py" />
+		<delete file="${test-path}/${test-app}.py" />
 		<exec executable="python" failonerror="true">
-		    <arg value="${src}/build_${ant.project.name}.py"/>
+		    <arg value="${source-path}/build_${test-app}.py"/>
 		</exec>
 	</target>
 
 	<target name="test" description="test the script">
+		<copy file="${test-path}/test_${test-app}_.py" tofile="${test-path}/test_${test-app}.py" />
+		<replace encoding="utf-8" file="${test-path}/test_${test-app}.py" token="${test-app}_" value="${test-app}" />
 		<exec executable="python" failonerror="true">
-		    <arg value="${test}/test_${ant.project.name}.py"/>
+		    <arg value="${test-path}/test_${test-app}.py"/>
 		</exec>
 	</target>
 
 	<target name="dist" description="generate the distribution">		
-		<delete dir="${build}" />
-		<mkdir dir="${build}" />
-		<delete dir="${dist}" />
-		<mkdir dir="${dist}" />
-		<mkdir dir="${build}/${release-name}" />
+		<delete dir="${build-path}" />
+		<mkdir dir="${build-path}" />
+		<delete dir="${dist-path}" />
+		<mkdir dir="${dist-path}" />
+		<mkdir dir="${build-path}/${release}" />
 
-		<copy file="${test}/${ant.project.name}.py" tofile="${build}/${release-name}/${ant.project.name}.py" />
-		<replace encoding="utf-8" file="${build}/${release-name}/${ant.project.name}.py" token="@release" value="${release}" />
+		<copy file="${test-path}/${test-app}.py" tofile="${build-path}/${release}/${application}.py" />
+		<replace encoding="utf-8" file="${build-path}/${release}/${application}.py" token="@release" value="${version}" />
 
-		<copy file="../LICENSE" todir="${build}/${release-name}" />
+		<copy file="../LICENSE" todir="${build-path}/${release}" />
 
-		<fixcrlf encoding="utf-8" eol="lf" srcdir="${test}" includes="**/*.*" />
+		<fixcrlf encoding="utf-8" eol="lf" srcdir="${build-path}" includes="**/*.*" />
 
-		<zip destfile="${dist}/${release-name}.zip" basedir="${build}/${release-name}" />
+		<zip destfile="${dist-path}/${release}.zip" basedir="${build-path}/${release}" />
 
-		<copy file="${docs}/template/${ant.project.name}.md" overwrite="True" todir="${docs}" />
-		<replace encoding="utf-8" file="${docs}/${ant.project.name}.md" token="${ant.project.name}_v0.99.0" value="${ant.project.name}_v${release}" />
+		<copy file="${docs-path}/template/${application}.md" overwrite="True" todir="${docs-path}" />
+		<replace encoding="utf-8" file="${docs-path}/${application}.md" token="${application}_v0.99.0" value="${application}_v${version}" />
 	</target>
 
 	<target name="clean" description="clean up">		
-		<delete file="${test}/${ant.project.name}.py" />
+		<delete file="${test-path}/${test-app}.py" />
+		<delete file="${test-path}/test_${test-app}.py" />		
 	</target>
 
 </project>
