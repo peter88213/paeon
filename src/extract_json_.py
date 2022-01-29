@@ -64,9 +64,9 @@ def run(sourcePath):
             f.write(json.dumps(jsonData, indent=4, sort_keys=True, ensure_ascii=False))
 
     except:
-        return 'ERROR: Cannot write "' + os.path.normpath(targetPath) + '".'
+        return f'ERROR: Cannot write "{os.path.normpath(targetPath)}".'
 
-    return 'SUCCESS: "' + os.path.normpath(targetPath) + '" written.'
+    return f'SUCCESS: "{os.path.normpath(targetPath)}" written.'
 
 
 if __name__ == '__main__':
