@@ -57,7 +57,7 @@ def run(sourcePath):
     else:
         return('ERROR: File format not supported.')
 
-    targetPath = sourcePath + JSON_EXT
+    targetPath = f'{sourcePath}{JSON_EXT}'
 
     try:
         with open(targetPath, 'w', encoding='utf-8') as f:
@@ -71,7 +71,7 @@ def run(sourcePath):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Create a pretty-printed JSON file from an Aeon Timeline 2/3 file ' + VERSION,
+        description=f'Create a pretty-printed JSON file from an Aeon Timeline 2/3 file {VERSION}',
         epilog='')
     parser.add_argument('sourcePath', metavar='Sourcefile',
                         help='The path of the .aeonzip or .aeon file.')
