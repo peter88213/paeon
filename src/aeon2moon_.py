@@ -125,14 +125,14 @@ def run(filePath):
 
     # Create a backup file.
 
-    copy2(filePath, filePath + '.bak')
+    copy2(filePath, f'{filePath}.bak')
 
     return save_timeline(jsonData, filePath)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Aeon Timeline 2 Add/update moon phase at event start date ' + VERSION,
+        description=f'Aeon Timeline 2 Add/update moon phase at event start date {VERSION}',
         epilog='"Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)')
     parser.add_argument('sourcePath', metavar='Sourcefile',
                         help='The path of the .aeonzip file.')
