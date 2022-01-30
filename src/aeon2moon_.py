@@ -22,6 +22,7 @@ from shutil import copy2
 from datetime import datetime
 from datetime import timedelta
 
+from pywriter.pywriter_globals import ERROR
 from pywaeon2.aeon2_fop import open_timeline
 from pywaeon2.aeon2_fop import save_timeline
 from pywaeon2.uid_helper import get_uid
@@ -42,7 +43,7 @@ def run(filePath):
     if filePath.endswith(AEON2_EXT):
         message, jsonData = open_timeline(filePath)
 
-        if message.startswith('ERROR'):
+        if message.startswith(ERROR):
             return message
 
     else:
@@ -61,7 +62,7 @@ def run(filePath):
                     break
 
     if tplDateGuid is None:
-        return 'ERROR: "AD" era is missing in the calendar.'
+        return f'{ERROR}: "AD" era is missing in the calendar.'
 
     #--- Get GUID of user defined properties.
 

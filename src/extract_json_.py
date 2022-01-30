@@ -18,6 +18,7 @@ import os
 import json
 import argparse
 
+from pywriter.pywriter_globals import ERROR
 from pywaeon2.aeon2_fop import open_timeline
 from pywaeon3.aeon3_fop import scan_file
 
@@ -37,21 +38,21 @@ def run(sourcePath):
         jsonPart = scan_file(sourcePath)
 
         if not jsonPart:
-            return 'ERROR: No JSON part found.'
+            return f'{ERROR}: No JSON part found.'
 
-        elif jsonPart.startswith('ERROR'):
+        elif jsonPart.startswith(ERROR):
             return jsonPart
 
         try:
             jsonData = json.loads(jsonPart)
 
         except('JSONDecodeError'):
-            return 'ERROR: Invalid JSON data.'
+            return f'{ERROR}: Invalid JSON data.'
 
     elif sourcePath.endswith(AEON2_EXT):
         message, jsonData = open_timeline(sourcePath)
 
-        if message.startswith('ERROR'):
+        if message.startswith(ERROR):
             return message
 
     else:
@@ -64,7 +65,7 @@ def run(sourcePath):
             f.write(json.dumps(jsonData, indent=4, sort_keys=True, ensure_ascii=False))
 
     except:
-        return f'ERROR: Cannot write "{os.path.normpath(targetPath)}".'
+        return f'{ERROR}: Cannot write "{os.path.normpath(targetPath)}".'
 
     return f'SUCCESS: "{os.path.normpath(targetPath)}" written.'
 
