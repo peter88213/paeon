@@ -37,7 +37,7 @@ PROPERTY_MOONPHASE = 'Moon phase'
 def run(filePath):
     """Extract JSON data from an .aeonzip file
     and add or update the "Moon phase" property. 
-    Return a message beginning with SUCCESS or ERROR.
+    Return a message beginning with the ERROR constant in case of error.
     """
 
     if filePath.endswith(AEON2_EXT):
@@ -47,7 +47,7 @@ def run(filePath):
             return message
 
     else:
-        return('ERROR: File format not supported.')
+        return(f'{ERROR}File format not supported.')
 
     #--- Get the date definition.
 
@@ -62,7 +62,7 @@ def run(filePath):
                     break
 
     if tplDateGuid is None:
-        return f'{ERROR}: "AD" era is missing in the calendar.'
+        return f'{ERROR}"AD" era is missing in the calendar.'
 
     #--- Get GUID of user defined properties.
 

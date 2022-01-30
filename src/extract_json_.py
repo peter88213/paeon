@@ -31,14 +31,14 @@ JSON_EXT = '.json'
 def run(sourcePath):
     """Extract JSON data from an .aeonzip or .aeon file
     and create a pretty-printed JSON file.
-    Return a message beginning with SUCCESS or ERROR.
+    Return a message beginning with the ERROR constant in case of error.
     """
 
     if sourcePath.endswith(AEON3_EXT):
         jsonPart = scan_file(sourcePath)
 
         if not jsonPart:
-            return f'{ERROR}: No JSON part found.'
+            return f'{ERROR}No JSON part found.'
 
         elif jsonPart.startswith(ERROR):
             return jsonPart
@@ -47,7 +47,7 @@ def run(sourcePath):
             jsonData = json.loads(jsonPart)
 
         except('JSONDecodeError'):
-            return f'{ERROR}: Invalid JSON data.'
+            return f'{ERROR}Invalid JSON data.'
 
     elif sourcePath.endswith(AEON2_EXT):
         message, jsonData = open_timeline(sourcePath)
@@ -56,7 +56,7 @@ def run(sourcePath):
             return message
 
     else:
-        return('ERROR: File format not supported.')
+        return(f'{ERROR}File format not supported.')
 
     targetPath = f'{sourcePath}{JSON_EXT}'
 
@@ -65,9 +65,9 @@ def run(sourcePath):
             f.write(json.dumps(jsonData, indent=4, sort_keys=True, ensure_ascii=False))
 
     except:
-        return f'{ERROR}: Cannot write "{os.path.normpath(targetPath)}".'
+        return f'{ERROR}Cannot write "{os.path.normpath(targetPath)}".'
 
-    return f'SUCCESS: "{os.path.normpath(targetPath)}" written.'
+    return f'"{os.path.normpath(targetPath)}" written.'
 
 
 if __name__ == '__main__':
