@@ -11,8 +11,8 @@ import inliner
 
 SRC = '../src/'
 BUILD = '../test/'
-SOURCE_FILE = 'aeon2moon_.py'
-TARGET_FILE = BUILD + 'aeon2moon.py'
+SOURCE_FILE = f'{SRC}aeon2moon_.py'
+TARGET_FILE = f'{BUILD}aeon2moon.py'
 
 
 def main():

@@ -11,8 +11,8 @@ import inliner
 
 SRC = '../src/'
 BUILD = '../test/'
-SOURCE_FILE = 'extract_json_.py'
-TARGET_FILE = BUILD + 'extract_json.py'
+SOURCE_FILE = f'{SRC}extract_json_.py'
+TARGET_FILE = f'{BUILD}extract_json.py'
 
 
 def main():
