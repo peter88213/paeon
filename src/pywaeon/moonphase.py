@@ -52,7 +52,7 @@ def get_moon_phase_plus(dateStr):
     s = '  ))))))))))))OOO(((((((((((( '
     p = '00¼¼¼¼½½½½¾¾¾¾111¾¾¾¾½½½½¼¼¼¼0'
     r = get_moon_phase(dateStr)
-    return str(r) + ' [  ' + s[r] + '  ] ' + p[r]
+    return f'{r} [  {s[r]}  ] {p[r]}'
 
 
 if __name__ == '__main__':
