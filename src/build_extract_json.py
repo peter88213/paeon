@@ -7,6 +7,8 @@ For further information see https://github.com/peter88213/yw2html
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
+import sys 
+sys.path.insert(0, f'{os.getcwd()}/../../PyWriter/src')
 import inliner
 
 SRC = '../src/'
@@ -16,14 +18,6 @@ TARGET_FILE = f'{BUILD}extract_json.py'
 
 
 def main():
-    os.chdir(SRC)
-
-    try:
-        os.remove(TARGET_FILE)
-
-    except:
-        pass
-
     inliner.run(SOURCE_FILE, TARGET_FILE, 'pywaeon2', '../../aeon2yw/src/')
     inliner.run(TARGET_FILE, TARGET_FILE, 'pywaeon3', '../../aeon3yw/src/')
     print('Done.')
