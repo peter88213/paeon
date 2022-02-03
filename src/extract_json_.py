@@ -2,6 +2,7 @@
 """Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 Version @release
+Requires Python 3.6+
 
 usage: extract_json.py [-h] Sourcefile
 
@@ -11,7 +12,7 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
 
-Copyright (c) 2021 Peter Triesberger
+Copyright (c) 2022 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os

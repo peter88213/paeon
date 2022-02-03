@@ -2,6 +2,7 @@
 """Aeon Timeline 2 Add/update moon phase at event start date.
 
 Version @release
+Requires Python 3.6+
 
 usage: aeon2moon.py [-h] Sourcefile
 
@@ -13,7 +14,7 @@ optional arguments:
   
 "Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
-Copyright (c) 2021 Peter Triesberger
+Copyright (c) 2022 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import argparse

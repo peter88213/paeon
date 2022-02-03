@@ -8,7 +8,7 @@ Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 ## Requirements
 
-- [Python 3.7+](https://www.python.org). 
+- [Python 3.6+](https://www.python.org). 
 
 ### Download:
 

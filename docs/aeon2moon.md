@@ -8,7 +8,7 @@ Aeon Timeline 2 - Add/update moon phase at event start date (only valid for the 
 
 ## Requirements
 
-- [Python 3.7+](https://www.python.org). 
+- [Python 3.6+](https://www.python.org). 
 
 ### Download:
 
