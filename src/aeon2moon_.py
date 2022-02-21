@@ -19,15 +19,15 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import argparse
 from shutil import copy2
-
 from datetime import datetime
 from datetime import timedelta
 
 from pywriter.pywriter_globals import ERROR
-from pywaeon2.aeon2_fop import open_timeline
-from pywaeon2.aeon2_fop import save_timeline
-from pywaeon2.uid_helper import get_uid
-from pywaeon.moonphase import get_moon_phase_plus
+from aeon2ywlib.aeon2_fop import open_timeline
+from aeon2ywlib.aeon2_fop import save_timeline
+from aeon2ywlib.uid_helper import get_uid
+
+from paeonlib.moonphase import get_moon_phase_plus
 
 VERSION = 'v@release'
 AEON2_EXT = '.aeonzip'

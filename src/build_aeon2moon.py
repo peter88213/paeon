@@ -18,8 +18,8 @@ TARGET_FILE = f'{BUILD}aeon2moon.py'
 
 
 def main():
-    inliner.run(SOURCE_FILE, TARGET_FILE, 'pywaeon2', '../../aeon2yw/src/')
-    inliner.run(TARGET_FILE, TARGET_FILE, 'pywaeon', '../src/')
+    inliner.run(SOURCE_FILE, TARGET_FILE, 'aeon2ywlib', '../../aeon2yw/src/')
+    inliner.run(TARGET_FILE, TARGET_FILE, 'paeonlib', '../src/')
     print('Done.')
 
 

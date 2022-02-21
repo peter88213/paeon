@@ -1,11 +1,4 @@
-/src/__pycache__/
-/src/paeon/__pycache__/
-/src/paeon/model/__pycache__/
-/src/paeon/aeon/__pycache__/
-/src/sample/__pycache__/
-/test/__pycache__/
-/tools/__pycache__/
 /extract_json/build/
 /aeon2moon/build/
-/standalone/__pycache__/
 /test/yw7/
+*.pyc
