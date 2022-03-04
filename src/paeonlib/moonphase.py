@@ -16,33 +16,24 @@ def get_moon_phase(dateStr):
     In its current form, it's only valid for the 20th and 21st centuries.
     See: http://www.ben-daglish.net/moon.shtml
     """
-
     y, m, d = dateStr.split('-')
     year = int(y)
     month = int(m)
     day = int(d)
     r = year % 100
     r %= 19
-
     if r > 9:
         r -= 19
-
     r = ((r * 11) % 30) + month + day
-
     if month < 3:
         r += 2
-
     if year < 2000:
         r -= 4
-
     else:
         r -= 8.3
-
     r = math.floor(r + 0.5) % 30
-
     if r < 0:
         r += 30
-
     return r
 
 
