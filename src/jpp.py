@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Pretty print a JSON file
 input file : command line parameter
 output file : name of the input file with '.json' appended.

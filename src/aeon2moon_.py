@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Aeon Timeline 2 Add/update moon phase at event start date.
 
 Version @release

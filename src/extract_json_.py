@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 Version @release
