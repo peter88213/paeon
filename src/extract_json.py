@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
-Version 1.0.5
+Version 1.0.6
 Requires Python 3.6+
 
 usage: extract_json.py [-h] Sourcefile
@@ -16,28 +16,16 @@ Copyright (c) 2022 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-import json
-import argparse
-import sys
-import gettext
-import locale
-
-ERROR = '!'
-
-# Initialize localization.
-LOCALE_PATH = f'{os.path.dirname(sys.argv[0])}/locale/'
-CURRENT_LANGUAGE = locale.getlocale()[0][:2]
-try:
-    t = gettext.translation('pywriter', LOCALE_PATH, languages=[CURRENT_LANGUAGE])
-    _ = t.gettext
-except:
-
-    def _(message):
-        return message
-
-__all__ = ['ERROR', '_', 'LOCALE_PATH', 'CURRENT_LANGUAGE']
 import zipfile
 import codecs
+import json
+import argparse
+
+VERSION = 'v1.0.6'
+AEON3_EXT = '.aeon'
+AEON2_EXT = '.aeonzip'
+JSON_EXT = '.json'
+ERROR = 'Error: '
 
 
 def open_timeline(filePath):
@@ -65,31 +53,6 @@ def open_timeline(filePath):
     return 'Timeline data read in.', jsonData
 
 
-def save_timeline(jsonData, filePath):
-    """Write the timeline to a zipfile located at filePath.
-    
-    Positional arguments:
-        jsonData -- Python object containing the timeline structure.
-        filePath -- Path of the .aeon project file to write.
-        
-    Return a message beginning with the ERROR constant in case of error.
-    """
-    if os.path.isfile(filePath):
-        os.replace(filePath, f'{filePath}.bak')
-        backedUp = True
-    else:
-        backedUp = False
-    try:
-        with zipfile.ZipFile(filePath, 'w', compression=zipfile.ZIP_DEFLATED) as f:
-            f.writestr('timeline.json', json.dumps(jsonData))
-    except:
-        if backedUp:
-            os.replace(f'{filePath}.bak', filePath)
-        return f'{ERROR}Cannot write "{os.path.normpath(filePath)}".'
-    
-    return f'"{os.path.normpath(filePath)}" written.'
-
-
 def scan_file(filePath):
     """Read and scan the project file.
     
@@ -106,7 +69,7 @@ def scan_file(filePath):
 
     except:
         return f'{ERROR}Cannot read "{os.path.normpath(filePath)}".'
-    
+
     # JSON part: all characters between the first and last curly bracket.
     chrData = []
     opening = ord('{')
@@ -131,11 +94,6 @@ def scan_file(filePath):
         return f'{ERROR}Cannot decode "{os.path.normpath(filePath)}".'
 
     return jsonStr
-
-VERSION = 'v1.0.5'
-AEON3_EXT = '.aeon'
-AEON2_EXT = '.aeonzip'
-JSON_EXT = '.json'
 
 
 def run(sourcePath):
