@@ -12,7 +12,7 @@ Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
 
 ### Download:
 
-[extract_json_v1.0.4.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/extract_json/dist/extract_json_v1.0.4.zip)
+[extract_json_v1.0.5.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/extract_json/dist/extract_json_v1.0.5.zip)
 
 ### Instructions for use:
 

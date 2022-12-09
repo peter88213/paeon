@@ -5,7 +5,7 @@ Published under the MIT License (https://opensource.org/licenses/mit-license.php
 """
 import os
 import unittest
-import extract_json_
+import extract_json
 from shutil import copyfile
 
 TEST_PATH = os.getcwd() + '/../test'
@@ -63,12 +63,12 @@ class NormalOperation(unittest.TestCase):
 
     def test_aeon2(self):
         copyfile(AEON2, TEST_AEON2)
-        self.assertEqual(extract_json_.run(TEST_AEON2), '"' + os.path.normpath(TEST_JSON2) + '" written.')
+        self.assertEqual(extract_json.run(TEST_AEON2), '"' + os.path.normpath(TEST_JSON2) + '" written.')
         self.assertEqual(read_file(TEST_JSON2), read_file(REF_JSON2))
 
     def test_aeon3(self):
         copyfile(AEON3, TEST_AEON3)
-        self.assertEqual(extract_json_.run(TEST_AEON3), '"' + os.path.normpath(TEST_JSON3) + '" written.')
+        self.assertEqual(extract_json.run(TEST_AEON3), '"' + os.path.normpath(TEST_JSON3) + '" written.')
         self.assertEqual(read_file(TEST_JSON3), read_file(REF_JSON3))
 
 
