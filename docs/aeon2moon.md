@@ -12,7 +12,7 @@ Aeon Timeline 2 - Add/update moon phase at event start date (only valid for the 
 
 ### Download:
 
-- [aeon2moon_v0.4.4.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/aeon2moon/dist/aeon2moon_v0.4.4.zip)
+- [aeon2moon_v0.4.5.zip (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/aeon2moon/dist/aeon2moon_v0.4.5.zip)
 
 ### Instructions for use:
 

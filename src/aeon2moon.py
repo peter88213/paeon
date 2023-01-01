@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Aeon Timeline 2 Add/update moon phase at event start date.
 
-Version 0.4.4
+Version 0.4.5
 Requires Python 3.6+
 
 usage: aeon2moon.py [-h] Sourcefile
@@ -14,7 +14,7 @@ optional arguments:
   
 "Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
-Copyright (c) 2022 Peter Triesberger
+Copyright (c) 2023 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import argparse
@@ -22,24 +22,14 @@ from shutil import copy2
 from datetime import datetime
 from datetime import timedelta
 import os
-import sys
-import gettext
-import locale
 
 ERROR = '!'
 
-# Initialize localization.
-LOCALE_PATH = f'{os.path.dirname(sys.argv[0])}/locale/'
-CURRENT_LANGUAGE = locale.getlocale()[0][:2]
-try:
-    t = gettext.translation('pywriter', LOCALE_PATH, languages=[CURRENT_LANGUAGE])
-    _ = t.gettext
-except:
 
-    def _(message):
-        return message
+def _(message):
+    return message
 
-__all__ = ['ERROR', '_', 'LOCALE_PATH', 'CURRENT_LANGUAGE']
+
 import zipfile
 import codecs
 import json
@@ -91,8 +81,10 @@ def save_timeline(jsonData, filePath):
         if backedUp:
             os.replace(f'{filePath}.bak', filePath)
         return f'{ERROR}Cannot write "{os.path.normpath(filePath)}".'
-    
+
     return f'"{os.path.normpath(filePath)}" written.'
+
+
 from hashlib import pbkdf2_hmac
 
 guidChars = list('ABCDEF0123456789')
@@ -129,6 +121,8 @@ def get_uid(text):
         key = pbkdf2_hmac('sha1', text, salts[i], 1)
         guid.append(get_sub_guid(key, sizes[i]))
     return '-'.join(guid)
+
+
 import math
 
 
@@ -168,7 +162,6 @@ def get_moon_phase_plus(dateStr):
     p = '00¼¼¼¼½½½½¾¾¾¾111¾¾¾¾½½½½¼¼¼¼0'
     r = get_moon_phase(dateStr)
     return f'{r} [  {s[r]}  ] {p[r]}'
-
 
 
 VERSION = 'v0.4.4'
