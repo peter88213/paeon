@@ -29,7 +29,7 @@ ERROR = 'Error: '
 
 
 def open_timeline(filePath):
-    """Unzip the project file and read 'timeline.json'.
+    """Unzip an Aeon Timeline 2 '.aeonzip' project file and read 'timeline.json'.
 
     Positional arguments:
         filePath -- Path of the .aeon project file to read.
@@ -54,7 +54,7 @@ def open_timeline(filePath):
 
 
 def scan_file(filePath):
-    """Read and scan the project file.
+    """Read and scan an Aeon Timeline 3 '.aeon. project file.
     
     Positional arguments:
         filePath -- str: Path to the Aeon 3 project file.
