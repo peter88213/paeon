@@ -54,7 +54,7 @@ def open_timeline(filePath):
 
 
 def scan_file(filePath):
-    """Read and scan an Aeon Timeline 3 '.aeon. project file.
+    """Read and scan an Aeon Timeline 3 '.aeon' project file.
     
     Positional arguments:
         filePath -- str: Path to the Aeon 3 project file.
