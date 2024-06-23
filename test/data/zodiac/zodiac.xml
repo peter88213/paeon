@@ -1,0 +1,1504 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Template>
+  <Name>fiction</Name>
+  <Types>
+    <Type>
+      <GUID>4D1C13AA-DA1B-4899-BBD2-AF470B0124A5</GUID>
+      <Name>Character</Name>
+      <Icon>person</Icon>
+      <Color>iconRed</Color>
+      <Persistent>0</Persistent>
+      <SortOrder>0</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>5B0AB989-CB40-4299-A6ED-92A5D510D0C4</GUID>
+          <Name>Participant</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+        <Role>
+          <GUID>73391A76-F11F-4CF4-8705-B38C177D4732</GUID>
+          <Name>Observer</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>1</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+    <Type>
+      <GUID>93AFCEDE-7576-411D-B5DC-CCD17EC91047</GUID>
+      <Name>Arc</Name>
+      <Icon>book</Icon>
+      <Color>iconYellow</Color>
+      <Persistent>1</Persistent>
+      <SortOrder>1</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>595902A3-5B47-4C41-8B6E-8150ED930CD3</GUID>
+          <Name>Arc</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>0</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+    <Type>
+      <GUID>C49B5226-F090-48CF-9ECA-EB236679510D</GUID>
+      <Name>Place</Name>
+      <Icon>map</Icon>
+      <Color>iconOrange</Color>
+      <Persistent>1</Persistent>
+      <SortOrder>2</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>0CFB07A5-F311-4864-97F9-43DE504336EC</GUID>
+          <Name>Location</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+  </Types>
+  <Colors>
+    <Color>
+      <GUID>429295A1-06FF-45EF-9895-FFD4F6CE0101</GUID>
+      <Name>Orange</Name>
+      <SwatchColor>orange</SwatchColor>
+      <SortOrder>1</SortOrder>
+    </Color>
+    <Color>
+      <GUID>438AD328-6E41-4F9B-89EE-37C9EF8E7A5E</GUID>
+      <Name>Yellow</Name>
+      <SwatchColor>yellow</SwatchColor>
+      <SortOrder>2</SortOrder>
+    </Color>
+    <Color>
+      <GUID>52099C15-8290-4D46-865C-E410D27E7C7A</GUID>
+      <Name>Fuschia</Name>
+      <SwatchColor>fuschia</SwatchColor>
+      <SortOrder>7</SortOrder>
+    </Color>
+    <Color>
+      <GUID>5879FAED-260C-4026-B105-1AD6622AE8A2</GUID>
+      <Name>Green</Name>
+      <SwatchColor>apple</SwatchColor>
+      <SortOrder>3</SortOrder>
+    </Color>
+    <Color>
+      <GUID>7C4F59E7-0276-448C-902E-C45CC1C53E5D</GUID>
+      <Name>Blue</Name>
+      <SwatchColor>midBlue</SwatchColor>
+      <SortOrder>4</SortOrder>
+    </Color>
+    <Color>
+      <GUID>98C3945D-4CF0-4EE7-86AF-EB1FDB5E741F</GUID>
+      <Name>Pink</Name>
+      <SwatchColor>darkPink</SwatchColor>
+      <SortOrder>6</SortOrder>
+    </Color>
+    <Color>
+      <GUID>B2FCAB66-0C01-4FA6-9CBB-B3B02BE195E3</GUID>
+      <Name>Red</Name>
+      <SwatchColor>red</SwatchColor>
+      <SortOrder>0</SortOrder>
+    </Color>
+    <Color>
+      <GUID>C831D23B-F677-4F5F-93BB-46209F01E188</GUID>
+      <Name>Purple</Name>
+      <SwatchColor>lightPurple</SwatchColor>
+      <SortOrder>5</SortOrder>
+    </Color>
+  </Colors>
+  <Properties>
+    <Property>
+      <GUID>448F3998-F5F0-451B-8B15-7514C954669B</GUID>
+      <Name>Tension</Name>
+      <Icon>tag</Icon>
+      <Type>percentage</Type>
+      <SortOrder>0</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>weightedPercentage</CalculationMode>
+      <UseForFadingEvents>0</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+    <Property>
+      <GUID>5694ABBC-E036-43AD-998C-2F4882315DE3</GUID>
+      <Name>Complete</Name>
+      <Icon>tag</Icon>
+      <Type>boolean</Type>
+      <SortOrder>1</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>default</CalculationMode>
+      <UseForFadingEvents>1</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+    <Property>
+      <GUID>9CAB24C5-AA1C-4EF9-8E4C-F5FAE9D5203A</GUID>
+      <Name>Summary</Name>
+      <Icon>tag</Icon>
+      <Type>multitext</Type>
+      <SortOrder>2</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>default</CalculationMode>
+      <UseForFadingEvents>0</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+  </Properties>
+  <RangeProperties>
+    <RangeProperty>
+      <GUID>654F7379-864F-457C-8D66-E8C44BEB3779</GUID>
+      <Name>Date</Name>
+      <Type>date</Type>
+      <MinUnitScale>day</MinUnitScale>
+      <MaxUnitScale>century</MaxUnitScale>
+      <DefaultUnitScale>century</DefaultUnitScale>
+      <Calendar>
+        <Name>BC-AD Calendar</Name>
+        <Notes />
+        <WeekdayIndexAtZero>1</WeekdayIndexAtZero>
+        <HoursInDay>24</HoursInDay>
+        <ZeroDateTimestamp>63460972800</ZeroDateTimestamp>
+        <DisplayType>Absolute</DisplayType>
+        <Eras>
+          <Era>
+            <Name>BC</Name>
+            <ShortName>BC</ShortName>
+            <Index>0</Index>
+            <Duration>9007199254740992</Duration>
+            <IsBackwards>1</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>AD</Name>
+            <ShortName>AD</ShortName>
+            <Index>1</Index>
+            <Duration>1966</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>1</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 164 "Era of Air"</Name>
+            <ShortName>♒, Era 164 "Era of Air"</ShortName>
+            <Index>2</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 164 "Era of Air"</Name>
+            <ShortName>♓, Era 164 "Era of Air"</ShortName>
+            <Index>3</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 165 "Era of Water"</Name>
+            <ShortName>♈, Era 165 "Era of Water"</ShortName>
+            <Index>4</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 165 "Era of Water"</Name>
+            <ShortName>♉, Era 165 "Era of Water"</ShortName>
+            <Index>5</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 165 "Era of Water"</Name>
+            <ShortName>♊, Era 165 "Era of Water"</ShortName>
+            <Index>6</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 165 "Era of Water"</Name>
+            <ShortName>♋, Era 165 "Era of Water"</ShortName>
+            <Index>7</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 165 "Era of Water"</Name>
+            <ShortName>♌, Era 165 "Era of Water"</ShortName>
+            <Index>8</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 165 "Era of Water"</Name>
+            <ShortName>♍, Era 165 "Era of Water"</ShortName>
+            <Index>9</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 165 "Era of Water"</Name>
+            <ShortName>♎, Era 165 "Era of Water"</ShortName>
+            <Index>10</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 165 "Era of Water"</Name>
+            <ShortName>♏, Era 165 "Era of Water"</ShortName>
+            <Index>11</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 165 "Era of Water"</Name>
+            <ShortName>♐, Era 165 "Era of Water"</ShortName>
+            <Index>12</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 165 "Era of Water"</Name>
+            <ShortName>♑, Era 165 "Era of Water"</ShortName>
+            <Index>13</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 165 "Era of Water"</Name>
+            <ShortName>♒, Era 165 "Era of Water"</ShortName>
+            <Index>14</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 165 "Era of Water"</Name>
+            <ShortName>♓, Era 165 "Era of Water"</ShortName>
+            <Index>15</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 166 "Era of Fire"</Name>
+            <ShortName>♈, Era 166 "Era of Fire"</ShortName>
+            <Index>16</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 166 "Era of Fire"</Name>
+            <ShortName>♉, Era 166 "Era of Fire"</ShortName>
+            <Index>17</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 166 "Era of Fire"</Name>
+            <ShortName>♊, Era 166 "Era of Fire"</ShortName>
+            <Index>18</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 166 "Era of Fire"</Name>
+            <ShortName>♋, Era 166 "Era of Fire"</ShortName>
+            <Index>19</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 166 "Era of Fire"</Name>
+            <ShortName>♌, Era 166 "Era of Fire"</ShortName>
+            <Index>20</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 166 "Era of Fire"</Name>
+            <ShortName>♍, Era 166 "Era of Fire"</ShortName>
+            <Index>21</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 166 "Era of Fire"</Name>
+            <ShortName>♎, Era 166 "Era of Fire"</ShortName>
+            <Index>22</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 166 "Era of Fire"</Name>
+            <ShortName>♏, Era 166 "Era of Fire"</ShortName>
+            <Index>23</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 166 "Era of Fire"</Name>
+            <ShortName>♐, Era 166 "Era of Fire"</ShortName>
+            <Index>24</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 166 "Era of Fire"</Name>
+            <ShortName>♑, Era 166 "Era of Fire"</ShortName>
+            <Index>25</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 166 "Era of Fire"</Name>
+            <ShortName>♒, Era 166 "Era of Fire"</ShortName>
+            <Index>26</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 166 "Era of Fire"</Name>
+            <ShortName>♓, Era 166 "Era of Fire"</ShortName>
+            <Index>27</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 167 "Era of Wood"</Name>
+            <ShortName>♈, Era 167 "Era of Wood"</ShortName>
+            <Index>28</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 167 "Era of Wood"</Name>
+            <ShortName>♉, Era 167 "Era of Wood"</ShortName>
+            <Index>29</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 167 "Era of Wood"</Name>
+            <ShortName>♊, Era 167 "Era of Wood"</ShortName>
+            <Index>30</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 167 "Era of Wood"</Name>
+            <ShortName>♋, Era 167 "Era of Wood"</ShortName>
+            <Index>31</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 167 "Era of Wood"</Name>
+            <ShortName>♌, Era 167 "Era of Wood"</ShortName>
+            <Index>32</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 167 "Era of Wood"</Name>
+            <ShortName>♍, Era 167 "Era of Wood"</ShortName>
+            <Index>33</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 167 "Era of Wood"</Name>
+            <ShortName>♎, Era 167 "Era of Wood"</ShortName>
+            <Index>34</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 167 "Era of Wood"</Name>
+            <ShortName>♏, Era 167 "Era of Wood"</ShortName>
+            <Index>35</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 167 "Era of Wood"</Name>
+            <ShortName>♐, Era 167 "Era of Wood"</ShortName>
+            <Index>36</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 167 "Era of Wood"</Name>
+            <ShortName>♑, Era 167 "Era of Wood"</ShortName>
+            <Index>37</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 167 "Era of Wood"</Name>
+            <ShortName>♒, Era 167 "Era of Wood"</ShortName>
+            <Index>38</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 167 "Era of Wood"</Name>
+            <ShortName>♓, Era 167 "Era of Wood"</ShortName>
+            <Index>39</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 168 "Era of Air"</Name>
+            <ShortName>♈, Era 168 "Era of Air"</ShortName>
+            <Index>40</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 168 "Era of Air"</Name>
+            <ShortName>♉, Era 168 "Era of Air"</ShortName>
+            <Index>41</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 168 "Era of Air"</Name>
+            <ShortName>♊, Era 168 "Era of Air"</ShortName>
+            <Index>42</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 168 "Era of Air"</Name>
+            <ShortName>♋, Era 168 "Era of Air"</ShortName>
+            <Index>43</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 168 "Era of Air"</Name>
+            <ShortName>♌, Era 168 "Era of Air"</ShortName>
+            <Index>44</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 168 "Era of Air"</Name>
+            <ShortName>♍, Era 168 "Era of Air"</ShortName>
+            <Index>45</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 168 "Era of Air"</Name>
+            <ShortName>♎, Era 168 "Era of Air"</ShortName>
+            <Index>46</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 168 "Era of Air"</Name>
+            <ShortName>♏, Era 168 "Era of Air"</ShortName>
+            <Index>47</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 168 "Era of Air"</Name>
+            <ShortName>♐, Era 168 "Era of Air"</ShortName>
+            <Index>48</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 168 "Era of Air"</Name>
+            <ShortName>♑, Era 168 "Era of Air"</ShortName>
+            <Index>49</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 168 "Era of Air"</Name>
+            <ShortName>♒, Era 168 "Era of Air"</ShortName>
+            <Index>50</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 168 "Era of Air"</Name>
+            <ShortName>♓, Era 168 "Era of Air"</ShortName>
+            <Index>51</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 169 "Era of Water"</Name>
+            <ShortName>♈, Era 169 "Era of Water"</ShortName>
+            <Index>52</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 169 "Era of Water"</Name>
+            <ShortName>♉, Era 169 "Era of Water"</ShortName>
+            <Index>53</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 169 "Era of Water"</Name>
+            <ShortName>♊, Era 169 "Era of Water"</ShortName>
+            <Index>54</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 169 "Era of Water"</Name>
+            <ShortName>♋, Era 169 "Era of Water"</ShortName>
+            <Index>55</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 169 "Era of Water"</Name>
+            <ShortName>♌, Era 169 "Era of Water"</ShortName>
+            <Index>56</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 169 "Era of Water"</Name>
+            <ShortName>♍, Era 169 "Era of Water"</ShortName>
+            <Index>57</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 169 "Era of Water"</Name>
+            <ShortName>♎, Era 169 "Era of Water"</ShortName>
+            <Index>58</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 169 "Era of Water"</Name>
+            <ShortName>♏, Era 169 "Era of Water"</ShortName>
+            <Index>59</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 169 "Era of Water"</Name>
+            <ShortName>♐, Era 169 "Era of Water"</ShortName>
+            <Index>60</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 169 "Era of Water"</Name>
+            <ShortName>♑, Era 169 "Era of Water"</ShortName>
+            <Index>61</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 169 "Era of Water"</Name>
+            <ShortName>♒, Era 169 "Era of Water"</ShortName>
+            <Index>62</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 169 "Era of Water"</Name>
+            <ShortName>♓, Era 169 "Era of Water"</ShortName>
+            <Index>63</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 170 "Era of Fire"</Name>
+            <ShortName>♈, Era 170 "Era of Fire"</ShortName>
+            <Index>64</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 170 "Era of Fire"</Name>
+            <ShortName>♉, Era 170 "Era of Fire"</ShortName>
+            <Index>65</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 170 "Era of Fire"</Name>
+            <ShortName>♊, Era 170 "Era of Fire"</ShortName>
+            <Index>66</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 170 "Era of Fire"</Name>
+            <ShortName>♋, Era 170 "Era of Fire"</ShortName>
+            <Index>67</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 170 "Era of Fire"</Name>
+            <ShortName>♌, Era 170 "Era of Fire"</ShortName>
+            <Index>68</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 170 "Era of Fire"</Name>
+            <ShortName>♍, Era 170 "Era of Fire"</ShortName>
+            <Index>69</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 170 "Era of Fire"</Name>
+            <ShortName>♎, Era 170 "Era of Fire"</ShortName>
+            <Index>70</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 170 "Era of Fire"</Name>
+            <ShortName>♏, Era 170 "Era of Fire"</ShortName>
+            <Index>71</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 170 "Era of Fire"</Name>
+            <ShortName>♐, Era 170 "Era of Fire"</ShortName>
+            <Index>72</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 170 "Era of Fire"</Name>
+            <ShortName>♑, Era 170 "Era of Fire"</ShortName>
+            <Index>73</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 170 "Era of Fire"</Name>
+            <ShortName>♒, Era 170 "Era of Fire"</ShortName>
+            <Index>74</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 170 "Era of Fire"</Name>
+            <ShortName>♓, Era 170 "Era of Fire"</ShortName>
+            <Index>75</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 171 "Era of Wood"</Name>
+            <ShortName>♈, Era 171 "Era of Wood"</ShortName>
+            <Index>76</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 171 "Era of Wood"</Name>
+            <ShortName>♉, Era 171 "Era of Wood"</ShortName>
+            <Index>77</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 171 "Era of Wood"</Name>
+            <ShortName>♊, Era 171 "Era of Wood"</ShortName>
+            <Index>78</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 171 "Era of Wood"</Name>
+            <ShortName>♋, Era 171 "Era of Wood"</ShortName>
+            <Index>79</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 171 "Era of Wood"</Name>
+            <ShortName>♌, Era 171 "Era of Wood"</ShortName>
+            <Index>80</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 171 "Era of Wood"</Name>
+            <ShortName>♍, Era 171 "Era of Wood"</ShortName>
+            <Index>81</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 171 "Era of Wood"</Name>
+            <ShortName>♎, Era 171 "Era of Wood"</ShortName>
+            <Index>82</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 171 "Era of Wood"</Name>
+            <ShortName>♏, Era 171 "Era of Wood"</ShortName>
+            <Index>83</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 171 "Era of Wood"</Name>
+            <ShortName>♐, Era 171 "Era of Wood"</ShortName>
+            <Index>84</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 171 "Era of Wood"</Name>
+            <ShortName>♑, Era 171 "Era of Wood"</ShortName>
+            <Index>85</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 171 "Era of Wood"</Name>
+            <ShortName>♒, Era 171 "Era of Wood"</ShortName>
+            <Index>86</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 171 "Era of Wood"</Name>
+            <ShortName>♓, Era 171 "Era of Wood"</ShortName>
+            <Index>87</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 172 "Era of Air"</Name>
+            <ShortName>♈, Era 172 "Era of Air"</ShortName>
+            <Index>88</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 172 "Era of Air"</Name>
+            <ShortName>♉, Era 172 "Era of Air"</ShortName>
+            <Index>89</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 172 "Era of Air"</Name>
+            <ShortName>♊, Era 172 "Era of Air"</ShortName>
+            <Index>90</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 172 "Era of Air"</Name>
+            <ShortName>♋, Era 172 "Era of Air"</ShortName>
+            <Index>91</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 172 "Era of Air"</Name>
+            <ShortName>♌, Era 172 "Era of Air"</ShortName>
+            <Index>92</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 172 "Era of Air"</Name>
+            <ShortName>♍, Era 172 "Era of Air"</ShortName>
+            <Index>93</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 172 "Era of Air"</Name>
+            <ShortName>♎, Era 172 "Era of Air"</ShortName>
+            <Index>94</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 172 "Era of Air"</Name>
+            <ShortName>♏, Era 172 "Era of Air"</ShortName>
+            <Index>95</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 172 "Era of Air"</Name>
+            <ShortName>♐, Era 172 "Era of Air"</ShortName>
+            <Index>96</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 172 "Era of Air"</Name>
+            <ShortName>♑, Era 172 "Era of Air"</ShortName>
+            <Index>97</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 172 "Era of Air"</Name>
+            <ShortName>♒, Era 172 "Era of Air"</ShortName>
+            <Index>98</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 172 "Era of Air"</Name>
+            <ShortName>♓, Era 172 "Era of Air"</ShortName>
+            <Index>99</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 173 "Era of Water"</Name>
+            <ShortName>♈, Era 173 "Era of Water"</ShortName>
+            <Index>100</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 173 "Era of Water"</Name>
+            <ShortName>♉, Era 173 "Era of Water"</ShortName>
+            <Index>101</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 173 "Era of Water"</Name>
+            <ShortName>♊, Era 173 "Era of Water"</ShortName>
+            <Index>102</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 173 "Era of Water"</Name>
+            <ShortName>♋, Era 173 "Era of Water"</ShortName>
+            <Index>103</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 173 "Era of Water"</Name>
+            <ShortName>♌, Era 173 "Era of Water"</ShortName>
+            <Index>104</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 173 "Era of Water"</Name>
+            <ShortName>♍, Era 173 "Era of Water"</ShortName>
+            <Index>105</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 173 "Era of Water"</Name>
+            <ShortName>♎, Era 173 "Era of Water"</ShortName>
+            <Index>106</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 173 "Era of Water"</Name>
+            <ShortName>♏, Era 173 "Era of Water"</ShortName>
+            <Index>107</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 173 "Era of Water"</Name>
+            <ShortName>♐, Era 173 "Era of Water"</ShortName>
+            <Index>108</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 173 "Era of Water"</Name>
+            <ShortName>♑, Era 173 "Era of Water"</ShortName>
+            <Index>109</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 173 "Era of Water"</Name>
+            <ShortName>♒, Era 173 "Era of Water"</ShortName>
+            <Index>110</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 173 "Era of Water"</Name>
+            <ShortName>♓, Era 173 "Era of Water"</ShortName>
+            <Index>111</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 174 "Era of Fire"</Name>
+            <ShortName>♈, Era 174 "Era of Fire"</ShortName>
+            <Index>112</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 174 "Era of Fire"</Name>
+            <ShortName>♉, Era 174 "Era of Fire"</ShortName>
+            <Index>113</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 174 "Era of Fire"</Name>
+            <ShortName>♊, Era 174 "Era of Fire"</ShortName>
+            <Index>114</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 174 "Era of Fire"</Name>
+            <ShortName>♋, Era 174 "Era of Fire"</ShortName>
+            <Index>115</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 174 "Era of Fire"</Name>
+            <ShortName>♌, Era 174 "Era of Fire"</ShortName>
+            <Index>116</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 174 "Era of Fire"</Name>
+            <ShortName>♍, Era 174 "Era of Fire"</ShortName>
+            <Index>117</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 174 "Era of Fire"</Name>
+            <ShortName>♎, Era 174 "Era of Fire"</ShortName>
+            <Index>118</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 174 "Era of Fire"</Name>
+            <ShortName>♏, Era 174 "Era of Fire"</ShortName>
+            <Index>119</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 174 "Era of Fire"</Name>
+            <ShortName>♐, Era 174 "Era of Fire"</ShortName>
+            <Index>120</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 174 "Era of Fire"</Name>
+            <ShortName>♑, Era 174 "Era of Fire"</ShortName>
+            <Index>121</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 174 "Era of Fire"</Name>
+            <ShortName>♒, Era 174 "Era of Fire"</ShortName>
+            <Index>122</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 174 "Era of Fire"</Name>
+            <ShortName>♓, Era 174 "Era of Fire"</ShortName>
+            <Index>123</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 175 "Era of Wood"</Name>
+            <ShortName>♈, Era 175 "Era of Wood"</ShortName>
+            <Index>124</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 175 "Era of Wood"</Name>
+            <ShortName>♉, Era 175 "Era of Wood"</ShortName>
+            <Index>125</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 175 "Era of Wood"</Name>
+            <ShortName>♊, Era 175 "Era of Wood"</ShortName>
+            <Index>126</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 175 "Era of Wood"</Name>
+            <ShortName>♋, Era 175 "Era of Wood"</ShortName>
+            <Index>127</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 175 "Era of Wood"</Name>
+            <ShortName>♌, Era 175 "Era of Wood"</ShortName>
+            <Index>128</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 175 "Era of Wood"</Name>
+            <ShortName>♍, Era 175 "Era of Wood"</ShortName>
+            <Index>129</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 175 "Era of Wood"</Name>
+            <ShortName>♎, Era 175 "Era of Wood"</ShortName>
+            <Index>130</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 175 "Era of Wood"</Name>
+            <ShortName>♏, Era 175 "Era of Wood"</ShortName>
+            <Index>131</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 175 "Era of Wood"</Name>
+            <ShortName>♐, Era 175 "Era of Wood"</ShortName>
+            <Index>132</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 175 "Era of Wood"</Name>
+            <ShortName>♑, Era 175 "Era of Wood"</ShortName>
+            <Index>133</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aquarius, Era 175 "Era of Wood"</Name>
+            <ShortName>♒, Era 175 "Era of Wood"</ShortName>
+            <Index>134</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Pisces, Era 175 "Era of Wood"</Name>
+            <ShortName>♓, Era 175 "Era of Wood"</ShortName>
+            <Index>135</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Aries, Era 176 "Era of Air"</Name>
+            <ShortName>♈, Era 176 "Era of Air"</ShortName>
+            <Index>136</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Taurus, Era 176 "Era of Air"</Name>
+            <ShortName>♉, Era 176 "Era of Air"</ShortName>
+            <Index>137</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Gemini, Era 176 "Era of Air"</Name>
+            <ShortName>♊, Era 176 "Era of Air"</ShortName>
+            <Index>138</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Cancer, Era 176 "Era of Air"</Name>
+            <ShortName>♋, Era 176 "Era of Air"</ShortName>
+            <Index>139</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Leo, Era 176 "Era of Air"</Name>
+            <ShortName>♌, Era 176 "Era of Air"</ShortName>
+            <Index>140</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Virgo, Era 176 "Era of Air"</Name>
+            <ShortName>♍, Era 176 "Era of Air"</ShortName>
+            <Index>141</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Libra, Era 176 "Era of Air"</Name>
+            <ShortName>♎, Era 176 "Era of Air"</ShortName>
+            <Index>142</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Scorpio, Era 176 "Era of Air"</Name>
+            <ShortName>♏, Era 176 "Era of Air"</ShortName>
+            <Index>143</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Sagittarius, Era 176 "Era of Air"</Name>
+            <ShortName>♐, Era 176 "Era of Air"</ShortName>
+            <Index>144</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Capricorn, Era 176 "Era of Air"</Name>
+            <ShortName>♑, Era 176 "Era of Air"</ShortName>
+            <Index>145</Index>
+            <Duration>1</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>End Age</Name>
+            <ShortName>End Age</ShortName>
+            <Index>146</Index>
+            <Duration>9007199254740992</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+        </Eras>
+        <Months>
+          <Month>
+            <Name>January</Name>
+            <ShortName>Jan</ShortName>
+            <Index>0</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>February</Name>
+            <ShortName>Feb</ShortName>
+            <Index>1</Index>
+            <DurationInNormalYear>28</DurationInNormalYear>
+            <DurationInLeapYear>29</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>March</Name>
+            <ShortName>Mar</ShortName>
+            <Index>2</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>April</Name>
+            <ShortName>Apr</ShortName>
+            <Index>3</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>May</Name>
+            <ShortName>May</ShortName>
+            <Index>4</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>June</Name>
+            <ShortName>Jun</ShortName>
+            <Index>5</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>July</Name>
+            <ShortName>Jul</ShortName>
+            <Index>6</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>August</Name>
+            <ShortName>Aug</ShortName>
+            <Index>7</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>September</Name>
+            <ShortName>Sep</ShortName>
+            <Index>8</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>October</Name>
+            <ShortName>Oct</ShortName>
+            <Index>9</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>November</Name>
+            <ShortName>Nov</ShortName>
+            <Index>10</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>December</Name>
+            <ShortName>Dec</ShortName>
+            <Index>11</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+        </Months>
+        <Weekdays>
+          <Weekday>
+            <Name>Sunday</Name>
+            <ShortName>Sun</ShortName>
+            <Index>0</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Monday</Name>
+            <ShortName>Mon</ShortName>
+            <Index>1</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Tuesday</Name>
+            <ShortName>Tue</ShortName>
+            <Index>2</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Wednesday</Name>
+            <ShortName>Wed</ShortName>
+            <Index>3</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Thursday</Name>
+            <ShortName>Thu</ShortName>
+            <Index>4</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Friday</Name>
+            <ShortName>Fri</ShortName>
+            <Index>5</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Saturday</Name>
+            <ShortName>Sat</ShortName>
+            <Index>6</Index>
+          </Weekday>
+        </Weekdays>
+        <DateFormat>medium</DateFormat>
+        <TimeFormat>24</TimeFormat>
+        <DateFormatIncludeDayName>24</DateFormatIncludeDayName>
+      </Calendar>
+      <IsMandatory>0</IsMandatory>
+      <SortOrder>0</SortOrder>
+    </RangeProperty>
+  </RangeProperties>
+  <DefaultLayout>
+    <LeftColumn>
+      <Array>
+        <ArrayItem type="string">Tension</ArrayItem>
+        <ArrayItem type="string">Summary</ArrayItem>
+        <ArrayItem type="string">Location</ArrayItem>
+        <ArrayItem type="string">Participant</ArrayItem>
+      </Array>
+    </LeftColumn>
+    <RightColumn>
+      <Array>
+        <ArrayItem type="string">Image</ArrayItem>
+      </Array>
+    </RightColumn>
+  </DefaultLayout>
+</Template>
