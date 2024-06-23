@@ -56,8 +56,8 @@ def main(templatePath):
         ET.SubElement(newEra, 'IsBackwards').text = '0'
         ET.SubElement(newEra, 'HasLeapYears').text = '0'
 
-    startYear = 1967
-    numberOfYears = 144
+    startYear = 1
+    numberOfYears = 1000
 
     xmlTree = ET.parse(templatePath)
     xmlTemplate = xmlTree.getroot()
@@ -65,21 +65,22 @@ def main(templatePath):
     xmlRangeProperty = xmlRangeProperties.find('RangeProperty')
     xmlCalendar = xmlRangeProperty.find('Calendar')
     xmlEras = xmlCalendar.find('Eras')
-    index = 0
     for xmlEra in xmlEras.iterfind('Era'):
-        xmlName = xmlEra.find('Name')
-        if xmlName.text == 'AD':
-            xmlEra.find('Duration').text = str(startYear - 1)
-        index += 1
+        if xmlEra.find('Name').text == 'BC':
+            xmlEra.find('Name').text = 'Unknown Past'
+            xmlEra.find('ShortName').text = 'UP'
+        else:
+            xmlEras.remove(xmlEra)
     calendarYear = startYear
+    index = 1
     for _ in range(numberOfYears):
         zodiacEra, element, zodiacYear = get_zodiac_year(calendarYear)
         zName = f'{ZODIAC_NAMES[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
-        zShortName = f'{ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
+        zShortName = f'{ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "{ELEMENTS[element]}"'
         add_era(zName, zShortName, 1)
         index += 1
         calendarYear += 1
-    add_era('End Age', 'End Age', 9007199254740992)
+    add_era('Unknown Future', 'UF', 9007199254740992)
     filePath, _ = os.path.split(templatePath)
     newTemplate = os.path.join(filePath, 'zodiac.xml')
     ET.indent(xmlTree)
