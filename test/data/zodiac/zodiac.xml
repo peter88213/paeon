@@ -179,8 +179,8 @@
         <DisplayType>Absolute</DisplayType>
         <Eras>
           <Era>
-            <Name>Unknown Past</Name>
-            <ShortName>UP</ShortName>
+            <Name>Before the Big Divide</Name>
+            <ShortName>Before the Big Divide</ShortName>
             <Index>0</Index>
             <Duration>9007199254740992</Duration>
             <IsBackwards>1</IsBackwards>

@@ -67,8 +67,8 @@ def main(templatePath):
     xmlEras = xmlCalendar.find('Eras')
     for xmlEra in xmlEras.iterfind('Era'):
         if xmlEra.find('Name').text == 'BC':
-            xmlEra.find('Name').text = 'Unknown Past'
-            xmlEra.find('ShortName').text = 'UP'
+            xmlEra.find('Name').text = 'Before the Big Divide'
+            xmlEra.find('ShortName').text = 'Before the Big Divide'
         else:
             xmlEras.remove(xmlEra)
     calendarYear = startYear
