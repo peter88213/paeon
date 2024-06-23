@@ -1,14 +1,23 @@
 #!/usr/bin/python3
-"""Create zodiac calendar eras for an Aeon Timeline 2 template
+"""Insert zodiac calendar eras into an Aeon Timeline 2 template.
+
+usage:
+
+zodiac.py path-to-template
 
 Copyright (c) 2024 Peter Triesberger
 For further information see https://github.com/peter88213/
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
-import calendar
 import sys
 import xml.etree.ElementTree as ET
+
+NUMBER_OF_YEARS = 1000
+FIRST_ERA_NAME = 'Before the Big Divide'
+FIRST_ERA_SHORT_NAME = 'Before the Big Divide'
+LAST_ERA_NAME = 'Unknown Future'
+LAST_ERA_SHORT_NAME = 'UF'
 
 ZODIAC_SIGNS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓']
 ZODIAC_NAMES = [
@@ -30,19 +39,12 @@ ELEMENTS = ['Water', 'Fire', 'Wood', 'Air']
 
 def get_zodiac_year(calendarYear):
     absoluteYear = calendarYear - 1
-    # because the calendas begins with Year One
+    # because the calendars begins with Year One
     absoluteEra = absoluteYear // len(ZODIAC_SIGNS)
     element = absoluteEra % len(ELEMENTS)
     zodiacYear = absoluteYear % len(ZODIAC_SIGNS)
     zodiacEra = absoluteEra + 1
     return zodiacEra, element, zodiacYear
-
-
-def print_years(first, number):
-    for y in range(number):
-        calendarYear = first + y
-        zodiacEra, element, zodiacYear = get_zodiac_year(calendarYear)
-        print(f'{calendarYear} {ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"')
 
 
 def main(templatePath):
@@ -56,9 +58,6 @@ def main(templatePath):
         ET.SubElement(newEra, 'IsBackwards').text = '0'
         ET.SubElement(newEra, 'HasLeapYears').text = '0'
 
-    startYear = 1
-    numberOfYears = 1000
-
     xmlTree = ET.parse(templatePath)
     xmlTemplate = xmlTree.getroot()
     xmlRangeProperties = xmlTemplate.find('RangeProperties')
@@ -67,20 +66,20 @@ def main(templatePath):
     xmlEras = xmlCalendar.find('Eras')
     for xmlEra in xmlEras.iterfind('Era'):
         if xmlEra.find('Name').text == 'BC':
-            xmlEra.find('Name').text = 'Before the Big Divide'
-            xmlEra.find('ShortName').text = 'Before the Big Divide'
+            xmlEra.find('Name').text = FIRST_ERA_NAME
+            xmlEra.find('ShortName').text = FIRST_ERA_SHORT_NAME
         else:
             xmlEras.remove(xmlEra)
-    calendarYear = startYear
+    calendarYear = 1
     index = 1
-    for _ in range(numberOfYears):
+    for _ in range(NUMBER_OF_YEARS):
         zodiacEra, element, zodiacYear = get_zodiac_year(calendarYear)
         zName = f'{ZODIAC_NAMES[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
         zShortName = f'{ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "{ELEMENTS[element]}"'
         add_era(zName, zShortName, 1)
         index += 1
         calendarYear += 1
-    add_era('Unknown Future', 'UF', 9007199254740992)
+    add_era(LAST_ERA_NAME, LAST_ERA_SHORT_NAME, 9007199254740992)
     filePath, _ = os.path.split(templatePath)
     newTemplate = os.path.join(filePath, 'zodiac.xml')
     ET.indent(xmlTree)
