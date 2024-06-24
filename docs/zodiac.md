@@ -4,9 +4,9 @@
 
 # zodiac.py
 
-![Screenshot](Screenshots/zodiac01.png)
-
 Create a "Zodiac" calendar for Aeon templates.
+
+![Screenshot](Screenshots/zodiac01.png)
 
 - The "Zodiac" calendar system has eras each of 12 years. 
 - The complete cycle is 48 years, because it is also linked to the elements "Water", "Fire", "Wood", and "Air".

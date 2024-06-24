@@ -6,6 +6,8 @@
 
 Aeon Timeline 2 - Add/update moon phase at event start date (only valid for the 20th and 21st centuries).
 
+![Screenshot](Screenshots/moonphase01.png)
+
 ## Requirements
 
 - [Python 3.6+](https://www.python.org). 
