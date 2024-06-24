@@ -81,7 +81,7 @@ def main(templatePath):
     jsonEras.append(get_era(LAST_ERA_NAME, LAST_ERA_SHORT_NAME, 9007199254740992))
     jsonTemplate['definitions']['calendar']['eras'] = jsonEras
     filePath, _ = os.path.split(templatePath)
-    newTemplate = os.path.join(filePath, 'zodiac.json')
+    newTemplate = os.path.join(filePath, 'zodiac.aeonTpl')
     with open(newTemplate, 'w', encoding='utf-8') as f:
         json.dump(jsonTemplate, f)
     print(f'New template "{newTemplate}" written')

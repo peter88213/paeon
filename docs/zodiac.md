@@ -34,7 +34,7 @@ The script inserts 1000 "Zodiac years" into an Aeon Timeline template file.
 
 Download the Python script and create a shortcut on the desktop. 
 - If you drag a template file onto it and drop it, a modified template file
-named *zodiac.xml* resp. *zodiac.json* is created. 
+named *zodiac.xml* resp. *zodiac.aeonTpl* is created. 
 
 ### Command line usage
 
@@ -55,7 +55,7 @@ positional arguments:
 usage: `zodiac3.py path-to-template`
 
 positional arguments:
-  `path-to-template`  The path of the .json template file.
+  `path-to-template`  The path of the .aeonTpl template file.
 
 
 ## License
