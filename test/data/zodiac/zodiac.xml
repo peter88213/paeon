@@ -8139,57 +8139,9 @@
             <HasLeapYears>0</HasLeapYears>
           </Era>
           <Era>
-            <Name>Aquarius, Era 83 "Era of Wood"</Name>
-            <ShortName>♒, Era 83 "Wood"</ShortName>
-            <Index>995</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Pisces, Era 83 "Era of Wood"</Name>
-            <ShortName>♓, Era 83 "Wood"</ShortName>
-            <Index>996</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Aries, Era 84 "Era of Air"</Name>
-            <ShortName>♈, Era 84 "Air"</ShortName>
-            <Index>997</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Taurus, Era 84 "Era of Air"</Name>
-            <ShortName>♉, Era 84 "Air"</ShortName>
-            <Index>998</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Gemini, Era 84 "Era of Air"</Name>
-            <ShortName>♊, Era 84 "Air"</ShortName>
-            <Index>999</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Cancer, Era 84 "Era of Air"</Name>
-            <ShortName>♋, Era 84 "Air"</ShortName>
-            <Index>1000</Index>
-            <Duration>1</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
             <Name>Unknown Future</Name>
             <ShortName>UF</ShortName>
-            <Index>1001</Index>
+            <Index>995</Index>
             <Duration>9007199254740992</Duration>
             <IsBackwards>0</IsBackwards>
             <HasLeapYears>0</HasLeapYears>
