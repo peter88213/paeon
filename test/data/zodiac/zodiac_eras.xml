@@ -1,0 +1,1144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Template>
+  <Name>fiction</Name>
+  <Types>
+    <Type>
+      <GUID>4D1C13AA-DA1B-4899-BBD2-AF470B0124A5</GUID>
+      <Name>Character</Name>
+      <Icon>person</Icon>
+      <Color>iconRed</Color>
+      <Persistent>0</Persistent>
+      <SortOrder>0</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>5B0AB989-CB40-4299-A6ED-92A5D510D0C4</GUID>
+          <Name>Participant</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+        <Role>
+          <GUID>73391A76-F11F-4CF4-8705-B38C177D4732</GUID>
+          <Name>Observer</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>1</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+    <Type>
+      <GUID>93AFCEDE-7576-411D-B5DC-CCD17EC91047</GUID>
+      <Name>Arc</Name>
+      <Icon>book</Icon>
+      <Color>iconYellow</Color>
+      <Persistent>1</Persistent>
+      <SortOrder>1</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>595902A3-5B47-4C41-8B6E-8150ED930CD3</GUID>
+          <Name>Arc</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>0</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+    <Type>
+      <GUID>C49B5226-F090-48CF-9ECA-EB236679510D</GUID>
+      <Name>Place</Name>
+      <Icon>map</Icon>
+      <Color>iconOrange</Color>
+      <Persistent>1</Persistent>
+      <SortOrder>2</SortOrder>
+      <Roles>
+        <Role>
+          <GUID>0CFB07A5-F311-4864-97F9-43DE504336EC</GUID>
+          <Name>Location</Name>
+          <Icon>circle text</Icon>
+          <MandatoryForEvent>0</MandatoryForEvent>
+          <MandatoryForEntity>0</MandatoryForEntity>
+          <AllowsMultipleForEvent>1</AllowsMultipleForEvent>
+          <AllowsMultipleForEntity>1</AllowsMultipleForEntity>
+          <AllowsPercentAllocated>0</AllowsPercentAllocated>
+          <SortOrder>0</SortOrder>
+        </Role>
+      </Roles>
+    </Type>
+  </Types>
+  <Colors>
+    <Color>
+      <GUID>429295A1-06FF-45EF-9895-FFD4F6CE0101</GUID>
+      <Name>Orange</Name>
+      <SwatchColor>orange</SwatchColor>
+      <SortOrder>1</SortOrder>
+    </Color>
+    <Color>
+      <GUID>438AD328-6E41-4F9B-89EE-37C9EF8E7A5E</GUID>
+      <Name>Yellow</Name>
+      <SwatchColor>yellow</SwatchColor>
+      <SortOrder>2</SortOrder>
+    </Color>
+    <Color>
+      <GUID>52099C15-8290-4D46-865C-E410D27E7C7A</GUID>
+      <Name>Fuschia</Name>
+      <SwatchColor>fuschia</SwatchColor>
+      <SortOrder>7</SortOrder>
+    </Color>
+    <Color>
+      <GUID>5879FAED-260C-4026-B105-1AD6622AE8A2</GUID>
+      <Name>Green</Name>
+      <SwatchColor>apple</SwatchColor>
+      <SortOrder>3</SortOrder>
+    </Color>
+    <Color>
+      <GUID>7C4F59E7-0276-448C-902E-C45CC1C53E5D</GUID>
+      <Name>Blue</Name>
+      <SwatchColor>midBlue</SwatchColor>
+      <SortOrder>4</SortOrder>
+    </Color>
+    <Color>
+      <GUID>98C3945D-4CF0-4EE7-86AF-EB1FDB5E741F</GUID>
+      <Name>Pink</Name>
+      <SwatchColor>darkPink</SwatchColor>
+      <SortOrder>6</SortOrder>
+    </Color>
+    <Color>
+      <GUID>B2FCAB66-0C01-4FA6-9CBB-B3B02BE195E3</GUID>
+      <Name>Red</Name>
+      <SwatchColor>red</SwatchColor>
+      <SortOrder>0</SortOrder>
+    </Color>
+    <Color>
+      <GUID>C831D23B-F677-4F5F-93BB-46209F01E188</GUID>
+      <Name>Purple</Name>
+      <SwatchColor>lightPurple</SwatchColor>
+      <SortOrder>5</SortOrder>
+    </Color>
+  </Colors>
+  <Properties>
+    <Property>
+      <GUID>448F3998-F5F0-451B-8B15-7514C954669B</GUID>
+      <Name>Tension</Name>
+      <Icon>tag</Icon>
+      <Type>percentage</Type>
+      <SortOrder>0</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>weightedPercentage</CalculationMode>
+      <UseForFadingEvents>0</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+    <Property>
+      <GUID>5694ABBC-E036-43AD-998C-2F4882315DE3</GUID>
+      <Name>Complete</Name>
+      <Icon>tag</Icon>
+      <Type>boolean</Type>
+      <SortOrder>1</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>default</CalculationMode>
+      <UseForFadingEvents>1</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+    <Property>
+      <GUID>9CAB24C5-AA1C-4EF9-8E4C-F5FAE9D5203A</GUID>
+      <Name>Summary</Name>
+      <Icon>tag</Icon>
+      <Type>multitext</Type>
+      <SortOrder>2</SortOrder>
+      <CalculateFromChildren>0</CalculateFromChildren>
+      <CalculationMode>default</CalculationMode>
+      <UseForFadingEvents>0</UseForFadingEvents>
+      <IsMandatory>0</IsMandatory>
+    </Property>
+  </Properties>
+  <RangeProperties>
+    <RangeProperty>
+      <GUID>654F7379-864F-457C-8D66-E8C44BEB3779</GUID>
+      <Name>Date</Name>
+      <Type>date</Type>
+      <MinUnitScale>day</MinUnitScale>
+      <MaxUnitScale>century</MaxUnitScale>
+      <DefaultUnitScale>century</DefaultUnitScale>
+      <Calendar>
+        <Name>BC-AD Calendar</Name>
+        <Notes />
+        <WeekdayIndexAtZero>1</WeekdayIndexAtZero>
+        <HoursInDay>24</HoursInDay>
+        <ZeroDateTimestamp>63460972800</ZeroDateTimestamp>
+        <DisplayType>Absolute</DisplayType>
+        <Eras>
+          <Era>
+            <Name>Before the Big Divide</Name>
+            <ShortName>Before the Big Divide</ShortName>
+            <Index>0</Index>
+            <Duration>9007199254740992</Duration>
+            <IsBackwards>1</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 1 "Era of Water"</Name>
+            <ShortName>Era 1 "Water"</ShortName>
+            <Index>1</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 2 "Era of Fire"</Name>
+            <ShortName>Era 2 "Fire"</ShortName>
+            <Index>2</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 3 "Era of Wood"</Name>
+            <ShortName>Era 3 "Wood"</ShortName>
+            <Index>3</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 4 "Era of Air"</Name>
+            <ShortName>Era 4 "Air"</ShortName>
+            <Index>4</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 5 "Era of Water"</Name>
+            <ShortName>Era 5 "Water"</ShortName>
+            <Index>5</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 6 "Era of Fire"</Name>
+            <ShortName>Era 6 "Fire"</ShortName>
+            <Index>6</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 7 "Era of Wood"</Name>
+            <ShortName>Era 7 "Wood"</ShortName>
+            <Index>7</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 8 "Era of Air"</Name>
+            <ShortName>Era 8 "Air"</ShortName>
+            <Index>8</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 9 "Era of Water"</Name>
+            <ShortName>Era 9 "Water"</ShortName>
+            <Index>9</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 10 "Era of Fire"</Name>
+            <ShortName>Era 10 "Fire"</ShortName>
+            <Index>10</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 11 "Era of Wood"</Name>
+            <ShortName>Era 11 "Wood"</ShortName>
+            <Index>11</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 12 "Era of Air"</Name>
+            <ShortName>Era 12 "Air"</ShortName>
+            <Index>12</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 13 "Era of Water"</Name>
+            <ShortName>Era 13 "Water"</ShortName>
+            <Index>13</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 14 "Era of Fire"</Name>
+            <ShortName>Era 14 "Fire"</ShortName>
+            <Index>14</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 15 "Era of Wood"</Name>
+            <ShortName>Era 15 "Wood"</ShortName>
+            <Index>15</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 16 "Era of Air"</Name>
+            <ShortName>Era 16 "Air"</ShortName>
+            <Index>16</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 17 "Era of Water"</Name>
+            <ShortName>Era 17 "Water"</ShortName>
+            <Index>17</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 18 "Era of Fire"</Name>
+            <ShortName>Era 18 "Fire"</ShortName>
+            <Index>18</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 19 "Era of Wood"</Name>
+            <ShortName>Era 19 "Wood"</ShortName>
+            <Index>19</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 20 "Era of Air"</Name>
+            <ShortName>Era 20 "Air"</ShortName>
+            <Index>20</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 21 "Era of Water"</Name>
+            <ShortName>Era 21 "Water"</ShortName>
+            <Index>21</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 22 "Era of Fire"</Name>
+            <ShortName>Era 22 "Fire"</ShortName>
+            <Index>22</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 23 "Era of Wood"</Name>
+            <ShortName>Era 23 "Wood"</ShortName>
+            <Index>23</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 24 "Era of Air"</Name>
+            <ShortName>Era 24 "Air"</ShortName>
+            <Index>24</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 25 "Era of Water"</Name>
+            <ShortName>Era 25 "Water"</ShortName>
+            <Index>25</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 26 "Era of Fire"</Name>
+            <ShortName>Era 26 "Fire"</ShortName>
+            <Index>26</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 27 "Era of Wood"</Name>
+            <ShortName>Era 27 "Wood"</ShortName>
+            <Index>27</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 28 "Era of Air"</Name>
+            <ShortName>Era 28 "Air"</ShortName>
+            <Index>28</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 29 "Era of Water"</Name>
+            <ShortName>Era 29 "Water"</ShortName>
+            <Index>29</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 30 "Era of Fire"</Name>
+            <ShortName>Era 30 "Fire"</ShortName>
+            <Index>30</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 31 "Era of Wood"</Name>
+            <ShortName>Era 31 "Wood"</ShortName>
+            <Index>31</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 32 "Era of Air"</Name>
+            <ShortName>Era 32 "Air"</ShortName>
+            <Index>32</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 33 "Era of Water"</Name>
+            <ShortName>Era 33 "Water"</ShortName>
+            <Index>33</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 34 "Era of Fire"</Name>
+            <ShortName>Era 34 "Fire"</ShortName>
+            <Index>34</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 35 "Era of Wood"</Name>
+            <ShortName>Era 35 "Wood"</ShortName>
+            <Index>35</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 36 "Era of Air"</Name>
+            <ShortName>Era 36 "Air"</ShortName>
+            <Index>36</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 37 "Era of Water"</Name>
+            <ShortName>Era 37 "Water"</ShortName>
+            <Index>37</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 38 "Era of Fire"</Name>
+            <ShortName>Era 38 "Fire"</ShortName>
+            <Index>38</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 39 "Era of Wood"</Name>
+            <ShortName>Era 39 "Wood"</ShortName>
+            <Index>39</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 40 "Era of Air"</Name>
+            <ShortName>Era 40 "Air"</ShortName>
+            <Index>40</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 41 "Era of Water"</Name>
+            <ShortName>Era 41 "Water"</ShortName>
+            <Index>41</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 42 "Era of Fire"</Name>
+            <ShortName>Era 42 "Fire"</ShortName>
+            <Index>42</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 43 "Era of Wood"</Name>
+            <ShortName>Era 43 "Wood"</ShortName>
+            <Index>43</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 44 "Era of Air"</Name>
+            <ShortName>Era 44 "Air"</ShortName>
+            <Index>44</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 45 "Era of Water"</Name>
+            <ShortName>Era 45 "Water"</ShortName>
+            <Index>45</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 46 "Era of Fire"</Name>
+            <ShortName>Era 46 "Fire"</ShortName>
+            <Index>46</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 47 "Era of Wood"</Name>
+            <ShortName>Era 47 "Wood"</ShortName>
+            <Index>47</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 48 "Era of Air"</Name>
+            <ShortName>Era 48 "Air"</ShortName>
+            <Index>48</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 49 "Era of Water"</Name>
+            <ShortName>Era 49 "Water"</ShortName>
+            <Index>49</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 50 "Era of Fire"</Name>
+            <ShortName>Era 50 "Fire"</ShortName>
+            <Index>50</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 51 "Era of Wood"</Name>
+            <ShortName>Era 51 "Wood"</ShortName>
+            <Index>51</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 52 "Era of Air"</Name>
+            <ShortName>Era 52 "Air"</ShortName>
+            <Index>52</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 53 "Era of Water"</Name>
+            <ShortName>Era 53 "Water"</ShortName>
+            <Index>53</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 54 "Era of Fire"</Name>
+            <ShortName>Era 54 "Fire"</ShortName>
+            <Index>54</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 55 "Era of Wood"</Name>
+            <ShortName>Era 55 "Wood"</ShortName>
+            <Index>55</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 56 "Era of Air"</Name>
+            <ShortName>Era 56 "Air"</ShortName>
+            <Index>56</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 57 "Era of Water"</Name>
+            <ShortName>Era 57 "Water"</ShortName>
+            <Index>57</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 58 "Era of Fire"</Name>
+            <ShortName>Era 58 "Fire"</ShortName>
+            <Index>58</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 59 "Era of Wood"</Name>
+            <ShortName>Era 59 "Wood"</ShortName>
+            <Index>59</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 60 "Era of Air"</Name>
+            <ShortName>Era 60 "Air"</ShortName>
+            <Index>60</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 61 "Era of Water"</Name>
+            <ShortName>Era 61 "Water"</ShortName>
+            <Index>61</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 62 "Era of Fire"</Name>
+            <ShortName>Era 62 "Fire"</ShortName>
+            <Index>62</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 63 "Era of Wood"</Name>
+            <ShortName>Era 63 "Wood"</ShortName>
+            <Index>63</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 64 "Era of Air"</Name>
+            <ShortName>Era 64 "Air"</ShortName>
+            <Index>64</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 65 "Era of Water"</Name>
+            <ShortName>Era 65 "Water"</ShortName>
+            <Index>65</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 66 "Era of Fire"</Name>
+            <ShortName>Era 66 "Fire"</ShortName>
+            <Index>66</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 67 "Era of Wood"</Name>
+            <ShortName>Era 67 "Wood"</ShortName>
+            <Index>67</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 68 "Era of Air"</Name>
+            <ShortName>Era 68 "Air"</ShortName>
+            <Index>68</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 69 "Era of Water"</Name>
+            <ShortName>Era 69 "Water"</ShortName>
+            <Index>69</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 70 "Era of Fire"</Name>
+            <ShortName>Era 70 "Fire"</ShortName>
+            <Index>70</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 71 "Era of Wood"</Name>
+            <ShortName>Era 71 "Wood"</ShortName>
+            <Index>71</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 72 "Era of Air"</Name>
+            <ShortName>Era 72 "Air"</ShortName>
+            <Index>72</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 73 "Era of Water"</Name>
+            <ShortName>Era 73 "Water"</ShortName>
+            <Index>73</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 74 "Era of Fire"</Name>
+            <ShortName>Era 74 "Fire"</ShortName>
+            <Index>74</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 75 "Era of Wood"</Name>
+            <ShortName>Era 75 "Wood"</ShortName>
+            <Index>75</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 76 "Era of Air"</Name>
+            <ShortName>Era 76 "Air"</ShortName>
+            <Index>76</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 77 "Era of Water"</Name>
+            <ShortName>Era 77 "Water"</ShortName>
+            <Index>77</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 78 "Era of Fire"</Name>
+            <ShortName>Era 78 "Fire"</ShortName>
+            <Index>78</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 79 "Era of Wood"</Name>
+            <ShortName>Era 79 "Wood"</ShortName>
+            <Index>79</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 80 "Era of Air"</Name>
+            <ShortName>Era 80 "Air"</ShortName>
+            <Index>80</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 81 "Era of Water"</Name>
+            <ShortName>Era 81 "Water"</ShortName>
+            <Index>81</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 82 "Era of Fire"</Name>
+            <ShortName>Era 82 "Fire"</ShortName>
+            <Index>82</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 83 "Era of Wood"</Name>
+            <ShortName>Era 83 "Wood"</ShortName>
+            <Index>83</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 84 "Era of Air"</Name>
+            <ShortName>Era 84 "Air"</ShortName>
+            <Index>84</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 85 "Era of Water"</Name>
+            <ShortName>Era 85 "Water"</ShortName>
+            <Index>85</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 86 "Era of Fire"</Name>
+            <ShortName>Era 86 "Fire"</ShortName>
+            <Index>86</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 87 "Era of Wood"</Name>
+            <ShortName>Era 87 "Wood"</ShortName>
+            <Index>87</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 88 "Era of Air"</Name>
+            <ShortName>Era 88 "Air"</ShortName>
+            <Index>88</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 89 "Era of Water"</Name>
+            <ShortName>Era 89 "Water"</ShortName>
+            <Index>89</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 90 "Era of Fire"</Name>
+            <ShortName>Era 90 "Fire"</ShortName>
+            <Index>90</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 91 "Era of Wood"</Name>
+            <ShortName>Era 91 "Wood"</ShortName>
+            <Index>91</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 92 "Era of Air"</Name>
+            <ShortName>Era 92 "Air"</ShortName>
+            <Index>92</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 93 "Era of Water"</Name>
+            <ShortName>Era 93 "Water"</ShortName>
+            <Index>93</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 94 "Era of Fire"</Name>
+            <ShortName>Era 94 "Fire"</ShortName>
+            <Index>94</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 95 "Era of Wood"</Name>
+            <ShortName>Era 95 "Wood"</ShortName>
+            <Index>95</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 96 "Era of Air"</Name>
+            <ShortName>Era 96 "Air"</ShortName>
+            <Index>96</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 97 "Era of Water"</Name>
+            <ShortName>Era 97 "Water"</ShortName>
+            <Index>97</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 98 "Era of Fire"</Name>
+            <ShortName>Era 98 "Fire"</ShortName>
+            <Index>98</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 99 "Era of Wood"</Name>
+            <ShortName>Era 99 "Wood"</ShortName>
+            <Index>99</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Era 100 "Era of Air"</Name>
+            <ShortName>Era 100 "Air"</ShortName>
+            <Index>100</Index>
+            <Duration>12</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+          <Era>
+            <Name>Unknown Future</Name>
+            <ShortName>UF</ShortName>
+            <Index>101</Index>
+            <Duration>9007199254740992</Duration>
+            <IsBackwards>0</IsBackwards>
+            <HasLeapYears>0</HasLeapYears>
+          </Era>
+        </Eras>
+        <Months>
+          <Month>
+            <Name>January</Name>
+            <ShortName>Jan</ShortName>
+            <Index>0</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>February</Name>
+            <ShortName>Feb</ShortName>
+            <Index>1</Index>
+            <DurationInNormalYear>28</DurationInNormalYear>
+            <DurationInLeapYear>29</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>March</Name>
+            <ShortName>Mar</ShortName>
+            <Index>2</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>April</Name>
+            <ShortName>Apr</ShortName>
+            <Index>3</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>May</Name>
+            <ShortName>May</ShortName>
+            <Index>4</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>June</Name>
+            <ShortName>Jun</ShortName>
+            <Index>5</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>July</Name>
+            <ShortName>Jul</ShortName>
+            <Index>6</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>August</Name>
+            <ShortName>Aug</ShortName>
+            <Index>7</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>September</Name>
+            <ShortName>Sep</ShortName>
+            <Index>8</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>October</Name>
+            <ShortName>Oct</ShortName>
+            <Index>9</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>November</Name>
+            <ShortName>Nov</ShortName>
+            <Index>10</Index>
+            <DurationInNormalYear>30</DurationInNormalYear>
+            <DurationInLeapYear>30</DurationInLeapYear>
+          </Month>
+          <Month>
+            <Name>December</Name>
+            <ShortName>Dec</ShortName>
+            <Index>11</Index>
+            <DurationInNormalYear>31</DurationInNormalYear>
+            <DurationInLeapYear>31</DurationInLeapYear>
+          </Month>
+        </Months>
+        <Weekdays>
+          <Weekday>
+            <Name>Sunday</Name>
+            <ShortName>Sun</ShortName>
+            <Index>0</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Monday</Name>
+            <ShortName>Mon</ShortName>
+            <Index>1</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Tuesday</Name>
+            <ShortName>Tue</ShortName>
+            <Index>2</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Wednesday</Name>
+            <ShortName>Wed</ShortName>
+            <Index>3</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Thursday</Name>
+            <ShortName>Thu</ShortName>
+            <Index>4</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Friday</Name>
+            <ShortName>Fri</ShortName>
+            <Index>5</Index>
+          </Weekday>
+          <Weekday>
+            <Name>Saturday</Name>
+            <ShortName>Sat</ShortName>
+            <Index>6</Index>
+          </Weekday>
+        </Weekdays>
+        <DateFormat>medium</DateFormat>
+        <TimeFormat>24</TimeFormat>
+        <DateFormatIncludeDayName>24</DateFormatIncludeDayName>
+      </Calendar>
+      <IsMandatory>0</IsMandatory>
+      <SortOrder>0</SortOrder>
+    </RangeProperty>
+  </RangeProperties>
+  <DefaultLayout>
+    <LeftColumn>
+      <Array>
+        <ArrayItem type="string">Tension</ArrayItem>
+        <ArrayItem type="string">Summary</ArrayItem>
+        <ArrayItem type="string">Location</ArrayItem>
+        <ArrayItem type="string">Participant</ArrayItem>
+      </Array>
+    </LeftColumn>
+    <RightColumn>
+      <Array>
+        <ArrayItem type="string">Image</ArrayItem>
+      </Array>
+    </RightColumn>
+  </DefaultLayout>
+</Template>

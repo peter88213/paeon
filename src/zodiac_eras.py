@@ -3,7 +3,7 @@
 
 usage:
 
-zodiac.py path-to-template
+zodiac_eras.py path-to-template
 
 Copyright (c) 2024 Peter Triesberger
 For further information see https://github.com/peter88213/
@@ -13,37 +13,19 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-NUMBER_OF_YEARS = 1000
+NUMBER_OF_ERAS = 100
 FIRST_ERA_NAME = 'Before the Big Divide'
 FIRST_ERA_SHORT_NAME = 'Before the Big Divide'
 LAST_ERA_NAME = 'Unknown Future'
 LAST_ERA_SHORT_NAME = 'UF'
-
-ZODIAC_SIGNS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓']
-ZODIAC_NAMES = [
-    'Aries',
-    'Taurus',
-    'Gemini',
-    'Cancer',
-    'Leo',
-    'Virgo',
-    'Libra',
-    'Scorpio',
-    'Sagittarius',
-    'Capricorn',
-    'Aquarius',
-    'Pisces'
-]
+YEARS_PER_ERA = 12
 ELEMENTS = ['Water', 'Fire', 'Wood', 'Air']
 
 
-def get_zodiac_year(calendarget_zodiac_eraluteYear = calendarYear - 1
-    # because the calendars begins with Year One
-    absoluteEra = absoluteYear // len(ZODIAC_SIGNS)
-    element = absoluteEra % len(ELEMENTS)
-    zodiacYear = absoluteYear % len(ZODIAC_SIGNS)
-    zodiacEra = absoluteEra + 1
-    return zodiacEra, element, zodiacYear
+def get_zodiac_era(era):
+    element = era % len(ELEMENTS)
+    zodiacEra = era + 1
+    return zodiacEra, element
 
 
 def main(templatePath):
@@ -69,17 +51,16 @@ def main(templatePath):
             xmlEra.find('ShortName').text = FIRST_ERA_SHORT_NAME
         else:
             xmlEras.remove(xmlEra)
-    calendarYear = 1
     index = 1
-    for _ in range(NUMBER_OF_YEARS):
-        zodiacEra, element, zodiacYear = get_zodiac_year(calendarget_zodiac_eraName = f'{ZODIAC_NAMES[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
-        zShortName = f'{ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "{ELEMENTS[element]}"'
-        add_era(zName, zShortName, 1)
+    for era in range(NUMBER_OF_ERAS):
+        zodiacEra, element = get_zodiac_era(era)
+        zName = f'Era {zodiacEra} "Era of {ELEMENTS[element]}"'
+        zShortName = f'Era {zodiacEra} "{ELEMENTS[element]}"'
+        add_era(zName, zShortName, YEARS_PER_ERA)
         index += 1
-        calendarYear += 1
     add_era(LAST_ERA_NAME, LAST_ERA_SHORT_NAME, 9007199254740992)
     filePath, _ = os.path.split(templatePath)
-    newTemplate = os.path.join(filePath, 'zodiac.xml')
+    newTemplate = os.path.join(filePath, 'zodiac_eras.xml')
     ET.indent(xmlTree)
     xmlTree.write(newTemplate, xml_declaration=True, encoding='utf-8')
     print(f'New template "{newTemplate}" written')

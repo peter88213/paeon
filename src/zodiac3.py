@@ -37,8 +37,7 @@ ZODIAC_NAMES = [
 ELEMENTS = ['Water', 'Fire', 'Wood', 'Air']
 
 
-def get_zodiac_year(calendarYear):
-    absoluteYear = calendarYear - 1
+def get_zodiac_year(calendarget_zodiac_eraluteYear = calendarYear - 1
     # because the calendars begins with Year One
     absoluteEra = absoluteYear // len(ZODIAC_SIGNS)
     element = absoluteEra % len(ELEMENTS)
@@ -73,8 +72,7 @@ def main(templatePath):
     ]
     calendarYear = 1
     for _ in range(NUMBER_OF_YEARS):
-        zodiacEra, element, zodiacYear = get_zodiac_year(calendarYear)
-        zName = f'{ZODIAC_NAMES[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
+        zodiacEra, element, zodiacYear = get_zodiac_year(calendarget_zodiac_eraName = f'{ZODIAC_NAMES[zodiacYear]}, Era {zodiacEra} "Era of {ELEMENTS[element]}"'
         zShortName = f'{ZODIAC_SIGNS[zodiacYear]}, Era {zodiacEra} "{ELEMENTS[element]}"'
         jsonEras.append(get_era(zName, zShortName, 1))
         calendarYear += 1
