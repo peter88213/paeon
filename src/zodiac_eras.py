@@ -13,7 +13,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-NUMBER_OF_ERAS = 100
+NUMBER_OF_ERAS = 98
 FIRST_ERA_NAME = 'Before the Big Divide'
 FIRST_ERA_SHORT_NAME = 'Before the Big Divide'
 LAST_ERA_NAME = 'Unknown Future'
@@ -60,7 +60,7 @@ def main(templatePath):
         index += 1
     add_era(LAST_ERA_NAME, LAST_ERA_SHORT_NAME, 9007199254740992)
     filePath, _ = os.path.split(templatePath)
-    newTemplate = os.path.join(filePath, 'zodiac_eras.xml')
+    newTemplate = os.path.join(filePath, 'zodiac-eras.xml')
     ET.indent(xmlTree)
     xmlTree.write(newTemplate, xml_declaration=True, encoding='utf-8')
     print(f'New template "{newTemplate}" written')

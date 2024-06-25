@@ -971,25 +971,9 @@
             <HasLeapYears>0</HasLeapYears>
           </Era>
           <Era>
-            <Name>Era 99 "Era of Wood"</Name>
-            <ShortName>Era 99 "Wood"</ShortName>
-            <Index>99</Index>
-            <Duration>12</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
-            <Name>Era 100 "Era of Air"</Name>
-            <ShortName>Era 100 "Air"</ShortName>
-            <Index>100</Index>
-            <Duration>12</Duration>
-            <IsBackwards>0</IsBackwards>
-            <HasLeapYears>0</HasLeapYears>
-          </Era>
-          <Era>
             <Name>Unknown Future</Name>
             <ShortName>UF</ShortName>
-            <Index>101</Index>
+            <Index>99</Index>
             <Duration>9007199254740992</Duration>
             <IsBackwards>0</IsBackwards>
             <HasLeapYears>0</HasLeapYears>
