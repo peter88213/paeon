@@ -15,7 +15,7 @@ Create a "Zodiac" calendar for Aeon templates.
 The Python script redefines Aeon Timeline eras as years in order to give them names.
 The names include the Zodiac sign, the numbered era, and the element.
 
-The script inserts 1000 "Zodiac years" into an Aeon Timeline template file. 
+The script inserts 994 "Zodiac years" into an Aeon Timeline template file. 
 
 ![Screenshot](Screenshots/zodiac02.png)
 
