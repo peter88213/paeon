@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Aeon Timeline 2 Add/update moon phase at event start date.
 
-Version 0.4.5
+Version 0.5.0
 Requires Python 3.6+
 
 usage: aeon2moon.py [-h] Sourcefile
@@ -14,7 +14,7 @@ optional arguments:
   
 "Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
-Copyright (c) 2023 Peter Triesberger
+Copyright (c) 2024 Peter Triesberger
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import argparse
@@ -158,13 +158,44 @@ def get_moon_phase(dateStr):
 def get_moon_phase_plus(dateStr):
     """Return a string containing the moon phase plus a pseudo-graphic display.
     """
-    s = '  ))))))))))))OOO(((((((((((( '
+    s = [
+        '🌑',
+        '🌑',
+        '🌒',
+        '🌒',
+        '🌒',
+        '🌒',
+        '🌓',
+        '🌓',
+        '🌓',
+        '🌓',
+        '🌔',
+        '🌔',
+        '🌔',
+        '🌔',
+        '🌕',
+        '🌕',
+        '🌕',
+        '🌖',
+        '🌖',
+        '🌖',
+        '🌖',
+        '🌗',
+        '🌗',
+        '🌗',
+        '🌗',
+        '🌘',
+        '🌘',
+        '🌘',
+        '🌘',
+        '🌑'
+    ]
     p = '00¼¼¼¼½½½½¾¾¾¾111¾¾¾¾½½½½¼¼¼¼0'
     r = get_moon_phase(dateStr)
     return f'{r} [  {s[r]}  ] {p[r]}'
 
 
-VERSION = 'v0.4.4'
+VERSION = 'v0.5.0'
 AEON2_EXT = '.aeonzip'
 PROPERTY_MOONPHASE = 'Moon phase'
 
