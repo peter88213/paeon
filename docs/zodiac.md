@@ -4,7 +4,7 @@
 
 # zodiac.py
 
-Create a "Zodiac" calendar for Aeon templates.
+Create a "Zodiac" calendar for Aeon Timeline 2 templates.
 
 ![Screenshot](Screenshots/zodiac01.png)
 
@@ -26,7 +26,7 @@ The script inserts 994 "Zodiac years" into an Aeon Timeline template file.
 ### Download:
 
 - [zodiac.py for Aeon Timeline 2 templates (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/src/zodiac.py)
-- [zodiac3.py for Aeon Timeline 3 templates (Download link)](https://raw.githubusercontent.com/peter88213/paeon/main/src/zodiac.py)
+
 
 ### Instructions for use:
 
@@ -50,14 +50,7 @@ usage: `zodiac.py path-to-template`
 positional arguments:
   `path-to-template`  The path of the .xml template file.
 
-#### Aeon Timeline 3 template
-
-usage: `zodiac3.py path-to-template`
-
-positional arguments:
-  `path-to-template`  The path of the .aeonTpl template file.
-
 
 ## License
 
-zodiac.py and zodiac3.py are distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+zodiac.py is distributed under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
