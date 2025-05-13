@@ -12,17 +12,33 @@ class Aeon2Calendar:
 
     def __init__(self, calendarDefinitions):
 
+        def seconds_in_year():
+            days = 0
+            for month in calendarDefinitions['months']:
+                days += month['normalDuration']
+            return days * calendarDefinitions['hoursInDay'] * 3600
+
+        def seconds_in_leap_year():
+            days = 0
+            for month in calendarDefinitions['months']:
+                days += month['leapDuration']
+            return days * calendarDefinitions['hoursInDay'] * 3600
+
         self.hoursInDay = calendarDefinitions['hoursInDay']
         self.minutesInHour = 60
         self.secondsInMinute = 60
         self.weekdayIndexAtZero = calendarDefinitions['weekdayIndexAtZero']
+        self.secondsInYear = seconds_in_year()
+        self.secondsInLeapYear = seconds_in_leap_year()
 
         #--- Era enumerations.
         self.eraShortNames = []
         self.eraNames = []
-        for era in calendarDefinitions['eras']:
+        self.eraSeconds = []
+        for self.maxEra, era in enumerate(calendarDefinitions['eras']):
             self.eraShortNames.append(era['shortName'])
             self.eraNames.append(era['name'])
+            self.eraSeconds.append(era['duration'] * self.secondsInYear)
 
         #--- Month enumerations.
         self.monthShortNames = []
@@ -58,7 +74,15 @@ class Aeon2Calendar:
 
     def get_era(self, itemDates):
         """Return a tuple: (era as an integer, era's short name, era's name)."""
-
+        timestamp = self.get_timestamp(itemDates)
+        era = self.maxEra
+        eraStart = 0
+        if timestamp < 0:
+            era -= 1
+            eraStart -= self.eraSeconds[era]
+            while timestamp < eraStart:
+                era -= 1
+                eraStart -= self.eraSeconds[era]
         try:
             return era, self.eraShortNames[era], self.eraNames[era]
         except:
