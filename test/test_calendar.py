@@ -1,7 +1,7 @@
-"""Unit tests for of the Aeon3Calendar time extraction methods.
+"""Unit tests for of the Aeon2Calendar time extraction methods.
 
 Copyright (c) 2025 Peter Triesberger
-For further information see https://github.com/peter88213/aeon3obsidian
+For further information see https://github.com/peter88213/paeon
 License: GNU GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
 """
 import unittest
@@ -240,10 +240,12 @@ class TestCalendar(unittest.TestCase):
         self.assertEqual(self.calendar.get_era(self.itemDates), (1, 'AD', 'AD'))
 
     def test_get_year(self):
-        self.assertEqual(self.calendar.get_year(self.itemDates), 1933)
+        year, _ = self.calendar.get_year(self.itemDates)
+        self.assertEqual(year, 1933)
 
     def test_get_month(self):
-        self.assertEqual(self.calendar.get_month(self.itemDates), (2, 'Feb', 'February'))
+        month, shortName, fullName, _ = self.calendar.get_month(self.itemDates)
+        self.assertEqual((month, shortName, fullName), (2, 'Feb', 'February'))
 
     def test_get_day(self):
         self.assertEqual(self.calendar.get_day(self.itemDates), 6)

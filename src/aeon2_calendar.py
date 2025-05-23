@@ -27,9 +27,12 @@ class Aeon2Calendar:
         self.hoursInDay = calendarDefinitions['hoursInDay']
         self.minutesInHour = 60
         self.secondsInMinute = 60
+        self.secondsInDay = self.secondsInMinute * self.minutesInHour * self.hoursInDay
         self.weekdayIndexAtZero = calendarDefinitions['weekdayIndexAtZero']
         self.secondsInYear = seconds_in_year()
         self.secondsInLeapYear = seconds_in_leap_year()
+        self.leapCycles = [4, 100, 400]
+        self.calendarDefinitions = calendarDefinitions
 
         #--- Era enumerations.
         self.eraShortNames = []
@@ -56,9 +59,13 @@ class Aeon2Calendar:
 
     def get_day(self, itemDates):
         """Return an integer day or None."""
-        timestamp = itemDates['rangeValues'][0]['position']['timestamp']
-        if timestamp is not None:
-            return timestamp.get('day', None)
+        timestamp = self.get_timestamp(itemDates)
+        if timestamp is None:
+            return
+
+        _, _, _, remainingSeconds = self.get_month(itemDates)
+        day = remainingSeconds // self.secondsInDay + 1
+        return day
 
     def get_duration_str(self, itemDates):
         """Return a string with comma-separated elements of the duration."""
@@ -105,19 +112,14 @@ class Aeon2Calendar:
         Return None, if the date isn't within the range specified by ISO 8601, 
         or in case of error.
         """
-        try:
-            timestamp = itemDates['timestamp']
-            era = timestamp['era']
-            eraName = self.eraNames[era]
-            if eraName not in self.ISO_ERAS:
-                return
-
-            year = timestamp['year']
-            month = timestamp['month']
-            day = timestamp['day']
-            return f'{year:04}-{month:02}-{day:02}'
-        except:
+        era, eraShortName, eraName = self.get_era(itemDates)
+        if eraShortName not in self.ISO_ERAS:
             return
+
+        year, _ = self.get_year(itemDates)
+        month, _, _, _ = self.get_month(itemDates)
+        day = self.get_day(itemDates)
+        return f'{year:04}-{month:02}-{day:02}'
 
     def get_iso_time(self, itemDates):
         """Return a time string formatted acc. to ISO 8601. 
@@ -144,16 +146,31 @@ class Aeon2Calendar:
 
     def get_month(self, itemDates):
         """Return a tuple: (month's order, month's short name, month's name)."""
-        timestamp = itemDates['rangeValues'][0]['position']['timestamp']
+
+        def get_seconds_in_month(monthIndex, isLeapYear):
+            if isLeapYear:
+                days = self.calendarDefinitions['months'][monthIndex]['leapDuration']
+            else:
+                days = self.calendarDefinitions['months'][monthIndex]['normalDuration']
+            return self.secondsInDay * days
+
+        timestamp = self.get_timestamp(itemDates)
         if timestamp is None:
             return
 
-        month = timestamp.get('month', None)
-        if month is None:
-            return
+        year, secondsCurrentYear = self.get_year(itemDates)
+        isLeapYear = self.isleap(year)
+        monthIndex = 0
+        seconds = get_seconds_in_month(monthIndex, isLeapYear)
+        remainingSeconds = secondsCurrentYear - seconds
+        while seconds < secondsCurrentYear:
+            remainingSeconds = secondsCurrentYear - seconds
+            monthIndex += 1
+            seconds += get_seconds_in_month(monthIndex, isLeapYear)
 
+        month = monthIndex + 1
         try:
-            return month, self.monthShortNames[month - 1], self.monthNames[month - 1]
+            return month, self.monthShortNames[monthIndex], self.monthNames[monthIndex], remainingSeconds
         except:
             return
 
@@ -189,7 +206,36 @@ class Aeon2Calendar:
 
     def get_year(self, itemDates):
         """Return an integer year or None."""
-        timestamp = itemDates['rangeValues'][0]['position']['timestamp']
-        if timestamp is not None:
-            return timestamp.get('year', None)
+        timestamp = self.get_timestamp(itemDates)
+        if timestamp is None:
+            return
 
+        maxSeconds = abs(timestamp)
+        year = 1
+        if self.isleap(year):
+            seconds = self.secondsInLeapYear
+        else:
+            seconds = self.secondsInYear
+        remainingSeconds = maxSeconds - seconds
+        while seconds <= maxSeconds:
+            remainingSeconds = maxSeconds - seconds
+            year += 1
+            if self.isleap(year):
+                seconds += self.secondsInLeapYear
+            else:
+                seconds += self.secondsInYear
+
+        return  year, remainingSeconds
+
+    def isleap(self, year):
+        """Return True if year is a leap year."""
+        return ((year % self.leapCycles[2] == 0) and (year % self.leapCycles[1] == 0)
+                or (year % self.leapCycles[0] == 0) and (year % self.leapCycles[1] != 0))
+
+    def leapyears(self, y1, y2):
+        """Return number of leap years in range [y1, y2). Assume y1 <= y2."""
+        y1 -= 1
+        y2 -= 1
+        return (y2 // self.leapCycles[0] - y1 // self.leapCycles[0]
+                ) - (y2 // self.leapCycles[1] - y1 // self.leapCycles[1]
+                     ) + (y2 // self.leapCycles[2] - y1 // self.leapCycles[2])

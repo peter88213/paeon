@@ -1,0 +1,508 @@
+{
+    "bookmarks": [],
+    "dependencies": [],
+    "entities": [],
+    "events": [
+        {
+            "attachments": [],
+            "color": "44E7B42E-433B-48DD-B764-373996492C78",
+            "displayId": "3",
+            "guid": "3D1E9712-954B-4404-BF9A-F5F2C3A79F56",
+            "links": [],
+            "locked": false,
+            "priority": 500,
+            "rangeValues": [
+                {
+                    "minimumZoom": -1,
+                    "position": {
+                        "precision": "second",
+                        "timestamp": -157680000
+                    },
+                    "rangeProperty": "B327CAD3-1CE1-475E-8F7A-C709D294EF2E",
+                    "span": {}
+                }
+            ],
+            "relationships": [],
+            "tags": [],
+            "title": "Erster Tag E2",
+            "values": []
+        },
+        {
+            "attachments": [],
+            "color": "44E7B42E-433B-48DD-B764-373996492C78",
+            "displayId": "1",
+            "guid": "9B25F450-E9AB-4C0D-B576-C413E6F622E3",
+            "links": [],
+            "locked": false,
+            "priority": 500,
+            "rangeValues": [
+                {
+                    "minimumZoom": -1,
+                    "position": {
+                        "precision": "day",
+                        "timestamp": -473126400
+                    },
+                    "rangeProperty": "B327CAD3-1CE1-475E-8F7A-C709D294EF2E",
+                    "span": {}
+                }
+            ],
+            "relationships": [],
+            "tags": [],
+            "title": "Letzter Tag BC",
+            "values": []
+        },
+        {
+            "attachments": [],
+            "color": "44E7B42E-433B-48DD-B764-373996492C78",
+            "displayId": "2",
+            "guid": "E286486B-084B-407B-A03B-9183E0784A65",
+            "links": [],
+            "locked": false,
+            "priority": 500,
+            "rangeValues": [
+                {
+                    "minimumZoom": -1,
+                    "position": {
+                        "precision": "second",
+                        "timestamp": -473040000
+                    },
+                    "rangeProperty": "B327CAD3-1CE1-475E-8F7A-C709D294EF2E",
+                    "span": {}
+                }
+            ],
+            "relationships": [],
+            "tags": [],
+            "title": "Erster Tag E1",
+            "values": []
+        },
+        {
+            "attachments": [],
+            "color": "44E7B42E-433B-48DD-B764-373996492C78",
+            "displayId": "4",
+            "guid": "ECDC7F4A-9A0D-4661-9FFD-979461126405",
+            "links": [],
+            "locked": false,
+            "priority": 500,
+            "rangeValues": [
+                {
+                    "minimumZoom": -1,
+                    "position": {
+                        "precision": "second",
+                        "timestamp": 0
+                    },
+                    "rangeProperty": "B327CAD3-1CE1-475E-8F7A-C709D294EF2E",
+                    "span": {}
+                }
+            ],
+            "relationships": [],
+            "tags": [],
+            "title": "Erster Tag AD",
+            "values": []
+        }
+    ],
+    "fileVersion": 2,
+    "savedFilters": [],
+    "suggestions": [
+        {
+            "complete": true,
+            "id": "fiction_create_timeline"
+        },
+        {
+            "complete": false,
+            "id": "fiction_add_character"
+        },
+        {
+            "complete": true,
+            "id": "fiction_add_event"
+        },
+        {
+            "complete": false,
+            "id": "fiction_assign_character"
+        },
+        {
+            "complete": false,
+            "id": "drag_event"
+        },
+        {
+            "complete": false,
+            "id": "fiction_character_age"
+        },
+        {
+            "complete": false,
+            "id": "fiction_group_by_character"
+        },
+        {
+            "complete": false,
+            "id": "fiction_divide_arcs"
+        }
+    ],
+    "syncData": [],
+    "tags": [],
+    "template": {
+        "colors": [
+            {
+                "guid": "285F53C9-8ADC-4F08-8158-E2699D4371B9",
+                "name": "Yellow",
+                "sortOrder": 2,
+                "swatchColor": "yellow"
+            },
+            {
+                "guid": "44E7B42E-433B-48DD-B764-373996492C78",
+                "name": "Red",
+                "sortOrder": 0,
+                "swatchColor": "red"
+            },
+            {
+                "guid": "4F2A28BE-883E-4A2D-B6B1-5749D614992F",
+                "name": "Fuschia",
+                "sortOrder": 7,
+                "swatchColor": "fuschia"
+            },
+            {
+                "guid": "5243FC84-26A5-4B32-BE06-FFD87EED326B",
+                "name": "Purple",
+                "sortOrder": 5,
+                "swatchColor": "lightPurple"
+            },
+            {
+                "guid": "6427DCEF-7DCD-4DB8-8580-FE53739A9373",
+                "name": "Pink",
+                "sortOrder": 6,
+                "swatchColor": "darkPink"
+            },
+            {
+                "guid": "CA4B3375-38D6-47EA-8B87-0C3C6033AB14",
+                "name": "Orange",
+                "sortOrder": 1,
+                "swatchColor": "orange"
+            },
+            {
+                "guid": "D0DD5059-67ED-4881-A08F-D9A2476D7D8D",
+                "name": "Green",
+                "sortOrder": 3,
+                "swatchColor": "apple"
+            },
+            {
+                "guid": "F99A37E7-8963-4EA2-8F34-C5DBB91DF03B",
+                "name": "Blue",
+                "sortOrder": 4,
+                "swatchColor": "midBlue"
+            }
+        ],
+        "name": "Date-based Fiction Template",
+        "properties": [
+            {
+                "calcMode": "default",
+                "calculate": false,
+                "fadeEvents": false,
+                "guid": "47672450-D415-4E2A-B6B2-769C7F216A90",
+                "icon": "tag",
+                "isMandatory": false,
+                "name": "Summary",
+                "sortOrder": 2,
+                "type": "multitext"
+            },
+            {
+                "calcMode": "default",
+                "calculate": false,
+                "fadeEvents": true,
+                "guid": "B496E829-6C14-4E85-A506-76A442F19708",
+                "icon": "tag",
+                "isMandatory": false,
+                "name": "Complete",
+                "sortOrder": 1,
+                "type": "boolean"
+            },
+            {
+                "calcMode": "weightedPercentage",
+                "calculate": false,
+                "fadeEvents": false,
+                "guid": "D12755B9-15F1-490B-B0E9-61AB82D30D80",
+                "icon": "tag",
+                "isMandatory": false,
+                "name": "Tension",
+                "sortOrder": 0,
+                "type": "percentage"
+            }
+        ],
+        "rangeProperties": [
+            {
+                "calendar": {
+                    "dateFormat": "medium",
+                    "dateFormatIncludeDayName": true,
+                    "displayType": "Absolute",
+                    "eras": [
+                        {
+                            "duration": 9007199254740992,
+                            "hasLeapYears": false,
+                            "index": 0,
+                            "isBackwards": true,
+                            "name": "BC",
+                            "shortName": "BC"
+                        },
+                        {
+                            "duration": 10,
+                            "hasLeapYears": false,
+                            "index": 1,
+                            "isBackwards": false,
+                            "name": "Era1",
+                            "shortName": "E1"
+                        },
+                        {
+                            "duration": 5,
+                            "hasLeapYears": false,
+                            "index": 2,
+                            "isBackwards": false,
+                            "name": "Era2",
+                            "shortName": "Era"
+                        },
+                        {
+                            "duration": 9007199254740992,
+                            "hasLeapYears": true,
+                            "index": 3,
+                            "isBackwards": false,
+                            "name": "AD",
+                            "shortName": "AD"
+                        }
+                    ],
+                    "hoursInDay": 24,
+                    "months": [
+                        {
+                            "index": 0,
+                            "leapDuration": 31,
+                            "name": "January",
+                            "normalDuration": 31,
+                            "shortName": "Jan"
+                        },
+                        {
+                            "index": 1,
+                            "leapDuration": 29,
+                            "name": "February",
+                            "normalDuration": 28,
+                            "shortName": "Feb"
+                        },
+                        {
+                            "index": 2,
+                            "leapDuration": 31,
+                            "name": "March",
+                            "normalDuration": 31,
+                            "shortName": "Mar"
+                        },
+                        {
+                            "index": 3,
+                            "leapDuration": 30,
+                            "name": "April",
+                            "normalDuration": 30,
+                            "shortName": "Apr"
+                        },
+                        {
+                            "index": 4,
+                            "leapDuration": 31,
+                            "name": "May",
+                            "normalDuration": 31,
+                            "shortName": "May"
+                        },
+                        {
+                            "index": 5,
+                            "leapDuration": 30,
+                            "name": "June",
+                            "normalDuration": 30,
+                            "shortName": "Jun"
+                        },
+                        {
+                            "index": 6,
+                            "leapDuration": 31,
+                            "name": "July",
+                            "normalDuration": 31,
+                            "shortName": "Jul"
+                        },
+                        {
+                            "index": 7,
+                            "leapDuration": 31,
+                            "name": "August",
+                            "normalDuration": 31,
+                            "shortName": "Aug"
+                        },
+                        {
+                            "index": 8,
+                            "leapDuration": 30,
+                            "name": "September",
+                            "normalDuration": 30,
+                            "shortName": "Sep"
+                        },
+                        {
+                            "index": 9,
+                            "leapDuration": 31,
+                            "name": "October",
+                            "normalDuration": 31,
+                            "shortName": "Oct"
+                        },
+                        {
+                            "index": 10,
+                            "leapDuration": 30,
+                            "name": "November",
+                            "normalDuration": 30,
+                            "shortName": "Nov"
+                        },
+                        {
+                            "index": 11,
+                            "leapDuration": 31,
+                            "name": "December",
+                            "normalDuration": 31,
+                            "shortName": "Dec"
+                        }
+                    ],
+                    "name": "BC-AD Calendar",
+                    "notes": "",
+                    "timeFormat": "24",
+                    "weekdayIndexAtZero": 1,
+                    "weekdays": [
+                        {
+                            "index": 0,
+                            "name": "Sunday",
+                            "shortName": "Sun"
+                        },
+                        {
+                            "index": 1,
+                            "name": "Monday",
+                            "shortName": "Mon"
+                        },
+                        {
+                            "index": 2,
+                            "name": "Tuesday",
+                            "shortName": "Tue"
+                        },
+                        {
+                            "index": 3,
+                            "name": "Wednesday",
+                            "shortName": "Wed"
+                        },
+                        {
+                            "index": 4,
+                            "name": "Thursday",
+                            "shortName": "Thu"
+                        },
+                        {
+                            "index": 5,
+                            "name": "Friday",
+                            "shortName": "Fri"
+                        },
+                        {
+                            "index": 6,
+                            "name": "Saturday",
+                            "shortName": "Sat"
+                        }
+                    ],
+                    "zeroDateTimestamp": 63460972800
+                },
+                "defaultUnitScale": "year",
+                "guid": "B327CAD3-1CE1-475E-8F7A-C709D294EF2E",
+                "isMandatory": false,
+                "maxUnitScale": "century",
+                "minUnitScale": "day",
+                "name": "Date",
+                "sortOrder": 0,
+                "type": "date"
+            }
+        ],
+        "types": [
+            {
+                "color": "iconOrange",
+                "guid": "3975A244-F199-4179-8361-DCF782167C1D",
+                "icon": "map",
+                "name": "Place",
+                "persistent": true,
+                "roles": [
+                    {
+                        "allowsMultipleForEntity": true,
+                        "allowsMultipleForEvent": true,
+                        "allowsPercentAllocated": false,
+                        "guid": "AC7F1F36-1417-4010-BBC8-B2CD81AEC94B",
+                        "icon": "circle text",
+                        "mandatoryForEntity": false,
+                        "mandatoryForEvent": false,
+                        "name": "Location",
+                        "sortOrder": 0
+                    }
+                ],
+                "sortOrder": 2
+            },
+            {
+                "color": "iconRed",
+                "guid": "6C857017-8B69-43D5-BD6A-B4A9B0A4A2EF",
+                "icon": "person",
+                "name": "Character",
+                "persistent": false,
+                "roles": [
+                    {
+                        "allowsMultipleForEntity": true,
+                        "allowsMultipleForEvent": true,
+                        "allowsPercentAllocated": false,
+                        "guid": "20CDEE90-ADF2-44DF-8CF7-9482B606A797",
+                        "icon": "circle text",
+                        "mandatoryForEntity": false,
+                        "mandatoryForEvent": false,
+                        "name": "Observer",
+                        "sortOrder": 1
+                    },
+                    {
+                        "allowsMultipleForEntity": true,
+                        "allowsMultipleForEvent": true,
+                        "allowsPercentAllocated": false,
+                        "guid": "CD053561-6E09-4A43-9D2C-A138F5719C9E",
+                        "icon": "circle text",
+                        "mandatoryForEntity": false,
+                        "mandatoryForEvent": false,
+                        "name": "Participant",
+                        "sortOrder": 0
+                    }
+                ],
+                "sortOrder": 0
+            },
+            {
+                "color": "iconYellow",
+                "guid": "CE37D960-077A-4CE4-BB64-5452417B8DB4",
+                "icon": "book",
+                "name": "Arc",
+                "persistent": true,
+                "roles": [
+                    {
+                        "allowsMultipleForEntity": true,
+                        "allowsMultipleForEvent": false,
+                        "allowsPercentAllocated": false,
+                        "guid": "EF87D9B5-F0B8-49D1-8E06-0241822F6E64",
+                        "icon": "circle text",
+                        "mandatoryForEntity": false,
+                        "mandatoryForEvent": false,
+                        "name": "Arc",
+                        "sortOrder": 0
+                    }
+                ],
+                "sortOrder": 1
+            }
+        ]
+    },
+    "todos": [],
+    "uiState": {
+        "DisplayEventMoreInfoLeftColumn": [
+            "Tension",
+            "Summary",
+            "Location",
+            "Participant"
+        ],
+        "DisplayEventMoreInfoRightColumn": [
+            "Image"
+        ],
+        "DisplayScrollingBehaviour": "bounce",
+        "DisplaySize": "100",
+        "DisplaySkin": "light",
+        "InspectorOpen": "1",
+        "InspectorWidth": "350",
+        "RelationshipViewFlattenTree": "0",
+        "RelationshipViewMode": "0",
+        "RelationshipViewShowOffsets": "1",
+        "ScrollPosition": "-865",
+        "ScrollPositionY": "0",
+        "UnitScale": "7889238.000000"
+    }
+}
