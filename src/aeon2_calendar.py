@@ -12,27 +12,29 @@ class Aeon2Calendar:
 
     def __init__(self, calendarDefinitions):
 
-        def seconds_in_year():
-            days = 0
-            for month in calendarDefinitions['months']:
-                days += month['normalDuration']
-            return days * calendarDefinitions['hoursInDay'] * 3600
-
-        def seconds_in_leap_year():
-            days = 0
-            for month in calendarDefinitions['months']:
-                days += month['leapDuration']
-            return days * calendarDefinitions['hoursInDay'] * 3600
-
         self.hoursInDay = calendarDefinitions['hoursInDay']
         self.minutesInHour = 60
         self.secondsInMinute = 60
         self.secondsInDay = self.secondsInMinute * self.minutesInHour * self.hoursInDay
+
+        daysInNormalYear = 0
+        daysInLeapYear = 0
+        self.monthNormalDurations = []
+        self.monthLeapDurations = []
+        self.monthShortNames = []
+        self.monthNames = []
+        for month in calendarDefinitions['months']:
+            daysInNormalYear += month['normalDuration']
+            self.monthNormalDurations.append(month['normalDuration'])
+            daysInLeapYear += month['leapDuration']
+            self.monthLeapDurations.append(month['leapDuration'])
+            self.monthShortNames.append(month['shortName'])
+            self.monthNames.append(month['name'])
+        self.secondsInYear = daysInNormalYear * self.secondsInDay
+        self.secondsInLeapYear = daysInLeapYear * self.secondsInDay
+
         self.weekdayIndexAtZero = calendarDefinitions['weekdayIndexAtZero']
-        self.secondsInYear = seconds_in_year()
-        self.secondsInLeapYear = seconds_in_leap_year()
         self.leapCycles = [4, 100, 400]
-        self.calendarDefinitions = calendarDefinitions
 
         #--- Era enumerations.
         self.eraShortNames = []
@@ -42,13 +44,6 @@ class Aeon2Calendar:
             self.eraShortNames.append(era['shortName'])
             self.eraNames.append(era['name'])
             self.eraSeconds.append(era['duration'] * self.secondsInYear)
-
-        #--- Month enumerations.
-        self.monthShortNames = []
-        self.monthNames = []
-        for month in calendarDefinitions['months']:
-            self.monthShortNames.append(month['shortName'])
-            self.monthNames.append(month['name'])
 
         #--- Weekday enumerations.
         self.weekdayShortNames = []
@@ -83,18 +78,18 @@ class Aeon2Calendar:
         isLeapYear = self.isleap(year)
         monthIndex = 0
         if isLeapYear:
-            days = self.calendarDefinitions['months'][monthIndex]['leapDuration']
+            days = self.monthLeapDurations[monthIndex]
         else:
-            days = self.calendarDefinitions['months'][monthIndex]['normalDuration']
+            days = self.monthNormalDurations[monthIndex]
         seconds = self.secondsInDay * days
         secondsCurrentMonth = secondsCurrentYear - seconds
         while seconds < secondsCurrentYear:
             secondsCurrentMonth = secondsCurrentYear - seconds
             monthIndex += 1
             if isLeapYear:
-                days = self.calendarDefinitions['months'][monthIndex]['leapDuration']
+                days = self.monthLeapDurations[monthIndex]
             else:
-                days = self.calendarDefinitions['months'][monthIndex]['normalDuration']
+                days = self.monthNormalDurations[monthIndex]
             seconds += self.secondsInDay * days
 
         #--- Day.
