@@ -64,7 +64,7 @@ class Aeon2Calendar:
 
         maxSeconds = abs(timestamp)
 
-        #--- Calculate the year.
+        #--- Year.
         year = 1
         if self.isleap(year):
             seconds = self.secondsInLeapYear
@@ -79,7 +79,7 @@ class Aeon2Calendar:
             else:
                 seconds += self.secondsInYear
 
-        #--- Calculate the month.
+        #--- Month.
         isLeapYear = self.isleap(year)
         monthIndex = 0
         if isLeapYear:
@@ -97,9 +97,10 @@ class Aeon2Calendar:
                 days = self.calendarDefinitions['months'][monthIndex]['normalDuration']
             seconds += self.secondsInDay * days
 
-        #--- Calcualte the day.
-        day = secondsCurrentMonth // self.secondsInDay + 1
-        return year, monthIndex + 1, day
+        #--- Day.
+        dayIndex = secondsCurrentMonth // self.secondsInDay
+
+        return year, monthIndex + 1, dayIndex + 1
 
     def get_day(self, itemDates):
         """Return an integer day or None."""
