@@ -240,11 +240,11 @@ class TestCalendar(unittest.TestCase):
         self.assertEqual(self.calendar.get_era(self.itemDates), (1, 'AD', 'AD'))
 
     def test_get_year(self):
-        year, _ = self.calendar.get_year(self.itemDates)
+        year = self.calendar.get_year(self.itemDates)
         self.assertEqual(year, 1933)
 
     def test_get_month(self):
-        month, shortName, fullName, _ = self.calendar.get_month(self.itemDates)
+        month, shortName, fullName = self.calendar.get_month(self.itemDates)
         self.assertEqual((month, shortName, fullName), (2, 'Feb', 'February'))
 
     def test_get_day(self):
