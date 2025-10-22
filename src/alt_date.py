@@ -52,7 +52,11 @@ def read_csv(csvfile_path):
 
 def write_csv(csvfile_path, aeon_data):
     with open(csvfile_path, 'w', encoding='utf-8', newline='') as csvfile:
-        csv_writer = csv.DictWriter(csvfile, list(aeon_data[0]))
+        csv_writer = csv.DictWriter(
+            csvfile,
+            list(aeon_data[0]),
+            quoting=csv.QUOTE_ALL,
+        )
         csv_writer.writeheader()
         for row in aeon_data:
             csv_writer.writerow(row)
