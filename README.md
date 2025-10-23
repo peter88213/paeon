@@ -1,7 +1,10 @@
 # paeon
-Tools for [Aeon Timeline](https://www.aeontimeline.com) support.
+ 
+ Python helper scripts for [Aeon Timeline](https://www.aeontimeline.com).
 
-For more information, see the [project homepage](https://peter88213.github.io/paeon) with description and download instructions.
+- [docs/aeon2moon](aeon2moon): Aeon Timeline 2 - Add/update moon phase at event start date.
+- [docs/extract_json](extract_json): Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
+- [docs/zodiac](zodiac): Create a "Zodiac" calendar for Aeon templates.
 
 ## License
 

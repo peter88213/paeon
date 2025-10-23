@@ -1,4 +1,4 @@
-[Project homepage](index) > aeon2moon
+[Project homepage](..) > aeon2moon
 
 ------------------------------------------------------------------
 

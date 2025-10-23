@@ -1,4 +1,4 @@
-[Project homepage](index) > zodiac
+[Project homepage](..) > zodiac
 
 ------------------------------------------------------------------
 

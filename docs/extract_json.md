@@ -1,4 +1,4 @@
-[Project homepage](index) > extract_json
+[Project homepage](..) > extract_json
 
 ------------------------------------------------------------------
 
