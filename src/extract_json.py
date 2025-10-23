@@ -13,7 +13,7 @@ optional arguments:
   -h, --help  show this help message and exit
 
 Copyright (c) 2022 Peter Triesberger
-For further information see https://peter88213.github.io/paeon/extract_json
+https://github.com/peter88213/paeon
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os

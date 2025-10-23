@@ -15,7 +15,7 @@ optional arguments:
 "Moon phase" event property: phase day (0 to 29, where 0=new moon, 15=full etc.)
 
 Copyright (c) 2024 Peter Triesberger
-For further information see https://peter88213.github.io/paeon/aeon2moon
+https://github.com/peter88213/paeon
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import argparse

@@ -6,7 +6,7 @@ usage:
 zodiac_eras.py path-to-template
 
 Copyright (c) 2024 Peter Triesberger
-For further information see https://peter88213.github.io/paeon/zodiac
+https://github.com/peter88213/paeon
 Published under the MIT License (https://opensource.org/licenses/mit-license.php)
 """
 import os
