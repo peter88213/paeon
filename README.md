@@ -2,9 +2,9 @@
  
  Python helper scripts for [Aeon Timeline](https://www.aeontimeline.com).
 
-- [docs/aeon2moon.md](aeon2moon): Aeon Timeline 2 - Add/update moon phase at event start date.
-- [docs/extract_json.md](extract_json): Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
-- [docs/zodiac.md](zodiac): Create a "Zodiac" calendar for Aeon templates.
+- [aeon2moon](docs/aeon2moon.md): Aeon Timeline 2 - Add/update moon phase at event start date.
+- [extract_json](docs/extract_json.md): Create a pretty-printed JSON file from an Aeon Timeline 2/3 file.
+- [zodiac](docs/zodiac.md): Create a "Zodiac" calendar for Aeon templates.
 
 ## License
 
